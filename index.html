@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Babaika — Adornment & Wear</title>
+  <meta name="description" content="Babaika is an adornment and wear brand rooted in the Volga delta — silks, kimonos, and handcrafted jewellery inspired by the natural world." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #eeede9;
+      --bg-dark: #e2e0db;
+      --text: #3a3a38;
+      --text-muted: #888880;
+      --text-faint: #b0aea8;
+      --line: rgba(60,60,55,0.18);
+      --font-mono: 'Courier Prime', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── SCRIPT FONT (CSS-drawn) ─────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&display=swap');
+    .script {
+      font-family: 'Dancing Script', 'Georgia', cursive;
+      font-weight: 400;
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    #hero img.hero-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: brightness(0.88) saturate(0.9);
+    }
+
+    #hero .hero-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    #hero .hero-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(64px, 10vw, 120px);
+      color: #fff;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.15);
+      line-height: 1;
+    }
+
+    #hero .hero-sub {
+      font-family: var(--font-mono);
+      font-size: clamp(11px, 1.4vw, 16px);
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    /* scroll indicator */
+    #hero .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.6);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    #hero .scroll-hint .mouse {
+      width: 22px;
+      height: 34px;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      border-radius: 11px;
+      position: relative;
+    }
+    #hero .scroll-hint .mouse::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 7px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 2px;
+      animation: scrollDot 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollDot {
+      0%   { top: 6px; opacity: 1; }
+      80%  { top: 18px; opacity: 0.2; }
+      100% { top: 6px; opacity: 0; }
+    }
+
+    /* ─── INTRO SECTION ──────────────────────────────────────── */
+    .intro-section {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 48px;
+    }
+
+    .intro-text {
+      max-width: 600px;
+      text-align: left;
+    }
+
+    .intro-text p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+
+    /* ─── CHAPTER / PRODUCT SECTIONS ───────────────────────── */
+    .chapter {
+      padding: 60px 0 0;
+    }
+
+    /* horizontal image strip */
+    .image-strip {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      gap: 0;
+      height: clamp(220px, 30vw, 380px);
+    }
+
+    .image-strip img {
+      flex: 1 0 auto;
+      width: calc(100% / 5);
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95) saturate(0.85);
+      transition: filter 0.5s ease;
+    }
+
+    .image-strip img:hover {
+      filter: brightness(1) saturate(1);
+    }
+
+    /* Three-column image strip */
+    .image-strip-3 img { width: calc(100% / 3); }
+
+    /* chapter body */
+    .chapter-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      padding: 60px 48px 80px;
+      position: relative;
+    }
+
+    .chapter-left {
+      padding-right: 40px;
+    }
+
+    .chapter-center {
+      padding: 0 20px;
+      border-left: 1px solid var(--line);
+    }
+
+    .chapter-right {
+      padding-left: 40px;
+      border-left: 1px solid var(--line);
+      text-align: right;
+    }
+
+    /* chapter name label */
+    .chapter-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+
+    /* scientific definition (left column) */
+    .definition {
+      font-size: 13px;
+      color: var(--text-faint);
+      font-style: italic;
+      line-height: 1.9;
+    }
+
+    /* botanical illustration placeholder */
+    .botanical {
+      width: 120px;
+      margin: 0 auto 24px;
+      opacity: 0.7;
+    }
+    .botanical svg {
+      width: 100%;
+      height: auto;
+    }
+
+    /* narrative text */
+    .narrative {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    /* inline script highlight */
+    .inline-script {
+      font-family: 'Dancing Script', cursive;
+      font-size: 20px;
+      color: var(--text);
+    }
+
+    /* arrow line */
+    .arrow-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 13px;
+      margin: 8px 0;
+    }
+    .arrow-line::after {
+      content: '';
+      display: inline-block;
+      width: 80px;
+      height: 1px;
+      background: var(--text-muted);
+      position: relative;
+    }
+
+    /* product list (right column) */
+    .product-label {
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .product-name {
+      font-size: 16px;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 4px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .product-name:hover { color: var(--text); }
+
+    .product-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--line);
+      margin: 16px 0;
+    }
+
+    .material-list {
+      font-size: 12px;
+      color: var(--text-faint);
+      line-height: 2;
+    }
+
+    /* ─── FULL-WIDTH LANDSCAPE ──────────────────────────────── */
+    .landscape-full {
+      width: 100%;
+      height: clamp(250px, 35vw, 500px);
+      overflow: hidden;
+    }
+
+    .landscape-full img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+      filter: brightness(0.9) saturate(0.8);
+    }
+
+    /* ─── INTERLUDE (poetry only) ───────────────────────────── */
+    .interlude {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 100px 48px;
+    }
+
+    .interlude-text {
+      max-width: 520px;
+    }
+
+    .interlude-text .script {
+      font-size: clamp(28px, 4vw, 44px);
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 24px;
+    }
+
+    .interlude-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 80px 48px 60px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    footer .footer-brand .script {
+      font-size: 36px;
+      color: var(--text);
+    }
+
+    footer .footer-brand p {
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    footer .footer-nav {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-nav a {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    footer .footer-nav a:hover { color: var(--text); }
+
+    footer .footer-copy {
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    /* ─── SCROLL REVEAL ─────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* stagger children */
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.12s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.24s; }
+    .reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.36s; }
+    .reveal-stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.48s; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .chapter-body {
+        grid-template-columns: 1fr;
+        padding: 40px 24px 60px;
+        gap: 40px;
+      }
+      .chapter-center, .chapter-right {
+        border-left: none;
+        border-top: 1px solid var(--line);
+        padding-left: 0;
+        padding-top: 32px;
+        text-align: left;
+      }
+      .image-strip { height: 180px; }
+      .image-strip img { width: calc(100% / 3); }
+      .intro-section { padding: 80px 24px; }
+      footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ──────────────────────────────────────────────────── -->
+  <section id="hero">
+    <img class="hero-bg" src="images/hero.png" alt="Volga Delta aerial view" />
+    <div class="hero-overlay">
+      <h1 class="hero-title script">Babaika</h1>
+      <p class="hero-sub">Adornment &amp; Wear</p>
+    </div>
+    <div class="scroll-hint">
+      <div class="mouse"></div>
+    </div>
+  </section>
+
+  <!-- ── INTRO ─────────────────────────────────────────────────── -->
+  <section class="intro-section">
+    <div class="intro-text reveal">
+      <p>Someone walks to the river.</p>
+      <p>It is 5 a.m. Cold and wet. The light is thin, pale, not yet formed.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 1 — ТАМАРИСК (TAMARISK) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section class="chapter" id="tamarisk">
+
+    <!-- Image strip -->
+    <div class="image-strip reveal-stagger">
+      <img src="images/kimono-cream.png" alt="Kimono front" />
+      <img src="images/kimono-cream.png" alt="Kimono detail" style="object-position:center top;" />
+      <img src="images/foggy.png" alt="Botanical illustration placeholder" style="filter:brightness(1.05) saturate(0.4) contrast(0.9);" />
+      <img src="images/kimono-cream.png" alt="Fabric texture" style="object-position:right center;" />
+      <img src="images/kimono-cream.png" alt="Full look" style="object-position:left center;" />
+    </div>
+
+    <div class="chapter-body">
+
+      <!-- LEFT: label + definition -->
+      <div class="chapter-left reveal">
+        <p class="chapter-label">Тамариск (tamarisk)</p>
+        <p class="definition">
+          halophytic woody shrub adapted to saline and alkaline soils. Uses salt-excreeting leaf glands to regulate ionic balance. Deep root systems allow survival in eroded ground. Phytosociologically dominant along the lower Volga banks.
+        </p>
+      </div>
+
+      <!-- CENTER: narrative + botanical -->
+      <div class="chapter-center reveal">
+        <div class="botanical">
+          <!-- inline SVG of a simple tamarisk/plant silhouette -->
+          <svg viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#888" stroke-width="1.2">
+            <!-- stem -->
+            <line x1="50" y1="155" x2="50" y2="70"/>
+            <!-- branches -->
+            <path d="M50 120 Q30 100 18 88" />
+            <path d="M50 120 Q68 102 78 90" />
+            <path d="M50 100 Q28 78 15 65" />
+            <path d="M50 100 Q72 80 85 68" />
+            <path d="M50 82 Q35 62 25 50" />
+            <path d="M50 82 Q65 64 75 52" />
+            <path d="M50 70 Q42 52 38 38" />
+            <path d="M50 70 Q58 54 62 40" />
+            <!-- flower dots -->
+            <circle cx="18" cy="88" r="2.5" fill="#c8a5b0" stroke="none"/>
+            <circle cx="78" cy="90" r="2.5" fill="#c8a5b0" stroke="none"/>
+            <circle cx="15" cy="65" r="2" fill="#c8a5b0" stroke="none"/>
+            <circle cx="85" cy="68" r="2" fill="#c8a5b0" stroke="none"/>
+            <circle cx="25" cy="50" r="2" fill="#c8a5b0" stroke="none"/>
+            <circle cx="75" cy="52" r="2" fill="#c8a5b0" stroke="none"/>
+            <circle cx="38" cy="38" r="2.5" fill="#c8a5b0" stroke="none"/>
+            <circle cx="62" cy="40" r="2.5" fill="#c8a5b0" stroke="none"/>
+            <circle cx="50" cy="30" r="3" fill="#c8a5b0" stroke="none"/>
+            <!-- roots -->
+            <path d="M50 155 Q40 158 32 155" />
+            <path d="M50 155 Q60 158 68 155" />
+            <path d="M50 155 Q44 162 36 162" />
+            <path d="M50 155 Q56 163 64 163" />
+          </svg>
+        </div>
+
+        <p class="narrative">
+          The ground changes. Salt tightens the soil and limits what can live there. Most plants fall away.
+        </p>
+        <p class="narrative">
+          <span class="inline-script">Tamarisk</span> remains.
+          <span class="arrow-line"></span>
+        </p>
+        <p class="narrative">
+          Slender branches, light blooms, restrained colour. It bends easily and does not retreat.
+        </p>
+      </div>
+
+      <!-- RIGHT: products -->
+      <div class="chapter-right reveal">
+        <p class="product-label">Pure Silk 6 Momme<br/>Georgette Fabric</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Kimono</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Scarf</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Bag</p>
+        <div class="product-divider"></div>
+        <p class="material-list">
+          100% Sandwashed Silk<br/>
+          Silver · River Pearls
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 2 — ТУМАН (TUMAN / FOG) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Full-width landscape -->
+  <div class="landscape-full reveal">
+    <img src="images/foggy.png" alt="Foggy wetland landscape" />
+  </div>
+
+  <section class="chapter" id="tuman">
+
+    <div class="image-strip reveal-stagger image-strip-3" style="height:clamp(200px,28vw,360px);">
+      <img src="images/kimono-cream.png" alt="Tuman kimono 1" />
+      <img src="images/foggy.png" alt="Fog atmosphere" style="filter:brightness(0.9) saturate(0.5);" />
+      <img src="images/kimono-cream.png" alt="Tuman kimono detail" style="object-position:top center;" />
+    </div>
+
+    <div class="chapter-body">
+      <div class="chapter-left reveal">
+        <p class="chapter-label">Туман (tuman)</p>
+        <p class="definition">
+          advection fog formed when warm moist air moves over cooler water or land. Visibility reduces below 1 km. Temperature inversion traps moisture close to the surface. A seasonal phenomenon of the delta lowlands, most frequent in early morning.
+        </p>
+      </div>
+
+      <div class="chapter-center reveal">
+        <!-- fog cloud SVG -->
+        <div class="botanical">
+          <svg viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#888" stroke-width="1.2">
+            <path d="M10 60 Q20 30 50 35 Q55 10 90 20 Q110 5 130 25 Q155 20 158 45 Q165 70 140 65 Q130 80 100 72 Q80 85 55 72 Q25 80 10 60Z" stroke-linejoin="round"/>
+            <path d="M120 65 Q140 50 150 35" opacity="0.4"/>
+            <path d="M150 35 Q155 20 148 12" opacity="0.3"/>
+          </svg>
+        </div>
+
+        <p class="narrative">
+          The air holds water. You cannot see the far bank. Distance collapses into grey.
+        </p>
+        <p class="narrative">
+          In <span class="inline-script">Tuman</span>, everything is soft.
+          <span class="arrow-line"></span>
+        </p>
+        <p class="narrative">
+          Mulberry silk velvet against skin feels like this — the edge between fabric and air, indistinct.
+        </p>
+      </div>
+
+      <div class="chapter-right reveal">
+        <p class="product-label">Mulberry Silk Velvet</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Kimono</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Earring</p>
+        <div class="product-divider"></div>
+        <p class="material-list">
+          Mulberry Silk Velvet<br/>
+          Silver · River Pearls
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 3 — ПОЛОИ (POLOI) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="landscape-full reveal">
+    <img src="images/water.png" alt="Still reflective water" />
+  </div>
+
+  <section class="chapter" id="poloi">
+
+    <div class="image-strip reveal-stagger">
+      <img src="images/kimono-blue.png" alt="Poloi kimono 1" />
+      <img src="images/kimono-blue.png" alt="Poloi look" style="object-position:top;" />
+      <img src="images/water.png" alt="Water reflection" style="filter:saturate(0.6) brightness(0.9);" />
+      <img src="images/kimono-blue.png" alt="Detail" style="object-position:right;" />
+      <img src="images/kimono-blue.png" alt="Full look" style="object-position:left;" />
+    </div>
+
+    <div class="chapter-body">
+      <div class="chapter-left reveal">
+        <p class="chapter-label">Полои (poloi)</p>
+        <p class="definition">
+          seasonally inundated lowlands of the Volga-Akhtuba floodplain. Filled by spring floods, drained as waters recede. Support ephemeral wetland habitats. Characterised by silty soils and halophyte communities.
+        </p>
+      </div>
+
+      <div class="chapter-center reveal">
+        <div class="botanical">
+          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#888" stroke-width="1">
+            <!-- Simple root structure -->
+            <line x1="60" y1="10" x2="60" y2="110"/>
+            <path d="M60 110 Q45 105 35 110" />
+            <path d="M60 110 Q75 105 85 110" />
+            <path d="M60 90 Q40 85 25 95" />
+            <path d="M60 90 Q80 85 95 95" />
+            <path d="M60 70 Q42 65 28 72" />
+            <path d="M60 70 Q78 65 92 72" />
+            <path d="M60 110 Q50 118 42 118" />
+            <path d="M60 110 Q70 118 78 118" />
+            <path d="M60 50 Q50 40 44 28" />
+            <path d="M60 50 Q70 40 76 28" />
+            <ellipse cx="60" cy="18" rx="12" ry="8" fill="none" stroke="#888" stroke-width="1"/>
+            <path d="M44 28 Q38 20 40 12" stroke-width="0.8"/>
+            <path d="M76 28 Q82 20 80 12" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <p class="narrative">
+          Water fills these lowlands each spring and slowly leaves again. What remains is silt, and silence, and the shape of where water was.
+        </p>
+        <p class="narrative">
+          <span class="inline-script">Poloi</span> is the pause.
+          <span class="arrow-line"></span>
+        </p>
+        <p class="narrative">
+          Silk and cotton — never too much of one element.
+        </p>
+      </div>
+
+      <div class="chapter-right reveal">
+        <p class="product-label">Silk / Cotton Blend</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Kimono</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Bag</p>
+        <div class="product-divider"></div>
+        <p class="material-list">
+          Silk / Cotton Blend<br/>
+          Silk Twill
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- INTERLUDE — ЧЕШУЯ (CHESHUYA / SCALE) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section class="interlude">
+    <div class="interlude-text reveal">
+      <p class="script">Чешуя (cheshuya)</p>
+      <p>
+        A flash of cheshuya — fish scale — catches the light beneath the surface. Here and then not. Silver, then water, then nothing.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 4 — КАМЫШ (KAMYSH / REED BEDS) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="landscape-full reveal">
+    <img src="images/reeds.png" alt="Dense reed beds" />
+  </div>
+
+  <section class="chapter" id="kamysh">
+
+    <div class="image-strip reveal-stagger">
+      <img src="images/kimono-cream.png" alt="Kamysh dark kimono" style="filter:brightness(0.75) saturate(0.7);" />
+      <img src="images/reeds.png" alt="Reed detail" />
+      <img src="images/kimono-cream.png" alt="Kamysh medium kimono" style="filter:brightness(0.88) saturate(0.8);" />
+      <img src="images/reeds.png" alt="Reed texture" style="object-position:left;" />
+      <img src="images/kimono-cream.png" alt="Kamysh light kimono" />
+    </div>
+
+    <div class="chapter-body">
+      <div class="chapter-left reveal">
+        <p class="chapter-label">Камыш (kamysh)</p>
+        <p class="definition">
+          Phragmites australis. Common reed. Rhizomatous perennial grass of wetland margins. Grows in dense monotypic stands 2–4m high. Stem structure creates vertical, rhythmic pattern. Seed heads persist through winter as dry feathery plumes.
+        </p>
+      </div>
+
+      <div class="chapter-center reveal">
+        <div class="botanical">
+          <svg viewBox="0 0 80 160" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#888" stroke-width="1">
+            <line x1="40" y1="155" x2="40" y2="20"/>
+            <path d="M40 140 Q30 135 22 130" />
+            <path d="M40 125 Q52 120 60 115" />
+            <path d="M40 110 Q28 105 18 98" />
+            <path d="M40 95 Q54 90 64 85" />
+            <path d="M40 78 Q30 70 22 62" />
+            <path d="M40 60 Q52 53 60 45" />
+            <!-- feather plume -->
+            <path d="M40 20 Q36 14 32 8" stroke-width="0.8"/>
+            <path d="M40 20 Q40 13 38 6" stroke-width="0.8"/>
+            <path d="M40 20 Q44 14 48 8" stroke-width="0.8"/>
+            <path d="M40 20 Q37 16 34 10" stroke-width="0.8"/>
+            <path d="M40 20 Q43 16 46 10" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <p class="narrative">
+          Thousands of stems, all upright, all the same height. You move through them and they close behind you.
+        </p>
+        <p class="narrative">
+          <span class="inline-script">Kamysh</span> does not yield entirely.
+          <span class="arrow-line"></span>
+        </p>
+        <p class="narrative">
+          Dark. Medium. Light. Three states of the same material in morning.
+        </p>
+      </div>
+
+      <div class="chapter-right reveal">
+        <p class="product-label">100% Sandwashed Silk</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Kimono — Dark</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Kimono — Medium</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Kimono — Light</p>
+        <div class="product-divider"></div>
+        <p class="material-list">100% Sandwashed Silk</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 5 — ИЛ (IL / SILT) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="landscape-full reveal">
+    <img src="images/water.png" alt="Silt and water" style="object-position: center 60%; filter: brightness(0.85) saturate(0.65);" />
+  </div>
+
+  <section class="chapter" id="il">
+    <div class="image-strip reveal-stagger image-strip-3" style="height:clamp(200px,28vw,360px);">
+      <img src="images/kimono-blue.png" alt="Il kimono" style="filter:brightness(0.9) saturate(0.6);" />
+      <img src="images/water.png" alt="Silt texture" style="filter:saturate(0.3) brightness(0.8);" />
+      <img src="images/kimono-blue.png" alt="Il ring" style="object-position:top;" />
+    </div>
+
+    <div class="chapter-body">
+      <div class="chapter-left reveal">
+        <p class="chapter-label">Ил (il)</p>
+        <p class="definition">
+          fine-grained fluvial sediment deposited when current velocity drops below transport threshold. Particle size 2–62 μm. Accumulates in deltaic backwaters and oxbow lakes. High organic content. Fertile, stable, slow.
+        </p>
+      </div>
+
+      <div class="chapter-center reveal">
+        <div class="botanical">
+          <svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#888" stroke-width="1">
+            <!-- horizontal sediment layers -->
+            <path d="M10 20 Q30 17 60 21 Q90 18 110 20" stroke-width="0.8" opacity="0.5"/>
+            <path d="M10 30 Q35 27 60 31 Q88 27 110 30" stroke-width="1"/>
+            <path d="M10 40 Q32 37 60 41 Q90 37 110 40" stroke-width="1.2"/>
+            <path d="M5 52 Q30 48 60 53 Q92 48 115 52" stroke-width="1.5"/>
+            <path d="M5 64 Q28 60 60 65 Q92 60 115 64" stroke-width="1.8"/>
+            <!-- small particles -->
+            <circle cx="25" cy="44" r="1.5" fill="#aaa" stroke="none"/>
+            <circle cx="55" cy="48" r="1" fill="#aaa" stroke="none"/>
+            <circle cx="80" cy="45" r="1.5" fill="#aaa" stroke="none"/>
+            <circle cx="100" cy="50" r="1" fill="#aaa" stroke="none"/>
+          </svg>
+        </div>
+        <p class="narrative">
+          At the end of the delta, current slows. What has travelled far — is laid down here.
+        </p>
+        <p class="narrative">
+          <span class="inline-script">Il</span> is the accumulation.
+          <span class="arrow-line"></span>
+        </p>
+        <p class="narrative">
+          Silk and cotton, worn close. Silver, shaped by hand.
+        </p>
+      </div>
+
+      <div class="chapter-right reveal">
+        <p class="product-label">Silk / Cotton · Silver</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Kimono</p>
+        <div class="product-divider"></div>
+        <p class="product-name">Ring</p>
+        <div class="product-divider"></div>
+        <p class="material-list">
+          Silk / Cotton<br/>
+          Silver
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-brand">
+      <p class="script">Babaika</p>
+      <p>Adornment &amp; Wear</p>
+    </div>
+    <nav class="footer-nav">
+      <a href="#">Collection</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Instagram</a>
+    </nav>
+    <p class="footer-copy">© 2024 Babaika</p>
+  </footer>
+
+  <!-- Load Dancing Script (script font) dynamically -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&display=swap" />
+
+  <script>
+    // ── Intersection Observer for scroll reveals ──────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+
+    // ── Parallax on hero image ─────────────────────────────────
+    const heroBg = document.querySelector('.hero-bg');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (heroBg && y < window.innerHeight * 1.5) {
+        heroBg.style.transform = `translateY(${y * 0.35}px)`;
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
