@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Babaika — Adornment & Wear</title>
+  <title>Babaika — A Wearable Landscape Archive.</title>
   <meta name="description" content="Babaika is an adornment and wear brand rooted in the Volga delta — silks, kimonos, and handcrafted jewellery inspired by the natural world." />
 
   <!-- Google Fonts -->
@@ -93,6 +93,7 @@
     .script {
       font-family: 'Figuea Granatae', 'Georgia', cursive;
       font-weight: 400;
+      letter-spacing: normal;
       /* Figuea Granatae might need slight size adjustment */
       /* By default we just swap the font */
     }
@@ -230,7 +231,11 @@
 
     /* ─── CHAPTER / PRODUCT SECTIONS ───────────────────────── */
     .chapter {
-      padding: 60px 0 0;
+      padding: 400px 0 0;
+    }
+
+    #tuman {
+      padding-top: 60px;
     }
 
     /* horizontal image strip */
@@ -369,9 +374,8 @@
       justify-content: center;
       gap: 0 160px;
       align-items: start;
-      padding: 160px 48px 80px;
+      padding: 160px 48px 100px;
       position: relative;
-      height: 1000px;
     }
 
     .chapter-left {
@@ -690,7 +694,7 @@
     @media (max-width: 768px) {
       .chapter-body {
         grid-template-columns: 1fr;
-        padding: 120px 75px 60px;
+        padding: 120px 75px 100px;
         gap: 40px;
       }
       .chapter-center { order: 1; }
@@ -709,7 +713,7 @@
       .image-strip-6 { flex-wrap: nowrap; height: 180px; }
       .intro-section { padding: 80px 75px; }
       footer { padding: 60px 75px 40px; flex-direction: column; align-items: flex-start; }
-      .hero-lang { top: 32px; right: 32px; }
+      .hero-lang { top: 32px; left: 50%; right: auto; transform: translateX(-50%); }
     }
   </style>
 </head>
@@ -815,8 +819,8 @@
       <h1 class="hero-title script">Babaika</h1>
     </div>
     <div class="hero-bottom-text">
-      <p class="hero-sub">Adornment &amp; Wear</p>
-      <p class="hero-desc">shaped by texture, Volga landscape, memory, and myth</p>
+      <p class="hero-sub">A Wearable Landscape Archive.</p>
+      <p class="hero-desc">The Volga Delta, mapped through texture, memory, and myth.</p>
     </div>
     <div class="scroll-hint">
       <div class="mouse"></div>
