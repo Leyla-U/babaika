@@ -526,12 +526,14 @@
     }
 
     .landscape-full img,
-    .landscape-full video {
+    .landscape-full video,
+    .landscape-full iframe {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       display: block;
+      border: none;
     }
 
     /* ─── INTERLUDE (poetry only) ───────────────────────────── */
@@ -895,7 +897,13 @@
 
     <!-- Full-width landscape video placed directly under the text -->
     <div class="landscape-full reveal">
-      <video src="images/tuman.mp4" autoplay loop muted playsinline></video>
+      <iframe
+        src="https://player.cloudinary.com/embed/?cloud_name=dejpm4v8y&public_id=tuman_oizisw"
+        style="height: auto; width: 100%; aspect-ratio: 640 / 360;"
+        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+        allowfullscreen
+        frameborder="0"
+      ></iframe>
     </div>
 
     <div class="slider-wrapper reveal">
