@@ -1488,6 +1488,11 @@
           el.style.opacity = '1';
           el.style.transform = 'none';
         });
+        // Ensure videos in the clone also play
+        clone.querySelectorAll('video').forEach(v => {
+          v.muted = true;
+          v.play().catch(() => {});
+        });
         magZoomInner.appendChild(clone);
       });
       // Force clone to exactly match body width, accounting for scrollbars

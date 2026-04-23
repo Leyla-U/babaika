@@ -842,10 +842,10 @@
 </div>
 </div>
 </div>
-<!-- Full-width landscape video placed directly under the text -->
-<div class="landscape-full reveal">
-<video autoplay="" loop="" muted="" playsinline="" src="images/tuman.mp4"></video>
-</div>
+    <!-- Full-width landscape video placed directly under the text -->
+    <div class="landscape-full reveal">
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/tuman_oizisw.mp4" autoplay loop muted playsinline></video>
+    </div>
 <div class="slider-wrapper reveal">
 <button aria-label="Previous" class="slider-arrow slider-prev"><i data-lucide="arrow-left"></i></button>
 <button aria-label="Next" class="slider-arrow slider-next"><i data-lucide="arrow-right"></i></button>
@@ -1356,6 +1356,11 @@
         clone.querySelectorAll('.reveal-stagger > *').forEach(el => {
           el.style.opacity = '1';
           el.style.transform = 'none';
+        });
+        // Ensure videos in the clone also play
+        clone.querySelectorAll('video').forEach(v => {
+          v.muted = true;
+          v.play().catch(() => {});
         });
         magZoomInner.appendChild(clone);
       });
