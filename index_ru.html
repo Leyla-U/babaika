@@ -35,6 +35,8 @@
       line-height: 1.7;
       overflow-x: hidden;
       cursor: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     /* ─── MAGNIFYING GLASS CURSOR ────────────────────────────── */
@@ -571,12 +573,12 @@
     footer .footer-brand .script {
       font-size: 42px;
       color: var(--text);
-      letter-spacing: 0.15em;
+      letter-spacing: normal;
     }
 
     footer .footer-brand p:not(.script) {
       font-size: 14px;
-      color: var(--text-faint);
+      color: var(--text);
       letter-spacing: 0.10em;
       line-height: 1.6;
       margin-top: 12px;
@@ -590,7 +592,7 @@
 
     footer .footer-nav a {
       font-size: 12px;
-      color: var(--text-muted);
+      color: var(--text);
       text-decoration: none;
       letter-spacing: 0.1em;
       transition: color 0.2s;
@@ -599,7 +601,7 @@
 
     footer .footer-copy {
       font-size: 11px;
-      color: var(--text-faint);
+      color: var(--text);
     }
     
     /* ─── CHAPTER NUMBER & LANG SWITCH ──────────────────────── */
