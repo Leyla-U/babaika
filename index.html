@@ -368,21 +368,16 @@
       grid-template-columns: 280px 500px 280px;
       justify-content: center;
       gap: 0 160px;
-      align-items: center;
-      padding: 60px 48px 80px;
+      align-items: start;
+      padding: 160px 48px 80px;
       position: relative;
       height: 1000px;
     }
 
     .chapter-left {
-      padding: 40px 16px;
-      border-radius: 16px;
-      background: var(--bg);
+      padding: 0 0 0 32px;
+      border-left: 1px solid var(--text-faint);
       opacity: 1 !important;
-    }
-
-    .chapter-left > * {
-      opacity: 0.5;
     }
 
     .chapter-left .narrative,
@@ -520,8 +515,7 @@
     /* ─── FULL-WIDTH LANDSCAPE ──────────────────────────────── */
     .landscape-full {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      max-height: 85vh;
+      height: 800px;
       overflow: hidden;
     }
 
@@ -609,10 +603,13 @@
     
     /* ─── CHAPTER NUMBER & LANG SWITCH ──────────────────────── */
     .chapter-num {
+      position: absolute;
+      top: -280px;
+      left: 50%;
+      transform: translateX(-50%);
       text-align: center;
-      margin-bottom: 60px;
-      margin-top: 10px;
-      color: var(--text-faint);
+      margin: 0;
+      color: var(--text);
       font-size: 12px;
       letter-spacing: 0.15em;
     }
@@ -693,9 +690,12 @@
     @media (max-width: 768px) {
       .chapter-body {
         grid-template-columns: 1fr;
-        padding: 40px 75px 60px;
+        padding: 120px 75px 60px;
         gap: 40px;
       }
+      .chapter-center { order: 1; }
+      .chapter-left { order: 2; }
+      .chapter-right { order: 3; }
       .chapter-center, .chapter-right {
         border-left: none;
         border-top: 1px solid var(--line);
@@ -897,7 +897,7 @@
 
     <!-- Full-width landscape video placed directly under the text -->
     <div class="landscape-full reveal">
-      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/tuman_oizisw.mp4" autoplay loop muted playsinline></video>
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776970050/tuman_opca5w.mp4" autoplay loop muted playsinline></video>
     </div>
 
     <div class="slider-wrapper reveal">
@@ -990,7 +990,7 @@
     </div>
     
     <div class="landscape-full reveal">
-      <video src="images/tamarisk.MOV" autoplay loop muted playsinline></video>
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969570/tamarisk_ze64td.mp4" autoplay loop muted playsinline></video>
     </div>
 
     <div class="slider-wrapper reveal">
@@ -1061,7 +1061,7 @@
     </div>
 
     <div class="landscape-full reveal">
-      <video src="images/poloi.mp4" autoplay loop muted playsinline></video>
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969569/poloi_id3nuc.mp4" autoplay loop muted playsinline></video>
     </div>
 
     <div class="slider-wrapper reveal">
@@ -1129,7 +1129,7 @@
     </div>
 
     <div class="landscape-full reveal">
-      <video src="images/il.mp4" autoplay loop muted playsinline></video>
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969566/il_vkmmxg.mp4" autoplay loop muted playsinline></video>
     </div>
 
     <div class="slider-wrapper reveal">
@@ -1197,7 +1197,7 @@
     </div>
 
     <div class="landscape-full reveal">
-      <video src="images/raskaty.mov" autoplay loop muted playsinline></video>
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969568/raskaty_ppnmp2.mp4" autoplay loop muted playsinline></video>
     </div>
 
     <div class="slider-wrapper reveal">
@@ -1269,7 +1269,7 @@
     </div>
     
     <div class="landscape-full reveal">
-      <video src="images/kamish.MOV" autoplay loop muted playsinline></video>
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969884/kamish_ftzl32.mp4" autoplay loop muted playsinline></video>
     </div>
 
     <div class="slider-wrapper reveal">
@@ -1340,8 +1340,8 @@
         </div>
       </div>
     </div>
-    <div class="landscape-full reveal" style="max-height: 50vh;">
-      <video src="images/cheshuya.MOV" autoplay loop muted playsinline></video>
+    <div class="landscape-full reveal">
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776970116/cheshuya_r5f94i.mp4" autoplay loop muted playsinline></video>
     </div>
   </section>
 
