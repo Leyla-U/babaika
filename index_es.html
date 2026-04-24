@@ -299,11 +299,18 @@
     }
     .image-strip-scroll::-webkit-scrollbar { display: none; }
 
+    .image-strip-6 img,
     .image-strip-6 > * { 
       height: 100%;
-      width: auto; 
+      width: calc(100% / 6) !important;
       flex: 0 0 auto; 
       object-fit: cover; 
+    }
+    @media (max-width: 900px) {
+      .image-strip-6 img,
+      .image-strip-6 > * {
+        width: calc(100% / 4) !important;
+      }
     }
     .strip-center-svg {
       display: flex;
@@ -388,7 +395,7 @@
     .chapter-left .inline-script,
     .chapter-left .chapter-label,
     .chapter-left .definition {
-      color: var(--text-faint);
+      color: var(--text);
     }
 
     .chapter-center {
@@ -418,7 +425,7 @@
       padding-left: 20px;
       padding-top: 16px;
       padding-bottom: 24px;
-      color: var(--text-faint);
+      color: var(--text);
       font-style: italic;
       line-height: 2;
     }
@@ -432,7 +439,7 @@
 
     /* chapter name label */
     .chapter-label {
-      color: var(--text-muted);
+      color: var(--text);
       letter-spacing: 0.08em;
       font-style: italic;
       margin-bottom: 14px;
@@ -440,7 +447,7 @@
 
     /* scientific definition (left column) */
     .definition {
-      color: var(--text-faint);
+      color: var(--text);
       font-style: italic;
       line-height: 1.9;
     }
@@ -475,7 +482,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: var(--text-muted);
+      color: var(--text);
       margin: 8px 0;
     }
     .arrow-line::after {
@@ -489,14 +496,14 @@
 
     /* product list (right column) */
     .product-label {
-      color: var(--text-faint);
+      color: var(--text);
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 8px;
     }
 
     .product-name {
-      color: var(--text-faint);
+      color: var(--text);
       font-style: italic;
       margin-bottom: 4px;
       cursor: pointer;
@@ -512,7 +519,7 @@
     }
 
     .material-list {
-      color: var(--text-faint);
+      color: var(--text);
       line-height: 2;
     }
 
@@ -554,7 +561,7 @@
 
     .interlude-text p {
       font-size: 14px;
-      color: var(--text-muted);
+      color: var(--text);
       line-height: 1.9;
     }
 
@@ -571,13 +578,13 @@
 
     footer .footer-brand .script {
       font-size: 42px;
-      color: var(--text);
+      color: var(--text-faint);
       letter-spacing: normal;
     }
 
     footer .footer-brand p:not(.script) {
       font-size: 14px;
-      color: var(--text);
+      color: var(--text-faint);
       letter-spacing: 0.10em;
       line-height: 1.6;
       margin-top: 12px;
@@ -591,7 +598,7 @@
 
     footer .footer-nav a {
       font-size: 12px;
-      color: var(--text);
+      color: var(--text-faint);
       text-decoration: none;
       letter-spacing: 0.1em;
       transition: color 0.2s;
@@ -600,7 +607,7 @@
 
     footer .footer-copy {
       font-size: 11px;
-      color: var(--text);
+      color: var(--text-faint);
     }
     
     /* ─── CHAPTER NUMBER & LANG SWITCH ──────────────────────── */
@@ -635,35 +642,26 @@
       transition: opacity 0.2s;
     }
     .hero-lang span.active {
-      text-decoration: underline;
+      text-decoration: underlineunderline
       text-underline-offset: 4px;
     }
     .hero-lang span:hover, .hero-lang a:hover {
       opacity: 0.7;
     }
-    .footer-lang {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 24px;
-      gap: 12px;
-      font-size: 11px;
-      color: var(--text);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
+    .footer-lang { display: flex; gap: 12px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
     .footer-lang span, .footer-lang a {
       cursor: pointer;
-      color: var(--text);
-      text-decoration: none;
+      color: var(--text-faint) !important;
+      text-decoration: none !important;
       transition: opacity 0.2s;
     }
-    .footer-lang span.active {
-      text-decoration: underline;
+    .footer-lang span.active, .footer-lang a.active {
+      text-decoration: underline !important;
       text-underline-offset: 4px;
     }
-    .footer-lang span:hover, .footer-lang a:hover {
-      opacity: 0.7;
-    }
+    
+    
+    
 
     /* ─── SCROLL REVEAL ─────────────────────────────────────── */
     .reveal {
@@ -783,7 +781,7 @@
 <!-- The rim -->
 <circle cx="168" cy="168" fill="none" r="167" stroke="url(#lens-rim-grad)" stroke-width="1"></circle>
       <!-- The center dot -->
-      <circle cx="168" cy="168" r="1" fill="white" style="mix-blend-mode: difference;" />
+      <circle cx="168" cy="168" r="3" fill="white" style="mix-blend-mode: difference;" />
 </svg>
 </div>
 <!-- ── HERO ──────────────────────────────────────────────────── -->
@@ -851,7 +849,7 @@
 </div>
     <!-- Full-width landscape video placed directly under the text -->
     <div class="landscape-full reveal">
-      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776970050/tuman_opca5w.mp4" autoplay loop muted playsinline></video>
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777053279/tuman_cmb78f.mp4" autoplay loop muted playsinline></video>
     </div>
 <div class="slider-wrapper reveal">
 <button aria-label="Previous" class="slider-arrow slider-prev"><i data-lucide="arrow-left"></i></button>
@@ -1062,11 +1060,11 @@
 <!-- ═══════════════════════════════════════════════════════════ -->
 <!-- CHAPTER 6 — РАСКАТЫ (RASKATY) -->
 <!-- ═══════════════════════════════════════════════════════════ -->
-<section class="chapter" id="raskati">
+<section class="chapter" id="raskaty">
 <div class="chapter-body">
 <div class="chapter-left reveal">
-<p class="chapter-label">Раскаты (raskati)</p>
-<p class="definition">Expansiones terminales de aguas poco profundas del delta del Volga, formadas donde canales distributarios estrechos y altamente sinuosos (<em>eriki</em>) pierden sus bancos estructurales. Los <em>eriki</em> funcionan como un laberinto hidrológico dinámico, transportando agua y sedimentos antes de disolverse finalmente en el gradiente acuático sin límites de los <span class="inline-script">raskaty</span>.</p>
+<p class="chapter-label">Раскаты (raskaty)</p>
+<p class="definition">Expansiones terminales de aguas poco profundas del delta del Volga, formadas donde canales distributarios estrechos y altamente sinuosos (<em>eriki</em>) pierden sus bancos estructurales. Los <em>eriki</em> funcionan como un laberinto hidrológico dinámico, transportando agua y sedimentos antes de disolverse finalmente en el gradiente acuático sin límites de los raskaty.</p>
 </div>
 <div class="chapter-center reveal">
 <div class="chapter-num">05</div>
@@ -1106,12 +1104,12 @@
 <button aria-label="Previous" class="slider-arrow slider-prev"><i data-lucide="arrow-left"></i></button>
 <button aria-label="Next" class="slider-arrow slider-next"><i data-lucide="arrow-right"></i></button>
 <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(150px,22vw,300px);">
-<img alt="Raskati detail 1" src="images/water.png"/>
-<img alt="Raskati detail 2" src="images/foggy.png"/>
-<img alt="Raskati detail 3" src="images/kimono-cream.png" style="object-position:top;"/>
-<img alt="Raskati detail 1" src="images/water.png"/>
-<img alt="Raskati detail 2" src="images/foggy.png"/>
-<img alt="Raskati detail 3" src="images/kimono-cream.png" style="object-position:top;"/>
+<img alt="Raskaty detail 1" src="images/water.png"/>
+<img alt="Raskaty detail 2" src="images/foggy.png"/>
+<img alt="Raskaty detail 3" src="images/kimono-cream.png" style="object-position:top;"/>
+<img alt="Raskaty detail 1" src="images/water.png"/>
+<img alt="Raskaty detail 2" src="images/foggy.png"/>
+<img alt="Raskaty detail 3" src="images/kimono-cream.png" style="object-position:top;"/>
 </div>
 </div>
 </section>
@@ -1239,7 +1237,7 @@
 <a href="https://www.instagram.com/babaika.babaika.babaika/" rel="noopener noreferrer" target="_blank">Instagram</a>
 </nav>
 <div class="footer-lang"><a href="index.html">EN</a> / <span class="active">ES</span> / <a href="index_ru.html">RU</a></div>
-<p class="footer-copy">© 2024 Babaika</p>
+<p class="footer-copy">© 2026 Babaika</p>
 </footer>
 <!-- Font loaded locally via CSS @font-face -->
 <!-- ── MAGNIFICATION OVERLAY ──────────────────────────────── -->
@@ -1269,6 +1267,21 @@
     // ── Parallax on hero image ─────────────────────────────────
     const heroBg = document.querySelector('.hero-bg');
     window.addEventListener('scroll', () => {
+      const cartBtn = document.getElementById("cart-btn");
+      if (cartBtn) {
+        const rect = cartBtn.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        const oldEvents = cartBtn.style.pointerEvents;
+        cartBtn.style.pointerEvents = "none";
+        const el = document.elementFromPoint(x, y);
+        cartBtn.style.pointerEvents = oldEvents;
+        if (el && el.closest(".hero, .landscape-full")) {
+          cartBtn.style.color = "#fff";
+        } else {
+          cartBtn.style.color = "var(--text)";
+        }
+      }
       const y = window.scrollY;
       if (heroBg && y < window.innerHeight * 1.5) {
         heroBg.style.transform = `translateY(${y * 0.35}px)`;
