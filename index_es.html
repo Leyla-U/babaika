@@ -1356,7 +1356,7 @@
       if (magReady) return;
       magReady = true;
       Array.from(document.body.children).forEach(child => {
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom') return;
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true') return;
         const clone = child.cloneNode(true);
         clone.querySelectorAll('script').forEach(s => s.remove());
         clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
@@ -1376,7 +1376,7 @@
       let diffLogs = [];
       Array.from(document.body.children).forEach((child, i) => {
         if (!child.id && !child.className) return;
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom') return;
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true') return;
         const cloneMatches = Array.from(magZoomInner.children).filter(c => c.tagName === child.tagName && c.className === child.className);
         if (cloneMatches.length > 0) {
            const clone = cloneMatches[0];

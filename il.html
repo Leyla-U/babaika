@@ -39,15 +39,48 @@
     .script { font-family: 'Figuea Granatae', cursive; font-weight: 400; }
     a, button { cursor: none; }
 
-    /* CURSOR */
+    /* ─── MAGNIFYING GLASS CURSOR ─── */
+    /* ─── MAGNIFYING GLASS CURSOR ────────────────────────────── */
     #mag-cursor {
-      position: fixed; top: 0; left: 0;
-      width: 336px; height: 336px;
-      pointer-events: none; z-index: 9999;
-      will-change: transform; transition: opacity 0.25s ease; opacity: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 336px;
+      height: 336px;
+      pointer-events: none;
+      z-index: 9999;
+      will-change: transform;
+      transition: opacity 0.25s ease;
+      opacity: 0;
     }
     #mag-cursor.visible { opacity: 1; }
-    #mag-cursor svg { width: 100%; height: 100%; overflow: visible; }
+    #mag-cursor svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* ─── MAGNIFICATION OVERLAY ──────────────────────────── */
+    #mag-zoom {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      /* barrel lens distortion filter applied via JS */
+    }
+    #mag-zoom.visible { opacity: 1; }
+    #mag-zoom-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--bg);
+      transform-origin: 0 0;
+    }
+
+    
 
     /* NAV */
     .page-nav {
@@ -752,7 +785,41 @@
 </head>
 <body>
 
-  <!-- Cursor -->
+  <!-- ── SVG FILTER DEFS (barrel lens distortion) ────────────── -->
+  <svg id="filter-svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"
+       xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="barrel-lens"
+              primitiveUnits="userSpaceOnUse"
+              x="-5%" y="-5%" width="110%" height="110%"
+              color-interpolation-filters="sRGB">
+        <feImage id="barrel-map-img" result="dmap"
+                 x="0" y="0" width="224" height="224"
+                 preserveAspectRatio="none"
+                 href=""/>
+        <feFlood flood-color="rgb(128,128,128)" flood-opacity="1" result="neutral"/>
+        <feComposite in="dmap" in2="neutral" operator="over" result="combined"/>
+        <feDisplacementMap in="SourceGraphic" in2="combined"
+                           scale="110"
+                           xChannelSelector="R"
+                           yChannelSelector="G"
+                           result="distorted"/>
+        <feGaussianBlur in="distorted" stdDeviation="4" result="blurred"/>
+        <feImage id="edge-mask-img" result="edgemask"
+                 x="0" y="0" width="224" height="224"
+                 preserveAspectRatio="none"
+                 href=""/>
+        <feComposite in="blurred" in2="distorted" operator="arithmetic"
+                     k1="0" k2="0" k3="1" k4="0" result="blurred-masked"/>
+        <feBlend in="distorted" in2="blurred" mode="normal" result="pre-blend"/>
+        <feComposite in="pre-blend" in2="edgemask" operator="in" result="edge-blur-part"/>
+        <feComposite in="distorted" in2="edgemask" operator="out" result="sharp-part"/>
+        <feComposite in="sharp-part" in2="edge-blur-part" operator="over"/>
+      </filter>
+    </defs>
+  </svg>
+
+<!-- ── MAGNIFYING GLASS CURSOR ── -->
   <div id="mag-cursor" aria-hidden="true">
     <svg viewBox="0 0 336 336" xmlns="http://www.w3.org/2000/svg" overflow="visible">
       <defs>
@@ -765,17 +832,26 @@
           <stop offset="100%" stop-color="#535E69" stop-opacity="0.4"/>
         </linearGradient>
         <filter id="glass-noise">
-          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1 0 0 0 0" in="noise" result="wn"/>
-          <feComponentTransfer in="wn" result="ln"><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
-          <feComposite operator="in" in="ln" in2="SourceGraphic"/>
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
+          <feColorMatrix type="matrix" values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1   1 0 0 0 0" in="noise" result="whiteNoise" />
+          <feComponentTransfer in="whiteNoise" result="lightNoise">
+            <feFuncA type="linear" slope="0.18" />
+          </feComponentTransfer>
+          <feComposite operator="in" in="lightNoise" in2="SourceGraphic" result="texture" />
+          <feImage href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='336' height='336'><radialGradient id='g' cx='35%' cy='30%' r='60%'><stop offset='0%' stop-color='white' stop-opacity='0.1'/><stop offset='100%' stop-color='white' stop-opacity='0'/></radialGradient><circle cx='168' cy='168' r='167' fill='url(%23g)'/></svg>" result="glare" width="336" height="336" x="0" y="0"/>
+          <feComposite operator="over" in="glare" in2="texture" result="combined" />
+          <feComposite operator="in" in="combined" in2="SourceGraphic" />
         </filter>
       </defs>
-      <circle cx="168" cy="168" r="167" fill="var(--bg)" filter="url(#glass-noise)"/>
+      <circle cx="168" cy="168" r="167" fill="var(--bg)" filter="url(#glass-noise)" />
       <circle cx="168" cy="168" r="167" fill="none" stroke="url(#lens-rim-grad)" stroke-width="1"/>
-      <!-- The center dot -->
       <circle cx="168" cy="168" r="1" fill="white" style="mix-blend-mode: difference;" />
     </svg>
+  </div>
+
+<!-- ── MAGNIFICATION OVERLAY ──────────────────────────────── -->
+  <div id="mag-zoom" aria-hidden="true">
+    <div id="mag-zoom-inner"></div>
   </div>
 
   <!-- NAV -->
@@ -947,13 +1023,212 @@
   </footer>
 
   <script>
-    // ── Cursor ──
-    const mag = document.getElementById('mag-cursor');
-    document.addEventListener('mousemove', e => {
-      mag.style.transform = `translate(${e.clientX - 168}px, ${e.clientY - 168}px)`;
-      mag.classList.add('visible');
+        // ── Magnifying glass cursor + magnification ────────────────
+    const magCursor    = document.getElementById('mag-cursor');
+    const magZoom      = document.getElementById('mag-zoom');
+    const magZoomInner = document.getElementById('mag-zoom-inner');
+    const barrelImg    = document.getElementById('barrel-map-img');
+
+    const LENS_R    = 168;  // px — lens radius
+    const MAG_SCALE = 1.5;  // zoom factor inside the lens
+    const EDGE_BLUR_W = 10; // px — width of blur zone at border
+
+    const edgeMaskImg = document.getElementById('edge-mask-img');
+
+    // ── Generate barrel distortion map (once) ────────────────────
+    (function initBarrelMap() {
+      const size = LENS_R * 2; // 224px
+
+      // --- barrel displacement map ---
+      const c = document.createElement('canvas');
+      c.width = c.height = size;
+      const ctx = c.getContext('2d');
+      const img = ctx.createImageData(size, size);
+      const d = img.data;
+      const h = size / 2;
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+          const nx = (x - h) / h;
+          const ny = (y - h) / h;
+          const r2 = nx * nx + ny * ny;
+          // Flat zone: central ~105px diameter (52px radius in a 168px-radius lens)
+          const flatR = 52 / h;
+          const flatR2 = flatR * flatR;
+          const str = (r2 > flatR2 && r2 < 1) ? r2 * r2 * 130 : 0;
+          const i = (y * size + x) * 4;
+          d[i]   = Math.min(255, Math.max(0, Math.round(128 + nx * str)));
+          d[i+1] = Math.min(255, Math.max(0, Math.round(128 + ny * str)));
+          d[i+2] = 0;
+          d[i+3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      barrelImg.setAttribute('href', c.toDataURL('image/png'));
+      barrelImg.setAttribute('width', size);
+      barrelImg.setAttribute('height', size);
+
+      // --- edge blur mask: 0% at 20px from border, 100% at 5px from border, 100% at edge ---
+      const ec = document.createElement('canvas');
+      ec.width = ec.height = size;
+      const ectx = ec.getContext('2d');
+      ectx.clearRect(0, 0, size, size);
+      // Inner radius = R-20 (0% blur), stops at R-5 (100% blur), stays opaque to R
+      const grd = ectx.createRadialGradient(h, h, h - 20, h, h, h - 5);
+      grd.addColorStop(0, 'rgba(255,255,255,0)');
+      grd.addColorStop(1, 'rgba(255,255,255,1)');
+      ectx.fillStyle = grd;
+      ectx.beginPath();
+      ectx.arc(h, h, h, 0, Math.PI * 2);
+      ectx.fill();
+      edgeMaskImg.setAttribute('href', ec.toDataURL('image/png'));
+      edgeMaskImg.setAttribute('width', size);
+      edgeMaskImg.setAttribute('height', size);
+
+      magZoom.style.filter = 'url(#barrel-lens)';
+    })();
+
+    let mouseX = 0, mouseY = 0;
+    let curX = 0, curY = 0;
+    let magReady = false;
+
+    // ── Touch / Mobile State ─────────────────────────────────────
+    let touchTimer = null;
+    let isLoupeActive = false;
+    let startTouchX = 0;
+    let startTouchY = 0;
+    let currentOffset = 0; // smoothly animates to 120 on touch
+
+
+    // Build DOM clone once on first mouse entry
+    function buildClone() {
+      if (magReady) return;
+      magReady = true;
+      Array.from(document.body.children).forEach(child => {
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true') return;
+        const clone = child.cloneNode(true);
+        clone.querySelectorAll('script').forEach(s => s.remove());
+        clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
+        clone.querySelectorAll('.reveal-stagger > *').forEach(el => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+        // Ensure videos in the clone also play
+        clone.querySelectorAll('video').forEach(v => {
+          v.muted = true;
+          v.play().catch(() => {});
+        });
+        magZoomInner.appendChild(clone);
+      });
+      // Force clone to exactly match body width, accounting for scrollbars
+      magZoomInner.style.width = document.body.clientWidth + 'px';
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      // Ignore mousemove if touch loupe is active (prevents conflicts on certain touch devices)
+      if (isLoupeActive) return;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      buildClone();
+      magCursor.classList.add('visible');
+      magZoom.classList.add('visible');
     });
-    document.addEventListener('mouseleave', () => mag.classList.remove('visible'));
+
+    document.addEventListener('mouseleave', () => {
+      magCursor.classList.remove('visible');
+      magZoom.classList.remove('visible');
+    });
+
+    // ── Touch Events for Long-Press ("Hold & Pan") ───────────────
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1) return; // ignore multi-touch
+      const t = e.touches[0];
+      startTouchX = t.clientX;
+      startTouchY = t.clientY;
+      
+      clearTimeout(touchTimer);
+      isLoupeActive = false;
+      
+      touchTimer = setTimeout(() => {
+        isLoupeActive = true;
+        mouseX = t.clientX;
+        mouseY = t.clientY;
+        curX = mouseX; // snap to touch instantly to avoid sliding from old mouse position
+        curY = mouseY;
+        buildClone();
+        magCursor.classList.add('visible');
+        magZoom.classList.add('visible');
+        if (navigator.vibrate) navigator.vibrate(50);
+      }, 400); // 400ms hold required
+    }, { passive: false });
+
+    document.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      if (!isLoupeActive) {
+        // Cancel long-press if user moves finger significantly
+        if (Math.abs(t.clientX - startTouchX) > 10 || Math.abs(t.clientY - startTouchY) > 10) {
+          clearTimeout(touchTimer);
+        }
+        return;
+      }
+      e.preventDefault(); // prevent page scroll while panning loupe
+      mouseX = t.clientX;
+      mouseY = t.clientY;
+    }, { passive: false });
+
+    const endTouch = () => {
+      clearTimeout(touchTimer);
+      if (isLoupeActive) {
+        isLoupeActive = false;
+        magCursor.classList.remove('visible');
+        magZoom.classList.remove('visible');
+      }
+    };
+    document.addEventListener('touchend', endTouch);
+    document.addEventListener('touchcancel', endTouch);
+
+    window.addEventListener('resize', () => {
+      magReady = false;
+      magZoomInner.innerHTML = '';
+    });
+
+    function animateCursor() {
+      curX += (mouseX - curX) * 0.12;
+      curY += (mouseY - curY) * 0.12;
+
+      // Smoothly jump the offset to -120px when long-pressing
+      const targetOffset = isLoupeActive ? 120 : 0;
+      currentOffset += (targetOffset - currentOffset) * 0.15;
+
+      // Position the visual ring so its centre aligns with cursor (minus offset)
+      magCursor.style.transform = `translate(${curX - LENS_R}px, ${curY - LENS_R - currentOffset}px)`;
+
+      if (magReady) {
+        const scrollY = window.scrollY;
+
+        // Translate layer to match scroll position AND the offset.
+        // The transformOrigin acts around curY. The -currentOffset shift perfectly places 
+        // the magnified spot of `curY` precisely into the center of our offset visual lens!
+        const f = MAG_SCALE;
+        magZoomInner.style.top = `${-scrollY - currentOffset}px`;
+        magZoomInner.style.left = '0px';
+        magZoomInner.style.transformOrigin = `${curX}px ${curY + scrollY}px`;
+        magZoomInner.style.transform = `scale(${f})`;
+
+        // Barrel / edge-mask maps follow offset cursor in viewport space
+        const bx = Math.round(curX - LENS_R);
+        const by = Math.round(curY - LENS_R - currentOffset);
+        barrelImg.setAttribute('x', bx);
+        barrelImg.setAttribute('y', by);
+        edgeMaskImg.setAttribute('x', bx);
+        edgeMaskImg.setAttribute('y', by);
+
+        // Clip the entire overlay to the offset lens circle
+        magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+      }
+
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
 
     // ── Nav color on hero ──
     const pageNav = document.querySelector('.page-nav');
