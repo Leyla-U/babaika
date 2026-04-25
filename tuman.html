@@ -48,7 +48,7 @@
       width: 336px;
       height: 336px;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 10002;
       will-change: transform;
       transition: opacity 0.25s ease;
       opacity: 0;
@@ -65,7 +65,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 9998;
+      z-index: 10001;
       opacity: 0;
       transition: opacity 0.25s ease;
       /* barrel lens distortion filter applied via JS */
@@ -86,7 +86,13 @@
     .page-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 28px 48px;
+      /* match the hero video grid width & centering */
+      max-width: 1400px;
+      width: 90vw;
+      margin: 0 auto;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 28px 0;
     }
     .page-nav a {
       font-size: 11px; color: var(--text); text-decoration: none;
@@ -98,37 +104,121 @@
     /* white state over video */
     .page-nav.nav--light a { color: #fff; }
 
-    /* HERO */
-    .chapter-hero {
-      position: relative; width: 100%; height:  1200px; min-height: 400px; overflow: hidden;
+    /* NEW HERO LAYOUT */
+    .chapter-hero-new {
+      padding-top: 140px; /* Space for nav */
+      padding-bottom: 60px;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .chapter-hero video {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(0.82) saturate(0.88); display: block;
+
+    .hero-text-block {
+      width: 90vw;
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      margin-bottom: 36px;
     }
-    .chapter-hero-overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 56px 64px;
+
+    .hero-text-block .hero-chapter-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      justify-self: start;
+      align-self: center;
     }
-    .hero-chapter-label {
-      font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.55);
-      text-transform: uppercase; margin-bottom: 12px;
-    }
-    .hero-title {
+
+    .hero-text-block .hero-title {
       font-family: 'Figuea Granatae', cursive;
-      font-size: clamp(64px, 9vw, 120px);
-      color: #fff; line-height: 0.9; margin-bottom: 16px;
+      font-size: clamp(60px, 9vw, 120px);
+      color: var(--text);
+      line-height: 1;
+      text-align: center;
+      justify-self: center;
     }
-    .hero-subtitle {
-      font-size: 11px; letter-spacing: 0.18em; color: rgba(255,255,255,0.5);
+
+    .hero-text-block .hero-subtitle {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-faint);
+      justify-self: end;
+      align-self: center;
+    }
+
+    .hero-video-grid {
+      width: 90vw;
+      max-width: 1400px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .hero-video-top {
+      width: 100%;
+      aspect-ratio: 21 / 9;
+    }
+    
+    .hero-video-top video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95);
+    }
+    
+    .hero-video-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+    }
+    
+    .hero-video-bottom video {
+      width: 100%;
+      aspect-ratio: 1 / 1.1;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95);
+    }
+
+    @media (max-width: 768px) {
+      .page-nav {
+        width: 100vw;
+        padding: 20px 80px;
+        transform: translateX(-50%);
+      }
+      .hero-text-block {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        text-align: center;
+        gap: 12px;
+        padding: 0 80px;
+        width: 100vw;
+        box-sizing: border-box;
+      }
+      .hero-text-block .hero-chapter-label { justify-self: center; }
+      .hero-text-block .hero-subtitle { justify-self: center; }
+      .hero-video-top {
+        aspect-ratio: 16 / 9;
+      }
+      .hero-video-bottom {
+        grid-template-columns: 1fr;
+      }
+      .hero-video-grid {
+        width: 100vw;
+      }
     }
 
     /* THREE-COLUMN INFO BAND */
     .info-band {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      
+      border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
     .info-col {
@@ -161,20 +251,31 @@
     }
 
     /* ARTIFACT SECTION */
-    .artifact-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .artifact-container {
+      padding: 72px 48px;
       border-bottom: 1px solid var(--line);
-      min-height: 560px;
     }
-    .artifact-left {
-      padding: 72px 64px;
-      border-right: 1px solid var(--line);
-      display: flex; flex-direction: column; justify-content: flex-start;
+    .artifact-header {
+      margin-bottom: 48px;
     }
     .artifact-tag {
-      font-size: 11px; letter-spacing: 0.2em; color: var(--text);
-      text-transform: uppercase; margin-bottom: 28px;
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.2em; color: var(--text-faint);
+      text-transform: uppercase;
+    }
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .kimono-grid { align-items: start; }
+    .sticky-col { height: 100%; position: relative; }
+    .sticky-content { position: sticky; top: 50vh; transform: translateY(-50%); }
+    .kimono-sliders { display: flex; flex-direction: column; gap: 80px; width: 100%; }
+    .gallery-block { width: 100%; display: flex; flex-direction: column; position: relative; }
+    .artifact-left {
+      display: flex; flex-direction: column; justify-content: center;
     }
     .artifact-name {
       font-size: 18px; letter-spacing: 0.15em; color: var(--text);
@@ -184,14 +285,16 @@
       font-size: 13px; color: var(--text); font-style: italic;
       line-height: 2; margin-bottom: 8px;
     }
-    .artifact-note {
-      font-size: 12px; color: var(--text); font-style: italic;
-      line-height: 1.9; margin-top: 24px; 
-      padding-top: 20px;
+    .artifact-center {
+      position: relative; overflow: hidden; background: var(--bg);
+      display: flex; flex-direction: column;
     }
     .artifact-right {
-      position: relative; overflow: hidden; background: #e8e7e4;
-      display: flex; flex-direction: column;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .artifact-note {
+      font-size: 12px; color: var(--text); font-style: italic;
+      line-height: 1.9;
     }
     .photo-viewer {
       position: relative; flex: 1; overflow: hidden; min-height: 460px;
@@ -222,7 +325,7 @@
 
     /* DOT PAGINATION */
     .photo-dots {
-      position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
       display: flex; gap: 6px; z-index: 10;
     }
     .photo-dot {
@@ -237,7 +340,7 @@
 
     /* THUMBNAIL STRIP */
     .thumb-strip {
-      display: flex; gap: 2px; overflow-x: auto;
+      display: none; gap: 1px; overflow-x: auto;
       scrollbar-width: none; -ms-overflow-style: none;
       background: #d8d7d4; flex-shrink: 0;
     }
@@ -249,11 +352,21 @@
     }
     .thumb-strip img:hover { filter: brightness(1) saturate(1); }
     .thumb-strip img.active { outline: 1px solid var(--text); }
+    .thumb-strip img.hidden { display: none; }
 
-    /* FULLSCREEN LIGHTBOX */
+    /* INLINE THUMB GROUP LABEL */
+    .thumb-group-label {
+      display: flex; align-items: center; flex-shrink: 0;
+      padding: 0 12px;
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-faint);
+      border-right: 1px solid var(--line);
+      user-select: none; white-space: nowrap;
+    }
+
     #lightbox {
       position: fixed; inset: 0; z-index: 10000;
-      background: rgba(22,22,20,0.96);
+      background: var(--bg);
       display: flex; align-items: center; justify-content: center;
       opacity: 0; pointer-events: none;
       transition: opacity 0.3s ease;
@@ -267,24 +380,24 @@
     #lb-img.fading { opacity: 0; }
     .lb-close {
       position: absolute; top: 24px; right: 32px;
-      background: none; border: none; color: rgba(255,255,255,0.5);
+      background: none; border: none; color: var(--text-faint);
       font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em;
       text-transform: uppercase; cursor: none;
       transition: color 0.2s;
     }
-    .lb-close:hover { color: #fff; }
+    .lb-close:hover { color: var(--text); }
     .lb-arrow {
       position: absolute; top: 50%; transform: translateY(-50%);
-      background: none; border: none; color: rgba(255,255,255,0.4);
+      background: none; border: none; color: var(--text-faint);
       font-size: 28px; cursor: none; padding: 16px;
       transition: color 0.2s;
     }
-    .lb-arrow:hover { color: #fff; }
+    .lb-arrow:hover { color: var(--text); }
     .lb-prev { left: 16px; }
     .lb-next { right: 16px; }
     .lb-counter {
       position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
-      font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.35);
+      font-size: 11px; letter-spacing: 0.2em; color: var(--text-faint);
     }
 
     /* REVEAL */
@@ -316,14 +429,24 @@
       .chapter-hero-overlay { padding: 40px 24px; }
       .info-band { grid-template-columns: 1fr; }
       .info-col { border-right: none; border-bottom: 1px solid var(--line); padding: 40px 24px; }
-      .artifact-section { display: flex; flex-direction: column; }
-      .artifact-left { order: 2; padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--line); }
-      .artifact-right { order: 1; min-height: 460px; width: 100%; }
+      .artifact-container { padding: 48px 24px; }
+      .artifact-grid { display: flex; flex-direction: column; gap: 40px; align-items: flex-start; width: 100%; }
+      .artifact-center { order: 1; width: 100%; min-height: 460px; }
+      .artifact-left { order: 2; width: 100%; text-align: left; }
+      .artifact-right { order: 3; width: 100%; text-align: left; }
+      .kimono-grid { display: flex; flex-direction: column; gap: 40px; }
+      .kimono-sliders { display: contents; }
+      .kimono-grid .artifact-left { order: 2; }
+      .kimono-grid .gallery-block[data-gallery="kimono1"] { order: 1; }
+      .kimono-grid .gallery-block[data-gallery="kimono2"] { order: 3; }
+      .kimono-grid .gallery-block[data-gallery="kimono3"] { order: 4; }
+      .kimono-grid .gallery-block[data-gallery="kimono4"] { order: 5; }
+      .kimono-grid .artifact-right { order: 6; }
       footer { padding: 48px 24px 32px; flex-direction: column; align-items: flex-start; }
     }
     /* ─── CART BUTTON (fixed top-right) ──────────────────────── */
             #cart-btn {
-      position: fixed;
+      display: none;
       top: 40px;
       right: 40px;
       z-index: 8000;
@@ -884,17 +1007,25 @@
   <nav class="page-nav">
     <a href="index.html">← Back to Archive</a>
     <a href="index.html" class="nav-brand script">Babaika</a>
-    <a href="about.html">About</a>
+    <a id="cart-btn-nav" href="#" onclick="document.getElementById('cart-sidebar').classList.toggle('open'); return false;">CART <span id="cart-count-nav">0</span></a>
   </nav>
 
   <!-- HERO -->
-  <section class="chapter-hero">
-    <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777053279/tuman_cmb78f.mp4"
-           autoplay loop muted playsinline></video>
-    <div class="chapter-hero-overlay">
+  <section class="chapter-hero-new">
+    <div class="hero-text-block">
       <p class="hero-chapter-label">Chapter 01:</p>
       <h1 class="hero-title script">Tuman</h1>
       <p class="hero-subtitle">// The Optical Equalizer</p>
+    </div>
+    <div class="hero-video-grid reveal">
+      <div class="hero-video-top">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777053279/tuman_cmb78f.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="hero-video-bottom">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777098436/tuman-fabric_fc1jts.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085507/tuman-ring_cgwnu3.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777096239/tuman_video_earring_fkqiwa.mp4" autoplay loop muted playsinline></video>
+      </div>
     </div>
   </section>
 
@@ -939,141 +1070,210 @@
   </div>
 
   <!-- ARTIFACT 01: KIMONO -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 01.01 ]</p>
-      <p class="artifact-name">KIMONO</p>
-      <p class="artifact-detail-row">Base: Mulberry Silk</p>
-      <p class="artifact-detail-row">Pile: Rayon</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-detail-row">Length: Customizable by request</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        Velvet was selected for its light-absorbing quality. It prevents sharp highlights, ensuring the wearer's form remains present but softened, mimicking the visual density of fog.
-      </p>
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="01.01" data-name="Tuman — Kimono" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="01.01" data-name="Tuman — Kimono" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="kimono">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="Kimono look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid kimono-grid">
+      <div class="artifact-left sticky-col">
+        <div class="sticky-content">
+          <p class="artifact-name">KIMONO</p>
+          <p class="artifact-detail-row">Base: Mulberry Silk</p>
+          <p class="artifact-detail-row">Pile: Rayon</p>
+          <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
+          <p class="artifact-detail-row">Length: Customizable by request</p>
+          <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
+            <button class="btn-add-cart" data-id="01.01" data-name="Tuman — Kimono" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
+            <button class="btn-buy-now" data-id="01.01" data-name="Tuman — Kimono" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
+          </div>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="kimono">
-        <img src="images/tuman/babaika_tuman_05.JPG" alt="Kimono 1" />
-        <img src="images/tuman/babaika_tuman_10.JPG" alt="Kimono 2" />
-        <img src="images/tuman/babaika_tuman_13.JPG" alt="Kimono 3" />
-        <img src="images/tuman/babaika_tuman_20.JPG" alt="Kimono 4" />
-        <img src="images/tuman/513BB5F9-CE67-4B70-A47E-11252B9C5645_1_105_c.jpeg" alt="Kimono 5" />
-        <img src="images/tuman/C277E71B-6C19-408C-A131-E552B1FDA552_1_105_c.jpeg" alt="Kimono 6" />
-        <img src="images/tuman/D72AC02B-6EC7-4A95-80E1-EFA609005A78_1_105_c.jpeg" alt="Kimono 7" />
-        <img src="images/tuman/FD07AEB3-C8F0-4C3D-A2DA-A55F3147DBDA_1_105_c.jpeg" alt="Kimono 8" />
-        <img src="images/tuman/8E984562-3C27-4A03-BE35-89F625F72060_1_105_c.jpeg" alt="Kimono 9" />
+      <div class="artifact-center kimono-sliders">
+        <!-- Slider 1 -->
+        <div class="gallery-block" data-gallery="kimono1">
+          <div class="photo-viewer">
+            <img class="main-photo" alt="Kimono look" />
+            <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
+            <button class="photo-nav next" aria-label="Next">&#8594;</button>
+            <div class="photo-dots"></div>
+          </div>
+          <div class="thumb-strip" data-thumbs="kimono1">
+            <img src="images/Tuman chapter/tuman kimono/babaika_film_10.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/babaika_film_11.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/babaika_film_15.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/babaika_film_18.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/babaika_film_20.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/Copy of TMN.png" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/IMG_4430 (1).png" alt="Kimono" />
+          </div>
+        </div>
+        <!-- Slider 2 -->
+        <div class="gallery-block" data-gallery="kimono2">
+          <div class="photo-viewer">
+            <img class="main-photo" alt="Kimono look" />
+            <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
+            <button class="photo-nav next" aria-label="Next">&#8594;</button>
+            <div class="photo-dots"></div>
+          </div>
+          <div class="thumb-strip" data-thumbs="kimono2">
+            <img src="images/Tuman chapter/tuman kimono/SHE00077.png" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/SHE00099.png" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/SHE00116.png" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/SHE00126.png" alt="Kimono" />
+          </div>
+        </div>
+        <!-- Slider 3 -->
+        <div class="gallery-block" data-gallery="kimono3">
+          <div class="photo-viewer">
+            <img class="main-photo" alt="Kimono look" />
+            <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
+            <button class="photo-nav next" aria-label="Next">&#8594;</button>
+            <div class="photo-dots"></div>
+          </div>
+          <div class="thumb-strip" data-thumbs="kimono3">
+            <img src="images/Tuman chapter/tuman kimono/IMG_3660.png" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/IMG_3664.png" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/IMG_3682.png" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/IMG_4004.png" alt="Kimono" />
+          </div>
+        </div>
+        <!-- Slider 4 -->
+        <div class="gallery-block" data-gallery="kimono4">
+          <div class="photo-viewer">
+            <img class="main-photo" alt="Kimono look" />
+            <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
+            <button class="photo-nav next" aria-label="Next">&#8594;</button>
+            <div class="photo-dots"></div>
+          </div>
+          <div class="thumb-strip" data-thumbs="kimono4">
+            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_06.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_20.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_25.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_26.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_52.JPG" alt="Kimono" />
+            <img src="images/Tuman chapter/tuman kimono/Copy of TMN (2).jpg" alt="Kimono" />
+          </div>
+        </div>
+      </div>
+      <div class="artifact-right sticky-col">
+        <div class="sticky-content">
+          <p class="artifact-note">
+            <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+            Velvet was selected for its light-absorbing quality. It prevents sharp highlights, ensuring the wearer's form remains present but softened, mimicking the visual density of fog.
+          </p>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- ARTIFACT 02: BRA -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 01.02 ]</p>
-      <p class="artifact-name">SOFT BRA</p>
-      <p class="artifact-detail-row">Material: White Silk Chiffon</p>
-      <p class="artifact-detail-row">Mulberry Silk Chiffon 8 Momme</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        A weightless, semi-transparent layer worn closest to the skin. It acts as the internal core of the "Tuman" atmosphere—diffused and unstructured.
-      </p>
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="01.02" data-name="Tuman — Soft Bra" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="01.02" data-name="Tuman — Soft Bra" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="bra">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="Bra look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left">
+        <p class="artifact-name">SOFT BRA</p>
+        <p class="artifact-detail-row">Material: White Silk Chiffon</p>
+        <p class="artifact-detail-row">Mulberry Silk Chiffon 8 Momme</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
+          <button class="btn-add-cart" data-id="01.02" data-name="Tuman — Soft Bra" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
+          <button class="btn-buy-now" data-id="01.02" data-name="Tuman — Soft Bra" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="bra">
-        <img src="images/tuman/babaika_tuman_25.JPG" alt="Bra 1" />
-        <img src="images/tuman/babaika_tuman_26.JPG" alt="Bra 2" />
-        <img src="images/tuman/babaika_tuman_44.JPG" alt="Bra 3" />
-        <img src="images/tuman/babaika_tuman_52.JPG" alt="Bra 4" />
-        <img src="images/tuman/092E4E56-D5B3-4F0E-85A3-7490AF0A94A7_4_5005_c.jpeg" alt="Bra 5" />
-        <img src="images/tuman/5052F4A0-0292-45FD-8423-71C2D148CE40_4_5005_c.jpeg" alt="Bra 6" />
-        <img src="images/tuman/8B63AF03-8F92-471F-8989-FE49CFF01D69_4_5005_c.jpeg" alt="Bra 7" />
-        <img src="images/tuman/E9296800-A09C-401C-A6C7-AF3F6140D511_4_5005_c.jpeg" alt="Bra 8" />
+      <div class="artifact-center" data-gallery="bra">
+        <div class="photo-viewer">
+          <img class="main-photo" alt="Bra look" />
+          <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
+          <button class="photo-nav next" aria-label="Next">&#8594;</button>
+          <div class="photo-dots"></div>
+        </div>
+        <div class="thumb-strip" data-thumbs="bra">
+          <img src="images/Tuman chapter/tuman bra/babaika_film_12.JPG" alt="Bra 1" />
+          <img src="images/Tuman chapter/tuman bra/babaika_tuman_03.JPG" alt="Bra 2" />
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          A weightless, semi-transparent layer worn closest to the skin. It acts as the internal core of the "Tuman" atmosphere—diffused and unstructured.
+        </p>
       </div>
     </div>
   </div>
 
   <!-- ARTIFACT 03: EARRING -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ HARDWARE ARTIFACT 01.03 ]</p>
-      <p class="artifact-name">EARRING</p>
-      <p class="artifact-detail-row">Material: Silver, miniature pearl drops</p>
-      <p class="artifact-detail-row">River Pearls</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        These small pearls represent the suspended microdroplets within the fog. They are the only "sharp" points of the ensemble, yet their scale remains microscopic and delicate, like moisture catching on a surface.
-      </p>
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="01.03" data-name="Tuman — Earring" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="01.03" data-name="Tuman — Earring" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="earring">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="Earring" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left">
+        <p class="artifact-name">EARRING</p>
+        <p class="artifact-detail-row">Material: Silver, miniature pearl drops</p>
+        <p class="artifact-detail-row">River Pearls</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
+          <button class="btn-add-cart" data-id="01.03" data-name="Tuman — Earring" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
+          <button class="btn-buy-now" data-id="01.03" data-name="Tuman — Earring" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="earring">
-        <img src="images/tuman/AD66A8AB-E76F-4D9E-AD5A-DCA7F76D8107_1_102_o.jpeg" alt="Earring 1" />
-        <img src="images/tuman/C152E60B-9E10-44A9-B389-CD16998698FE_1_102_o.jpeg" alt="Earring 2" />
-        <img src="images/tuman/Copy of TMN.jpg" alt="Earring 3" />
-        <img src="images/tuman/Copy of TMN (1).jpg" alt="Earring 4" />
+      <div class="artifact-center" data-gallery="earring">
+        <div class="photo-viewer">
+          <img class="main-photo" alt="Earring" />
+          <video class="main-video" src="" autoplay loop muted playsinline style="display:none; width:100%; height:100%; object-fit:cover;"></video>
+          <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
+          <button class="photo-nav next" aria-label="Next">&#8594;</button>
+          <div class="photo-dots"></div>
+        </div>
+        <div class="thumb-strip" data-thumbs="earring">
+          <img src="images/Tuman chapter/tuman earring/DSC04889.png" alt="Earring 1" />
+          <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777096239/tuman_video_earring_fkqiwa.mp4" muted playsinline style="height:72px; width:auto; object-fit:cover; cursor:none; flex-shrink:0;"></video>
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          These small pearls represent the suspended microdroplets within the fog. They are the only "sharp" points of the ensemble, yet their scale remains microscopic and delicate, like moisture catching on a surface.
+        </p>
       </div>
     </div>
   </div>
 
   <!-- ARTIFACT 04: RING -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ HARDWARE ARTIFACT 01.04 ]</p>
-      <p class="artifact-name">RING</p>
-      <p class="artifact-detail-row">Material: Silver</p>
-      <p class="artifact-detail-row">River Pearls</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        These small pearls represent the suspended microdroplets within the fog. They are the only "sharp" points of the ensemble, yet their scale remains microscopic and delicate, like moisture catching on a surface.
-      </p>
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="01.04" data-name="Tuman — Ring" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="01.04" data-name="Tuman — Ring" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="ring">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="Ring" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left">
+        <p class="artifact-name">RING</p>
+        <p class="artifact-detail-row">Material: Silver</p>
+        <p class="artifact-detail-row">River Pearls</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
+          <button class="btn-add-cart" data-id="01.04" data-name="Tuman — Ring" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
+          <button class="btn-buy-now" data-id="01.04" data-name="Tuman — Ring" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="ring">
-        <img src="images/tuman/A1369640-DB64-445D-A919-7927700F6FA3_1_105_c.jpeg" alt="Ring 1" />
-        <img src="images/tuman/Copy of TMN (2).jpg" alt="Ring 2" />
-        <img src="images/tuman/092E4E56-D5B3-4F0E-85A3-7490AF0A94A7_4_5005_c.jpeg" alt="Ring 3" />
-        <img src="images/tuman/5052F4A0-0292-45FD-8423-71C2D148CE40_4_5005_c.jpeg" alt="Ring 4" />
+      <div class="artifact-center" data-gallery="ring">
+        <div class="photo-viewer">
+          <img class="main-photo" alt="Ring" />
+          <video class="main-video" src="" autoplay loop muted playsinline style="display:none; width:100%; height:100%; object-fit:cover;"></video>
+          <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
+          <button class="photo-nav next" aria-label="Next">&#8594;</button>
+          <div class="photo-dots"></div>
+        </div>
+        <div class="thumb-strip" data-thumbs="ring">
+          <img src="images/Tuman chapter/Tuman ring/DSC04877.png" alt="Ring 1" />
+          <img src="images/Tuman chapter/Tuman ring/DSC04880.png" alt="Ring 2" />
+          <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085507/tuman-ring_cgwnu3.mp4" muted playsinline style="height:72px; width:auto; object-fit:cover; cursor:none; flex-shrink:0;"></video>
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          These small pearls represent the suspended microdroplets within the fog. They are the only "sharp" points of the ensemble, yet their scale remains microscopic and delicate, like moisture catching on a surface.
+        </p>
       </div>
     </div>
   </div>
@@ -1309,15 +1509,6 @@
     }
     animateCursor();
 
-    // ── Nav color on hero ──
-    const pageNav = document.querySelector('.page-nav');
-    const heroSection = document.querySelector('.chapter-hero');
-    const heroObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        pageNav.classList.toggle('nav--light', entry.isIntersecting);
-      });
-    }, { threshold: 0.1 });
-    heroObserver.observe(heroSection);
 
     const revealObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -1342,23 +1533,45 @@
 
     function setGalleryIndex(id, idx, animate = true) {
       const g = galleries[id];
-      const imgs = g.thumbImgs;
-      idx = (idx + imgs.length) % imgs.length;
+      const items = g.thumbImgs;
+      idx = (idx + items.length) % items.length;
       g.currentIndex = idx;
 
-      const src = imgs[idx].src;
+      const item = items[idx];
+      const isVideo = item.tagName.toLowerCase() === 'video';
+      const mainImg = g.mainImg;
+      const mainVid = g.mainVid;
+
       if (animate) {
         g.viewer.classList.add('fading');
         setTimeout(() => {
-          g.mainImg.src = src;
+          if (isVideo && mainVid) {
+            mainImg.style.display = 'none';
+            mainVid.style.display = 'block';
+            mainVid.src = item.src;
+            mainVid.play();
+          } else {
+            if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
+            mainImg.style.display = 'block';
+            mainImg.src = item.src;
+          }
           g.viewer.classList.remove('fading');
         }, 180);
       } else {
-        g.mainImg.src = src;
+        if (isVideo && mainVid) {
+          mainImg.style.display = 'none';
+          mainVid.style.display = 'block';
+          mainVid.src = item.src;
+          mainVid.play();
+        } else {
+          if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
+          mainImg.style.display = 'block';
+          mainImg.src = item.src;
+        }
       }
 
-      // update thumbs
-      imgs.forEach((t, i) => t.classList.toggle('active', i === idx));
+      // update thumb active state
+      items.forEach((t, i) => t.classList.toggle('active', i === idx));
 
       // update dots
       g.dots.querySelectorAll('.photo-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
@@ -1370,24 +1583,36 @@
       const mainImg = viewer.querySelector('.main-photo');
       const dotsEl = viewer.querySelector('.photo-dots');
       const thumbStrip = wrapper.querySelector('[data-thumbs]');
-      const thumbImgs = Array.from(thumbStrip.querySelectorAll('img'));
+      const allThumbImgs = Array.from(thumbStrip.querySelectorAll('img, video'));
+      const mainVid = viewer.querySelector('.main-video');
 
-      buildDots(dotsEl, thumbImgs.length);
+      function getVisibleThumbs() {
+        return allThumbImgs.filter(el => !el.classList.contains('hidden'));
+      }
 
-      galleries[id] = { viewer, mainImg, dots: dotsEl, thumbImgs, currentIndex: 0 };
+      function initGallery(startIdx = 0) {
+        const visibleThumbs = getVisibleThumbs();
+        dotsEl.innerHTML = '';
+        buildDots(dotsEl, visibleThumbs.length);
+        galleries[id] = { viewer, mainImg, mainVid, dots: dotsEl, thumbImgs: visibleThumbs, currentIndex: 0 };
+        setGalleryIndex(id, startIdx, false);
 
-      // init first image
-      setGalleryIndex(id, 0, false);
+        dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
+          dot.addEventListener('click', () => setGalleryIndex(id, i));
+        });
+      }
 
       // thumbnail clicks
-      thumbImgs.forEach((thumb, i) => {
-        thumb.addEventListener('click', () => setGalleryIndex(id, i));
+      allThumbImgs.forEach((thumb, i) => {
+        thumb.addEventListener('click', () => {
+          const visible = getVisibleThumbs();
+          const visIdx = visible.indexOf(thumb);
+          if (visIdx >= 0) setGalleryIndex(id, visIdx);
+        });
       });
 
-      // dot clicks
-      dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
-        dot.addEventListener('click', () => setGalleryIndex(id, i));
-      });
+
+      initGallery(0);
 
       // in-page arrow buttons
       viewer.querySelector('.prev').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex - 1));
@@ -1419,26 +1644,51 @@
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
       activeGalleryId = galleryId;
+      
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        cloneLb.style.position = 'absolute';
+        cloneLb.style.top = window.scrollY + 'px';
+        cloneLb.style.bottom = 'auto';
+        cloneLb.style.height = window.innerHeight + 'px';
+      }
     }
 
     function closeLightbox() {
       lb.classList.remove('open');
       document.body.style.overflow = '';
       activeGalleryId = null;
+      
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) cloneLb.classList.remove('open');
     }
 
     function updateLightbox(animate = true) {
       const imgs = galleries[lbGalleryId].thumbImgs;
       lbIndex = (lbIndex + imgs.length) % imgs.length;
       const src = imgs[lbIndex].src;
+      const syncClone = () => {
+        const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+        if (cloneLb) {
+          const cloneImg = cloneLb.querySelector('#lb-img');
+          if (cloneImg) {
+            cloneImg.src = src;
+            cloneImg.classList.remove('fading');
+          }
+        }
+      };
+
       if (animate) {
         lbImg.classList.add('fading');
         setTimeout(() => {
           lbImg.src = src;
           lbImg.classList.remove('fading');
+          syncClone();
         }, 180);
       } else {
         lbImg.src = src;
+        syncClone();
       }
       lbCounter.textContent = `${lbIndex + 1} / ${imgs.length}`;
       // sync gallery
@@ -1608,6 +1858,8 @@
     function renderCart() {
       const total = cart.reduce((s, i) => s + i.qty, 0);
       cartCount.textContent = total;
+      const navCount = document.getElementById('cart-count-nav');
+      if (navCount) navCount.textContent = total;
       checkoutBtn.disabled = cart.length === 0;
 
       if (cart.length === 0) {

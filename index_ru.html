@@ -296,6 +296,7 @@
       overflow-x: auto;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none;  /* IE and Edge */
+      gap: 1px;
     }
     .image-strip-scroll::-webkit-scrollbar { display: none; }
 
@@ -395,7 +396,7 @@
     .chapter-left .inline-script,
     .chapter-left .chapter-label,
     .chapter-left .definition {
-      color: var(--text);
+      color: var(--text-faint);
     }
 
     .chapter-center {
@@ -412,7 +413,7 @@
     .chapter-right {
       padding-left: 40px;
       text-align: left;
-      opacity: 0.5;
+      color: var(--text-faint);
     }
 
     .tuman-list-item {
@@ -439,7 +440,7 @@
 
     /* chapter name label */
     .chapter-label {
-      color: var(--text);
+      color: var(--text-faint);
       letter-spacing: 0.08em;
       font-style: italic;
       margin-bottom: 14px;
@@ -447,7 +448,7 @@
 
     /* scientific definition (left column) */
     .definition {
-      color: var(--text);
+      color: var(--text-faint);
       font-style: italic;
       line-height: 1.9;
     }
@@ -496,14 +497,14 @@
 
     /* product list (right column) */
     .product-label {
-      color: var(--text);
+      color: var(--text-faint);
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 8px;
     }
 
     .product-name {
-      color: var(--text);
+      color: var(--text-faint);
       font-style: italic;
       margin-bottom: 4px;
       cursor: pointer;
@@ -519,7 +520,7 @@
     }
 
     .material-list {
-      color: var(--text);
+      color: var(--text-faint);
       line-height: 2;
     }
 

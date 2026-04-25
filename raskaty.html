@@ -190,7 +190,7 @@
       padding-top: 20px;
     }
     .artifact-right {
-      position: relative; overflow: hidden; background: #e8e7e4;
+      position: relative; overflow: hidden; background: var(--bg);
       display: flex; flex-direction: column;
     }
     .photo-viewer {
@@ -222,7 +222,7 @@
 
     /* DOT PAGINATION */
     .photo-dots {
-      position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
       display: flex; gap: 6px; z-index: 10;
     }
     .photo-dot {
@@ -237,7 +237,7 @@
 
     /* THUMBNAIL STRIP */
     .thumb-strip {
-      display: flex; gap: 2px; overflow-x: auto;
+      display: none; gap: 2px; overflow-x: auto;
       scrollbar-width: none; -ms-overflow-style: none;
       background: #d8d7d4; flex-shrink: 0;
     }

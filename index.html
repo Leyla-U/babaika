@@ -48,7 +48,7 @@
       width: 336px;
       height: 336px;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 10002;
       will-change: transform;
       transition: opacity 0.25s ease;
       opacity: 0;
@@ -65,7 +65,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 9998;
+      z-index: 10001;
       opacity: 0;
       transition: opacity 0.25s ease;
       /* barrel lens distortion filter applied via JS */
@@ -297,10 +297,12 @@
       overflow-x: auto;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none;  /* IE and Edge */
+      gap: 1px;
     }
     .image-strip-scroll::-webkit-scrollbar { display: none; }
 
     .image-strip-6 img,
+    .image-strip-6 video,
     .image-strip-6 > * { 
       height: 100%;
       width: calc(100% / 6) !important;
@@ -309,6 +311,7 @@
     }
     @media (max-width: 900px) {
       .image-strip-6 img,
+      .image-strip-6 video,
       .image-strip-6 > * {
         width: calc(100% / 4) !important;
       }
@@ -345,12 +348,16 @@
       opacity: 1;
       pointer-events: auto;
     }
-    #lightbox-img {
+    #lightbox-img, #lightbox-video {
       max-width: 90vw;
       max-height: 90vh;
       object-fit: contain;
       user-select: none;
+      display: block;
     }
+    #lightbox-video { display: none; }
+    #lightbox.is-video #lightbox-img { display: none; }
+    #lightbox.is-video #lightbox-video { display: block; }
     .lightbox-btn {
       position: absolute;
       top: 50%;
@@ -396,7 +403,7 @@
     .chapter-left .inline-script,
     .chapter-left .chapter-label,
     .chapter-left .definition {
-      color: var(--text);
+      color: var(--text-faint);
     }
 
     .chapter-center {
@@ -413,7 +420,7 @@
     .chapter-right {
       padding-left: 40px;
       text-align: left;
-      opacity: 0.5;
+      color: var(--text-faint);
     }
 
     .tuman-list-item {
@@ -448,7 +455,7 @@
     .artifact-section-title {
       font-family: var(--font-mono);
       font-size: 13px;
-      color: var(--text);
+      color: var(--text-faint);
       letter-spacing: 0.1em;
       font-style: italic;
       text-transform: uppercase;
@@ -465,7 +472,7 @@
     .artifact-title {
       font-family: var(--font-mono);
       font-size: 13px;
-      color: var(--text);
+      color: var(--text-faint);
       letter-spacing: 0.1em;
       font-style: italic;
       text-transform: uppercase;
@@ -473,14 +480,14 @@
     .artifact-desc {
       font-family: var(--font-mono);
       font-size: 13px;
-      color: var(--text);
+      color: var(--text-faint);
       font-style: italic;
       line-height: 1.8;
     }
 
     /* chapter name label */
     .chapter-label {
-      color: var(--text);
+      color: var(--text-faint);
       letter-spacing: 0.08em;
       font-style: italic;
       margin-bottom: 14px;
@@ -488,7 +495,7 @@
 
     /* scientific definition (left column) */
     .definition {
-      color: var(--text);
+      color: var(--text-faint);
       font-style: italic;
       line-height: 1.9;
     }
@@ -1513,22 +1520,16 @@
       <button class="slider-arrow slider-prev" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
       <button class="slider-arrow slider-next" aria-label="Next"><i data-lucide="arrow-right"></i></button>
       <div id="tuman-slider" class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081961/tuman-fabric_fc1jts.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
+        <img src="images/tuman/babaika_tuman_02.JPG" alt="Tuman look" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085507/tuman-ring_cgwnu3.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
         <img src="images/tuman/babaika_tuman_05.JPG" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088807/tuman-2_hrfdxd.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
         <img src="images/tuman/babaika_tuman_10.JPG" alt="Tuman look" style="object-position:center 20%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <img src="images/tuman/babaika_tuman_13.JPG" alt="Tuman look" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <img src="images/tuman/babaika_tuman_20.JPG" alt="Tuman look" style="object-position:center 25%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088809/tuman-3_yrdu03.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
         <img src="images/tuman/babaika_tuman_25.JPG" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <img src="images/tuman/babaika_tuman_26.JPG" alt="Tuman look" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777096239/tuman_video_earring_fkqiwa.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
         <img src="images/tuman/babaika_tuman_44.JPG" alt="Tuman look" style="object-position:center 20%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <img src="images/tuman/babaika_tuman_52.JPG" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <img src="images/tuman/092E4E56-D5B3-4F0E-85A3-7490AF0A94A7_4_5005_c.jpeg" alt="Tuman detail" style="object-position:center; width:clamp(160px,22vw,340px); flex:0 0 auto;" />
-        <img src="images/tuman/5052F4A0-0292-45FD-8423-71C2D148CE40_4_5005_c.jpeg" alt="Tuman detail" style="object-position:center; width:clamp(160px,22vw,340px); flex:0 0 auto;" />
-        <img src="images/tuman/8B63AF03-8F92-471F-8989-FE49CFF01D69_4_5005_c.jpeg" alt="Tuman detail" style="object-position:center; width:clamp(160px,22vw,340px); flex:0 0 auto;" />
-        <img src="images/tuman/E9296800-A09C-401C-A6C7-AF3F6140D511_4_5005_c.jpeg" alt="Tuman detail" style="object-position:center; width:clamp(160px,22vw,340px); flex:0 0 auto;" />
-        <img src="images/tuman/513BB5F9-CE67-4B70-A47E-11252B9C5645_1_105_c.jpeg" alt="Tuman editorial" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <img src="images/tuman/C277E71B-6C19-408C-A131-E552B1FDA552_1_105_c.jpeg" alt="Tuman editorial" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <img src="images/tuman/D72AC02B-6EC7-4A95-80E1-EFA609005A78_1_105_c.jpeg" alt="Tuman editorial" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <img src="images/tuman/FD07AEB3-C8F0-4C3D-A2DA-A55F3147DBDA_1_105_c.jpeg" alt="Tuman editorial" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
       </div>
     </div>
 
@@ -1977,6 +1978,7 @@
     <button class="lightbox-btn lb-close"><i data-lucide="x"></i></button>
     <button class="lightbox-btn lb-prev"><i data-lucide="arrow-left"></i></button>
     <img id="lightbox-img" src="" alt="Fullscreen image">
+    <video id="lightbox-video" autoplay loop muted playsinline></video>
     <button class="lightbox-btn lb-next"><i data-lucide="arrow-right"></i></button>
   </div>
 
@@ -2212,6 +2214,7 @@
       if (magReady) {
         const scrollY = window.scrollY;
 
+
         // Translate layer to match scroll position AND the offset.
         // The transformOrigin acts around curY. The -currentOffset shift perfectly places 
         // the magnified spot of `curY` precisely into the center of our offset visual lens!
@@ -2238,35 +2241,68 @@
     // ── Horizontal Auto-Scrolling Sliders & Lightbox ───────────
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightbox-img');
+    const lbVideo = document.getElementById('lightbox-video');
     const lbPrev = document.querySelector('.lb-prev');
     const lbNext = document.querySelector('.lb-next');
     const lbClose = document.querySelector('.lb-close');
     
-    const allSliderImages = Array.from(document.querySelectorAll('.image-strip-scroll img'));
+    const allSliderMedia = Array.from(document.querySelectorAll('.image-strip-scroll > img, .image-strip-scroll > video'));
     let currentLbIndex = 0;
 
-    allSliderImages.forEach((img, idx) => {
-      img.addEventListener('click', () => {
+    function updateLightboxMedia(mediaEl) {
+      const isVideo = mediaEl.tagName.toLowerCase() === 'video';
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (isVideo) {
+        lbVideo.src = mediaEl.src;
+        lightbox.classList.add('is-video');
+        if (cloneLb) {
+          cloneLb.querySelector('#lightbox-video').src = mediaEl.src;
+          cloneLb.classList.add('is-video');
+        }
+      } else {
+        lbImg.src = mediaEl.src;
+        lightbox.classList.remove('is-video');
+        if (cloneLb) {
+          cloneLb.querySelector('#lightbox-img').src = mediaEl.src;
+          cloneLb.classList.remove('is-video');
+        }
+      }
+    }
+
+    allSliderMedia.forEach((el, idx) => {
+      el.addEventListener('click', (e) => {
+        if (el.getAttribute('aria-hidden') === 'true') return; // only original items
+        e.stopPropagation();
         currentLbIndex = idx;
-        lbImg.src = img.src;
+        updateLightboxMedia(el);
         lightbox.classList.add('active');
+        const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+        if (cloneLb) {
+          cloneLb.classList.add('active');
+          cloneLb.style.top = window.scrollY + 'px';
+        }
       });
     });
 
     lbPrev.addEventListener('click', (e) => {
       e.stopPropagation();
-      currentLbIndex = (currentLbIndex - 1 + allSliderImages.length) % allSliderImages.length;
-      lbImg.src = allSliderImages[currentLbIndex].src;
+      currentLbIndex = (currentLbIndex - 1 + allSliderMedia.length) % allSliderMedia.length;
+      updateLightboxMedia(allSliderMedia[currentLbIndex]);
     });
 
     lbNext.addEventListener('click', (e) => {
       e.stopPropagation();
-      currentLbIndex = (currentLbIndex + 1) % allSliderImages.length;
-      lbImg.src = allSliderImages[currentLbIndex].src;
+      currentLbIndex = (currentLbIndex + 1) % allSliderMedia.length;
+      updateLightboxMedia(allSliderMedia[currentLbIndex]);
     });
 
-    lbClose.addEventListener('click', () => lightbox.classList.remove('active'));
-    lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+    const closeLightbox = () => {
+      lightbox.classList.remove('active');
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) cloneLb.classList.remove('active');
+    };
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', closeLightbox);
     lbImg.addEventListener('click', (e) => e.stopPropagation());
 
     const sliderWrappers = document.querySelectorAll('.slider-wrapper');
@@ -2279,7 +2315,23 @@
       origItems.forEach(item => {
         const clone = item.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
+        // Ensure click on clone also opens lightbox
+        clone.addEventListener('click', (e) => {
+          e.stopPropagation();
+          updateLightboxMedia(item);
+          lightbox.classList.add('active');
+          const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+          if (cloneLb) {
+            cloneLb.classList.add('active');
+            cloneLb.style.top = window.scrollY + 'px';
+          }
+        });
         slider.appendChild(clone);
+      });
+      // Re-query to include clones for auto-playing videos
+      slider.querySelectorAll('video').forEach(v => {
+        v.muted = true;
+        v.play().catch(() => {});
       });
 
       let isHovered = false;
@@ -2292,7 +2344,7 @@
 
       function autoScroll() {
         if (!isHovered && !lightbox.classList.contains('active')) {
-          slider.scrollLeft += 0.5;
+          slider.scrollLeft += 0.25;
         }
 
         // Seamless loop: when we've scrolled through the first half (originals),
@@ -2303,6 +2355,14 @@
         }
 
         requestAnimationFrame(autoScroll);
+      }
+
+      // Center initial position on load (specifically centering the first item)
+      const firstMedia = slider.querySelector('video, img');
+      if (firstMedia) {
+        const itemWidth = firstMedia.offsetWidth;
+        const totalWidth = slider.scrollWidth;
+        slider.scrollLeft = (totalWidth / 2) - (window.innerWidth / 2) + (itemWidth / 2);
       }
 
       requestAnimationFrame(autoScroll);
