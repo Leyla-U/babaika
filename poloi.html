@@ -1056,12 +1056,12 @@
     </div>
     <div class="hero-video-grid reveal">
       <div class="hero-video-top">
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777173004/pli-5_untttg.mp4" autoplay loop muted playsinline></video>
+        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777173004/pli-5_untttg.mp4" autoplay loop muted playsinline></video>
       </div>
       <div class="hero-video-bottom">
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081971/poloi-chiffon-fabric_pcsqfm.mp4" autoplay loop muted playsinline></video>
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081967/poloi-fabric-cotton_lom1g0.mp4" autoplay loop muted playsinline></video>
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085497/raskaty-ring_rqvurs.mp4" autoplay loop muted playsinline></video>
+        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777081971/poloi-chiffon-fabric_pcsqfm.mp4" autoplay loop muted playsinline></video>
+        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777081967/poloi-fabric-cotton_lom1g0.mp4" autoplay loop muted playsinline></video>
+        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777085497/raskaty-ring_rqvurs.mp4" autoplay loop muted playsinline></video>
       </div>
     </div>
   </section>
@@ -1920,5 +1920,62 @@
     renderCart();
   })();
   </script>
+
+  <!-- ── Global Video Lazy-Loader ──────────────────────────── -->
+  <script>
+  (function() {
+    var isMobile = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+    // For every video with a src: move src → data-src, set preload=none
+    // Hero videos (inside .hero-video-top, .landscape-full) are also lazy-loaded
+    // but with a larger rootMargin so they start loading just before entering view.
+    document.querySelectorAll('video[src]').forEach(function(v) {
+      // Skip lightbox video (it has no real src yet)
+      if (v.id === 'lightbox-video') return;
+      v.dataset.src = v.getAttribute('src');
+      v.removeAttribute('src');
+      v.setAttribute('preload', 'none');
+    });
+
+    var heroObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var v = entry.target;
+        if (v.dataset.src && !v.src) {
+          v.src = v.dataset.src;
+          v.load();
+          v.play().catch(function(){});
+        }
+        heroObs.unobserve(v);
+      });
+    }, { rootMargin: '400px' }); // start loading 400px before entering view
+
+    var galleryObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var v = entry.target;
+        if (v.dataset.src && !v.src) {
+          v.src = v.dataset.src;
+          v.load();
+          // On mobile, only play gallery videos if not data-saver mode
+          if (!isMobile || !navigator.connection || navigator.connection.saveData === false) {
+            v.play().catch(function(){});
+          }
+        }
+        galleryObs.unobserve(v);
+      });
+    }, { rootMargin: '150px' });
+
+    document.querySelectorAll('video[data-src]').forEach(function(v) {
+      var inHero = v.closest('.hero-video-top, .hero-video-grid, .landscape-full, .chapter-hero-new');
+      if (inHero) {
+        heroObs.observe(v);
+      } else {
+        galleryObs.observe(v);
+      }
+    });
+  })();
+  </script>
+
 </body>
 </html>

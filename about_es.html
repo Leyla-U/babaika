@@ -200,8 +200,8 @@
     <div class="about-section">
       <h2>[ PROCESO ]</h2>
       <div class="media-grid">
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777054449/process1_ryh82x.mp4" autoplay loop muted playsinline></video>
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777054449/process_uutxil.mp4" autoplay loop muted playsinline></video>
+        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777054449/process1_ryh82x.mp4" autoplay loop muted playsinline></video>
+        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777054449/process_uutxil.mp4" autoplay loop muted playsinline></video>
         <img src="images/4E39F7C1-B379-4E27-B254-8E015AEB83F6_4_5005_c.jpeg" alt="Process image 1" />
         <img src="images/B96D4BA4-7C0E-426E-B8B2-A939DD353C25_4_5005_c.jpeg" alt="Process image 2" />
       </div>
@@ -288,5 +288,62 @@
     applyLang(lang);
   })();
   </script>
+
+  <!-- ── Global Video Lazy-Loader ──────────────────────────── -->
+  <script>
+  (function() {
+    var isMobile = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+    // For every video with a src: move src → data-src, set preload=none
+    // Hero videos (inside .hero-video-top, .landscape-full) are also lazy-loaded
+    // but with a larger rootMargin so they start loading just before entering view.
+    document.querySelectorAll('video[src]').forEach(function(v) {
+      // Skip lightbox video (it has no real src yet)
+      if (v.id === 'lightbox-video') return;
+      v.dataset.src = v.getAttribute('src');
+      v.removeAttribute('src');
+      v.setAttribute('preload', 'none');
+    });
+
+    var heroObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var v = entry.target;
+        if (v.dataset.src && !v.src) {
+          v.src = v.dataset.src;
+          v.load();
+          v.play().catch(function(){});
+        }
+        heroObs.unobserve(v);
+      });
+    }, { rootMargin: '400px' }); // start loading 400px before entering view
+
+    var galleryObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var v = entry.target;
+        if (v.dataset.src && !v.src) {
+          v.src = v.dataset.src;
+          v.load();
+          // On mobile, only play gallery videos if not data-saver mode
+          if (!isMobile || !navigator.connection || navigator.connection.saveData === false) {
+            v.play().catch(function(){});
+          }
+        }
+        galleryObs.unobserve(v);
+      });
+    }, { rootMargin: '150px' });
+
+    document.querySelectorAll('video[data-src]').forEach(function(v) {
+      var inHero = v.closest('.hero-video-top, .hero-video-grid, .landscape-full, .chapter-hero-new');
+      if (inHero) {
+        heroObs.observe(v);
+      } else {
+        galleryObs.observe(v);
+      }
+    });
+  })();
+  </script>
+
 </body>
 </html>
