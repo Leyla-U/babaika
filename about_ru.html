@@ -171,7 +171,22 @@
     @media (max-width: 768px) {
       footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
     }
-  </style>
+  
+    /* Fix for weird vertical line on mobile */
+    @media (max-width: 900px) {
+      .artifact-left, .artifact-right, .artifact-center, .info-col, .sticky-col { 
+        border-right: none !important; 
+        border-left: none !important; 
+      }
+    }
+
+    /* Hide brand on mobile and make cart smaller */
+    @media (max-width: 900px) {
+      .page-nav .nav-brand { display: none !important; }
+      #cart-btn { padding: 8px 16px !important; font-size: 10px !important; gap: 8px !important; }
+      #cart-btn-nav { font-size: 10px !important; }
+    }
+</style>
 </head>
 <body>
 

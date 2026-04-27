@@ -272,7 +272,22 @@
     @media (max-width: 768px) {
       footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
     }
-  </style>
+  
+    /* Fix for weird vertical line on mobile */
+    @media (max-width: 900px) {
+      .artifact-left, .artifact-right, .artifact-center, .info-col, .sticky-col { 
+        border-right: none !important; 
+        border-left: none !important; 
+      }
+    }
+
+    /* Hide brand on mobile and make cart smaller */
+    @media (max-width: 900px) {
+      .page-nav .nav-brand { display: none !important; }
+      #cart-btn { padding: 8px 16px !important; font-size: 10px !important; gap: 8px !important; }
+      #cart-btn-nav { font-size: 10px !important; }
+    }
+</style>
 </head>
 <body>
 
@@ -343,22 +358,22 @@
       <div class="cat-row">
         <a href="tuman-kimono.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777088809/tuman-6_grktcd.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">01.01 Velvet Kimono</span>
+          <span class="cat-item-name">Velvet Kimono</span>
           <span class="cat-item-desc">Mulberry Silk / Rayon Pile</span>
         </a>
         <a href="tuman-bra.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777228757/babaika_tuman_02_ia8ol9.jpg" alt="Tuman Soft Bra"/></div>
-          <span class="cat-item-name">01.02 Chiffon Bra</span>
+          <span class="cat-item-name">Chiffon Bra</span>
           <span class="cat-item-desc">Mulberry Silk Chiffon 8 Momme</span>
         </a>
         <a href="tuman-earring.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777230414/babaika_delta_45dd_mifayq.png" alt="Tuman Earring"/></div>
-          <span class="cat-item-name">01.03 Earring</span>
+          <span class="cat-item-name">Earring</span>
           <span class="cat-item-desc">Silver, River Pearls</span>
         </a>
         <a href="tuman-ring.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777230413/babaika_delta_45cd_t6mwbb.png" alt="Tuman Ring"/></div>
-          <span class="cat-item-name">01.04 Ring</span>
+          <span class="cat-item-name">Ring</span>
           <span class="cat-item-desc">Silver, River Pearls</span>
         </a>
       </div>
@@ -370,17 +385,17 @@
       <div class="cat-row">
         <a href="tamarisk-kimono.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777144391/tmr-v5_yfohsm.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">02.01 Chiffon Kimono</span>
+          <span class="cat-item-name">Chiffon Kimono</span>
           <span class="cat-item-desc">Mulberry Silk 6 Momme Georgette</span>
         </a>
         <a href="tamarisk-bra.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777167754/tmr123_mjl8ib.png" alt="Tamarisk Bra"/></div>
-          <span class="cat-item-name">02.02 Chiffon Bra</span>
+          <span class="cat-item-name">Chiffon Bra</span>
           <span class="cat-item-desc">Mulberry Silk 6 Momme Georgette</span>
         </a>
         <a href="tamarisk-ring.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777082418/tamarisk_ring_vxj0td.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">02.04 Ring</span>
+          <span class="cat-item-name">Ring</span>
           <span class="cat-item-desc">Silver, Lab Grown Rubies</span>
         </a>
       </div>
@@ -392,22 +407,22 @@
       <div class="cat-row">
         <a href="poloi-kimono.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777169031/pc2_fsgmnp.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">03.01 Chiffon Kimono</span>
+          <span class="cat-item-name">Chiffon Kimono</span>
           <span class="cat-item-desc">Mulberry Silk Chiffon</span>
         </a>
         <a href="poloi-bra.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777152373/babaika_delta_30_rzpquc.jpg" alt="Polói Bra"/></div>
-          <span class="cat-item-name">03.03 Chiffon Bra</span>
+          <span class="cat-item-name">Chiffon Bra</span>
           <span class="cat-item-desc">Mulberry Silk Chiffon</span>
         </a>
         <a href="poloi-ring.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777085497/raskaty-ring_rqvurs.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">03.04 The Flooded Surface</span>
+          <span class="cat-item-name">The Flooded Surface</span>
           <span class="cat-item-desc">Sculpted Silver Ring</span>
         </a>
         <a href="poloi-kimono-cotton.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777153181/psc7_kmsqof.png" alt="Polói Cotton Silk Kimono"/></div>
-          <span class="cat-item-name">03.02 Polói Kimono</span>
+          <span class="cat-item-name">Polói Kimono</span>
           <span class="cat-item-desc">50% Cotton 50% Silk Poplin</span>
         </a>
       </div>
@@ -419,12 +434,12 @@
       <div class="cat-row">
         <a href="il-kimono.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777172866/il-4_e2xwiw.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">04.01 Velvet Kimono</span>
+          <span class="cat-item-name">Velvet Kimono</span>
           <span class="cat-item-desc">Brown-grey Velvet</span>
         </a>
         <a href="il-ring.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777177653/babaika_il_18_dw3xxb.png" alt="Il Ring"/></div>
-          <span class="cat-item-name">04.02 Distorted Ring</span>
+          <span class="cat-item-name">Distorted Ring</span>
           <span class="cat-item-desc">Melted Silver</span>
         </a>
         <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
@@ -438,17 +453,17 @@
       <div class="cat-row">
         <a href="raskaty-kimono.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777255323/raskaty-kimono2_hzu2xz.png" alt="Raskaty Kimono"/></div>
-          <span class="cat-item-name">05.01 Kimono</span>
+          <span class="cat-item-name">Kimono</span>
           <span class="cat-item-desc">Pleated transparent chiffon</span>
         </a>
         <a href="raskaty-stockings.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182275/SHE00304_prorin.png" alt="Raskaty Stockings"/></div>
-          <span class="cat-item-name">05.02 THE NAVIGATIONAL SEAM</span>
+          <span class="cat-item-name">THE NAVIGATIONAL SEAM</span>
           <span class="cat-item-desc">Nylon Mesh</span>
         </a>
         <a href="raskaty-ring.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777085493/raskaty-ring2_qok5zn.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">05.03 THE NAVIGATIONAL ROUTE</span>
+          <span class="cat-item-name">THE NAVIGATIONAL ROUTE</span>
           <span class="cat-item-desc">Wide textured silver band, 1mm moissanite line</span>
         </a>
         <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
@@ -460,23 +475,23 @@
       <p class="cat-chapter-title">Kamish</p>
       <div class="cat-row">
         <a href="kamish-kimono-beige.html" class="cat-item">
-          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png" alt="Kamish Beige Kimono"/></div>
-          <span class="cat-item-name">06.01 Sandwashed Charmeuse Kimono</span>
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777276600/kam4_sunvpy.png" alt="Kamish Beige Kimono"/></div>
+          <span class="cat-item-name">Beige Sandwashed Charmeuse Kimono</span>
           <span class="cat-item-desc">Sandwashed Mulberry Silk Charmeuse 16mm</span>
         </a>
         <a href="kamish-kimono-green.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777175218/kamish1_vrnrqx.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">06.02 Sandwashed Charmeuse Kimono</span>
+          <span class="cat-item-name">Grey Green Sandwashed Charmeuse Kimono</span>
           <span class="cat-item-desc">Sandwashed Mulberry Silk Charmeuse 16mm</span>
         </a>
         <a href="kamish-bag.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png" alt="Kamish Bag"/></div>
-          <span class="cat-item-name">06.03 Bag</span>
+          <span class="cat-item-name">Bag</span>
           <span class="cat-item-desc">Mulberry Silk Dupioni 18mm</span>
         </a>
         <a href="kamish.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182441/babaika_il_18_eutgbo.png" alt="Kamish Belt"/></div>
-          <span class="cat-item-name">06.04 Belt</span>
+          <span class="cat-item-name">Belt</span>
           <span class="cat-item-desc">Mulberry Silk Dupioni 18mm</span>
         </a>
       </div>
@@ -488,22 +503,22 @@
       <div class="cat-row">
         <a href="cheshuya-bra.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256108/babaika_delta_04_drfdvt.jpg" alt="Cheshuya Bra"/></div>
-          <span class="cat-item-name">07.01 Shell Bra</span>
-          <span class="cat-item-desc">50% Cotton 50% Silk Charmeuse</span>
+          <span class="cat-item-name">Shell Bra</span>
+          <span class="cat-item-desc">50% Cotton 50% Silk Charmeuse, Motherpearl Shells</span>
         </a>
         <a href="cheshuya-necklace.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777233016/babaika_delta_13_fbfukt.jpg" alt="Cotton Silk Necklace"/></div>
-          <span class="cat-item-name">07.02 Shell Necklace</span>
-          <span class="cat-item-desc">50% Cotton 50% Silk Charmeuse</span>
+          <span class="cat-item-name">Shell Necklace</span>
+          <span class="cat-item-desc">50% Cotton 50% Silk Charmeuse, Motherpearl Shells</span>
         </a>
         <a href="cheshuya-necklace-2.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184289/kamchesh_lbxt5y.png" alt="Shell Button Necklace"/></div>
-          <span class="cat-item-name">07.03 Shell Necklace</span>
+          <span class="cat-item-name">Shell Necklace</span>
           <span class="cat-item-desc">15mm Motherpearl Shells</span>
         </a>
         <a href="cheshuya-belt.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184287/kam45_fkonri.png" alt="Cheshuya Belt"/></div>
-          <span class="cat-item-name">07.04 Shell Belt</span>
+          <span class="cat-item-name">Shell Belt</span>
           <span class="cat-item-desc">20mm Motherpearl Shells</span>
         </a>
       </div>

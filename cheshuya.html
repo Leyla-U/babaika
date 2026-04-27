@@ -968,6 +968,21 @@
       .info-col:last-child { border-bottom: none !important; }
     }
 
+
+    /* Fix for weird vertical line on mobile */
+    @media (max-width: 900px) {
+      .artifact-left, .artifact-right, .artifact-center, .info-col, .sticky-col { 
+        border-right: none !important; 
+        border-left: none !important; 
+      }
+    }
+
+    /* Hide brand on mobile and make cart smaller */
+    @media (max-width: 900px) {
+      .page-nav .nav-brand { display: none !important; }
+      #cart-btn { padding: 8px 16px !important; font-size: 10px !important; gap: 8px !important; }
+      #cart-btn-nav { font-size: 10px !important; }
+    }
 </style>
 </head>
 <body>
@@ -1124,7 +1139,7 @@
     <div class="artifact-grid">
       <div class="artifact-left" onclick="window.location='cheshuya-bra.html'">
         <p class="artifact-name">SHELL BRA</p>
-         <p class="artifact-detail-row">Material: Mother-of-pearl shells, internal silicone grip</p>
+         <p class="artifact-detail-row">Material: Motherpearl Shells</p>
         <p class="artifact-detail-row">Base: 50% Cotton 50% Silk Charmeuse</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
@@ -1147,7 +1162,7 @@
     <div class="artifact-grid">
       <div class="artifact-left" onclick="window.location='cheshuya-necklace.html'">
         <p class="artifact-name">SHELL NECKLACE</p>
-        <p class="artifact-detail-row">Material: Mother-of-pearl shells, internal silicone grip</p>
+        <p class="artifact-detail-row">Material: Motherpearl Shells</p>
         <p class="artifact-detail-row">Base: 50% Cotton 50% Silk Charmeuse</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">

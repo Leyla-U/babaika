@@ -1172,6 +1172,21 @@
         height: auto !important;
       }
     }
+
+    /* Fix for weird vertical line on mobile */
+    @media (max-width: 900px) {
+      .artifact-left, .artifact-right, .artifact-center, .info-col, .sticky-col { 
+        border-right: none !important; 
+        border-left: none !important; 
+      }
+    }
+
+    /* Hide brand on mobile and make cart smaller */
+    @media (max-width: 900px) {
+      .page-nav .nav-brand { display: none !important; }
+      #cart-btn { padding: 8px 16px !important; font-size: 10px !important; gap: 8px !important; }
+      #cart-btn-nav { font-size: 10px !important; }
+    }
 </style>
 </head>
 <body>
@@ -1238,19 +1253,19 @@
 <div class="artifact-left sticky-col">
 <div class="sticky-content" style="top: 80px; transform: none;">
 <div class="artifact-title-group">
-<h1 class="artifact-name" style="margin-top: 0; margin-bottom: 16px;">06.01 Sandwashed Charmeuse Kimono</h1>
+<h1 class="artifact-name" style="margin-top: 0; margin-bottom: 16px;">Beige Sandwashed Charmeuse Kimono</h1>
 <p class="artifact-tag" style="margin-top: 8px; margin-bottom: 24px;">[ TEXTILE ARTIFACT 06.01 ]</p>
 </div>
 <!-- Remove material switch -->
-<p class="artifact-detail-row">Material: Blue chiffon silk</p>
+<p class="artifact-detail-row">Material: Sandwashed Mulberry Silk Charmeuse 16mm</p>
 <p class="artifact-detail-row" style="margin-top:8px;">Size: One size (length can be customized)</p>
 <div class="artifact-actions" style="margin-top: 32px; display: flex; gap: 8px; max-width: 320px;">
-<button class="btn-add-cart btn-glass" data-desc="Blue chiffon silk" data-id="06.01" data-name="Kamish — Kimono" data-price-id="price_1TQbiFJPn6LmQgwJmgpuP2KF" style="flex:1;">+ Add</button>
+<button class="btn-add-cart btn-glass" data-desc="Sandwashed Mulberry Silk Charmeuse 16mm" data-id="06.01" data-name="Kamish — Kimono" data-price-id="price_1TQbiFJPn6LmQgwJmgpuP2KF" style="flex:1;">+ Add</button>
 </div>
 <div style="margin-top: 48px;">
 <p class="artifact-tag" style="font-size: 10px; margin-bottom: 12px;">[ TRANSLATION NOTE ]</p>
 <p class="artifact-note" style="margin-top: 0; padding-top: 0;">
-            Selected for its weightless transparency. When worn, the blue chiffon functions exactly as the polói water does—as a thin, fluid layer that covers the body in the color of the reflected sky.
+            The sand-washed finish provides a matte, organic texture similar to the reed stem. The colors represent the seasonal progression of the Kamish from new growth to sun-dried fiber.
           </p>
 </div>
 </div>
@@ -1265,7 +1280,7 @@
 <button class="photo-nav next">→</button>
 <div class="photo-dots"></div>
 </div>
-<div class="thumb-strip vertical-gallery" data-thumbs="kamish_kimono_beige"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png"/>
+<div class="thumb-strip vertical-gallery" data-thumbs="kamish_kimono_beige"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777276600/kam4_sunvpy.png"/>
           <img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182832/babaika_delta_07_og8w3g.png"/>
           <img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182713/SHE09988_wxon8q.png"/>
           <img alt="" class="hidden" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182833/SHE00010_gtuq25.png"/>
@@ -1283,7 +1298,7 @@
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
 <div onclick="window.location='kamish-kimono-green.html'" style="cursor: pointer;">
 <img onmouseout="this.style.filter='brightness(0.96) saturate(0.9)'" onmouseover="this.style.filter='brightness(1) saturate(1)'" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182354/kam11111111_x4jeyl.png" style="width: 100%; aspect-ratio: 1; object-fit: cover; filter: brightness(0.96) saturate(0.9); transition: filter 0.3s;"/>
-<p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); margin-top: 16px;">06.02 Sandwashed Charmeuse Kimono</p>
+<p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); margin-top: 16px;">Grey Green Sandwashed Charmeuse Kimono</p>
 <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint);">Sand-washed satin silk</p>
 </div>
 <div onclick="window.location='kamish-bag.html'" style="cursor: pointer;">
@@ -1329,11 +1344,11 @@
     <div class="cat-row">
       <a href="tuman-kimono.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777229442/babaika_film_18_aglteu.jpg" alt=""></div>
-        <span class="cat-item-name">01.01 Velvet Kimono</span>
+        <span class="cat-item-name">Velvet Kimono</span>
       </a>
       <a href="tuman-bra.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777232154/babaika_film_12_kisi4o.jpg" alt=""></div>
-        <span class="cat-item-name">01.02 Chiffon Bra</span>
+        <span class="cat-item-name">Chiffon Bra</span>
       </a>
       <a href="tuman-earring.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777231902/te1_kjzxym.png" alt=""></div>
@@ -1351,11 +1366,11 @@
     <div class="cat-row">
       <a href="tamarisk-kimono.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182363/tmr111_smm4lt.png" alt=""></div>
-        <span class="cat-item-name">02.01 Chiffon Kimono</span>
+        <span class="cat-item-name">Chiffon Kimono</span>
       </a>
       <a href="tamarisk-bra.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777167754/tmr123_mjl8ib.png" alt=""></div>
-        <span class="cat-item-name">02.02 Chiffon Bra</span>
+        <span class="cat-item-name">Chiffon Bra</span>
       </a>
       <a href="tamarisk-ring.html" class="cat-item">
         <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777082418/tamarisk_ring_vxj0td.mp4" autoplay loop muted playsinline></video></div>
@@ -1373,7 +1388,7 @@
     <div class="cat-row">
       <a href="poloi-kimono.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173937/babaika_film_03_hnyeed.jpg" alt=""></div>
-        <span class="cat-item-name">03.01 Chiffon Kimono</span>
+        <span class="cat-item-name">Chiffon Kimono</span>
       </a>
       <a href="poloi-kimono-cotton.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777233449/poloidd_bzraoq.png" alt=""></div>
@@ -1381,7 +1396,7 @@
       </a>
       <a href="poloi-bra.html" class="cat-item">
         <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777172643/poloic_uyjq9u.mp4" autoplay loop muted playsinline></video></div>
-        <span class="cat-item-name">03.03 Chiffon Bra</span>
+        <span class="cat-item-name">Chiffon Bra</span>
       </a>
       <a href="poloi-ring.html" class="cat-item">
         <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777085497/raskaty-ring_rqvurs.mp4" autoplay loop muted playsinline></video></div>
@@ -1395,7 +1410,7 @@
     <div class="cat-row">
       <a href="il-kimono.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182384/il111111_ft12bx.png" alt=""></div>
-        <span class="cat-item-name">04.01 Velvet Kimono</span>
+        <span class="cat-item-name">Velvet Kimono</span>
       </a>
       <a href="il-ring.html" class="cat-item">
         <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777085494/il-ring_lpipgo.mp4" autoplay loop muted playsinline></video></div>
@@ -1411,15 +1426,15 @@
     <div class="cat-row">
       <a href="raskaty-kimono.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777255323/raskaty-kimono2_hzu2xz.png" alt=""></div>
-        <span class="cat-item-name">05.01 Kimono</span>
+        <span class="cat-item-name">Kimono</span>
       </a>
       <a href="raskaty-stockings.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182275/SHE00304_prorin.png" alt=""></div>
-        <span class="cat-item-name">05.02 Stockings</span>
+        <span class="cat-item-name">Stockings</span>
       </a>
       <a href="raskaty-ring.html" class="cat-item">
         <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777085493/raskaty-ring2_qok5zn.mp4" autoplay loop muted playsinline></video></div>
-        <span class="cat-item-name">05.03 Ring</span>
+        <span class="cat-item-name">Ring</span>
       </a>
       <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
     </div>
@@ -1429,16 +1444,16 @@
     <p class="cat-chapter-title">Chapter 06 — Kamish</p>
     <div class="cat-row">
       <a href="kamish-kimono-beige.html" class="cat-item">
-        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png" alt=""></div>
-        <span class="cat-item-name">06.01 Sandwashed Charmeuse Kimono</span>
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777276600/kam4_sunvpy.png" alt=""></div>
+        <span class="cat-item-name">Beige Sandwashed Charmeuse Kimono</span>
       </a>
       <a href="kamish-kimono-green.html" class="cat-item">
         <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777175218/kamish1_vrnrqx.mp4" autoplay loop muted playsinline></video></div>
-        <span class="cat-item-name">06.02 Sandwashed Charmeuse Kimono</span>
+        <span class="cat-item-name">Grey Green Sandwashed Charmeuse Kimono</span>
       </a>
       <a href="kamish-bag.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png" alt=""></div>
-        <span class="cat-item-name">06.03 Bag</span>
+        <span class="cat-item-name">Bag</span>
       </a>
       <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
     </div>
@@ -1449,19 +1464,21 @@
     <div class="cat-row">
       <a href="cheshuya-bra.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256108/babaika_delta_04_drfdvt.jpg" alt=""></div>
-        <span class="cat-item-name">07.01 Shell Bra</span>
+        <span class="cat-item-name">Shell Bra</span>
+        <span class="cat-item-desc">50% Cotton 50% Silk Charmeuse, Motherpearl Shells</span>
       </a>
       <a href="cheshuya-necklace.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777233016/babaika_delta_13_fbfukt.jpg" alt=""></div>
-        <span class="cat-item-name">07.02 Shell Necklace</span>
+        <span class="cat-item-name">Shell Necklace</span>
+        <span class="cat-item-desc">50% Cotton 50% Silk Charmeuse, Motherpearl Shells</span>
       </a>
       <a href="cheshuya-necklace-2.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184289/kamchesh_lbxt5y.png" alt=""></div>
-        <span class="cat-item-name">07.03 Shell Necklace</span>
+        <span class="cat-item-name">Shell Necklace</span>
       </a>
       <a href="cheshuya-belt.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184287/kam45_fkonri.png" alt=""></div>
-        <span class="cat-item-name">07.04 Shell Belt</span>
+        <span class="cat-item-name">Shell Belt</span>
       </a>
     </div>
   </div>

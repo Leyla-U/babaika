@@ -1291,7 +1291,22 @@
         inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
     }
 
-  </style>
+  
+    /* Fix for weird vertical line on mobile */
+    @media (max-width: 900px) {
+      .artifact-left, .artifact-right, .artifact-center, .info-col, .sticky-col { 
+        border-right: none !important; 
+        border-left: none !important; 
+      }
+    }
+
+    /* Hide brand on mobile and make cart smaller */
+    @media (max-width: 900px) {
+      .page-nav .nav-brand { display: none !important; }
+      #cart-btn { padding: 8px 16px !important; font-size: 10px !important; gap: 8px !important; }
+      #cart-btn-nav { font-size: 10px !important; }
+    }
+</style>
 </head>
 <body>
   <!-- ── CART BUTTON ────────────────────────────────────────────── -->
@@ -1532,24 +1547,24 @@
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='tuman-kimono.html'">
-            <p class="artifact-title">01.01 KIMONO</p>
+            <p class="artifact-title">KIMONO</p>
             <p class="artifact-desc">Base: Mulberry Silk<br>Pile: Rayon</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='tuman-bra.html'">
-            <p class="artifact-title">01.02 BRA</p>
+            <p class="artifact-title">BRA</p>
             <p class="artifact-desc">Mulberry Silk Chiffon 8 Momme</p>
           </div>
           
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='tuman-ring.html'">
-            <p class="artifact-title">01.03 RING</p>
+            <p class="artifact-title">RING</p>
             <p class="artifact-desc">Silver, River Pearls</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='tuman-earring.html'">
-            <p class="artifact-title">01.04 EARRING</p>
+            <p class="artifact-title">EARRING</p>
             <p class="artifact-desc">Silver, River Pearls</p>
           </div>
         </div>
@@ -1611,12 +1626,12 @@
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='tamarisk-kimono.html'">
-            <p class="artifact-title">02.01 KIMONO</p>
+            <p class="artifact-title">KIMONO</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='tamarisk-bra.html'">
-            <p class="artifact-title">02.02 BRA</p>
+            <p class="artifact-title">BRA</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
 
@@ -1624,7 +1639,7 @@
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='tamarisk-ring.html'">
-            <p class="artifact-title">02.03 RING</p>
+            <p class="artifact-title">RING</p>
             <p class="artifact-desc">Silver, Lab grown rubies</p>
           </div>
         </div>
@@ -1680,17 +1695,17 @@
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='poloi-kimono.html'">
-            <p class="artifact-title">03.01 KIMONO</p>
+            <p class="artifact-title">KIMONO</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='poloi-kimono-cotton.html'">
-            <p class="artifact-title">03.02 KIMONO</p>
+            <p class="artifact-title">KIMONO</p>
             <p class="artifact-desc">40% Silk, 60% Cotton</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='poloi-bra.html'">
-            <p class="artifact-title">03.03 BRA</p>
+            <p class="artifact-title">BRA</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
 
@@ -1698,7 +1713,7 @@
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='poloi-ring.html'">
-            <p class="artifact-title">03.05 RING</p>
+            <p class="artifact-title">RING</p>
             <p class="artifact-desc">Silver</p>
           </div>
         </div>
@@ -1754,19 +1769,19 @@
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='il-kimono.html'">
-            <p class="artifact-title">04.01 KIMONO</p>
+            <p class="artifact-title">KIMONO</p>
             <p class="artifact-desc">Base: Mulberry Silk<br>Pile: Rayon</p>
           </div>
           
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='il-ring.html'">
-            <p class="artifact-title">04.02 RING</p>
+            <p class="artifact-title">RING</p>
             <p class="artifact-desc">Silver</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='il-ring.html'">
-            <p class="artifact-title">04.03 RING</p>
+            <p class="artifact-title">RING</p>
             <p class="artifact-desc">Silver</p>
           </div>
         </div>
@@ -1821,19 +1836,19 @@
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='raskaty-kimono.html'">
-            <p class="artifact-title">05.01 KIMONO</p>
+            <p class="artifact-title">KIMONO</p>
             <p class="artifact-desc">Polyester Chiffon</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='raskaty-stockings.html'">
-            <p class="artifact-title">05.02 THE NAVIGATIONAL SEAM</p>
+            <p class="artifact-title">THE NAVIGATIONAL SEAM</p>
             <p class="artifact-desc">Nylon Mesh</p>
           </div>
 
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='raskaty-ring.html'">
-            <p class="artifact-title">05.03 THE NAVIGATIONAL ROUTE</p>
+            <p class="artifact-title">THE NAVIGATIONAL ROUTE</p>
             <p class="artifact-desc">Silver</p>
           </div>
 
@@ -1889,24 +1904,24 @@
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='kamish-kimono-beige.html'">
-            <p class="artifact-title">06.01 KIMONO</p>
+            <p class="artifact-title">KIMONO</p>
             <p class="artifact-desc">Beige Sandwashed Mulberry Silk Charmeuse 16momme</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='kamish-kimono-green.html'">
-            <p class="artifact-title">06.02 KIMONO</p>
+            <p class="artifact-title">KIMONO</p>
             <p class="artifact-desc">Light Green Sandwashed Mulberry Silk Charmeuse 16momme</p>
           </div>
           
 
           
           <div class="artifact-item" onclick="window.location='kamish-bag.html'">
-            <p class="artifact-title">06.03 BAG</p>
+            <p class="artifact-title">BAG</p>
             <p class="artifact-desc">Mulberry Silk Dupioni 18 momme</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='kamish.html'">
-            <p class="artifact-title">06.04 BELT</p>
+            <p class="artifact-title">BELT</p>
             <p class="artifact-desc">Mulberry Silk Dupioni 18 momme</p>
           </div>
         </div>
@@ -1958,24 +1973,24 @@
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='cheshuya-bra.html'">
-            <p class="artifact-title">07.01 BRA</p>
+            <p class="artifact-title">BRA</p>
             <p class="artifact-desc">40% Silk 60% Cotton Base<br>15mm Motherpearl Shells</p>
           </div>
 
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='cheshuya-necklace.html'">
-            <p class="artifact-title">07.02 NECKLACE</p>
+            <p class="artifact-title">NECKLACE</p>
             <p class="artifact-desc">40% Silk 60% Cotton Base<br>10mm Motherpearl Shells</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='cheshuya-necklace-2.html'">
-            <p class="artifact-title">07.03 NECKLACE</p>
+            <p class="artifact-title">NECKLACE</p>
             <p class="artifact-desc">10mm Motherpearl Shells</p>
           </div>
           
           <div class="artifact-item" onclick="window.location='cheshuya-belt.html'">
-            <p class="artifact-title">07.04 BELT</p>
+            <p class="artifact-title">BELT</p>
             <p class="artifact-desc">20mm Motherpearl Shells</p>
           </div>
         </div>
