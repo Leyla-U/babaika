@@ -5,4 +5,6 @@
 *.HEIC
 *.heic
 images/
-images/
+node_modules/
+.env
+.env.local

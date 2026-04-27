@@ -1,6 +1,7 @@
 {
+  "name": "babaika",
+  "version": "1.0.0",
   "dependencies": {
-    "@stripe/stripe-js": "^9.3.1",
-    "stripe": "^22.1.0"
+    "stripe": "^17.0.0"
   }
 }

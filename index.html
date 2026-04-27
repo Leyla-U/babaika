@@ -2160,8 +2160,11 @@
     let currentOffset = 0; // smoothly animates to 120 on touch
 
 
-    // Build DOM clone once on first mouse entry
+    // Build DOM clone once on first mouse entry (desktop only — skipped on touch devices)
+    const isMagnifierEnabled = !('ontouchstart' in window) && !(navigator.maxTouchPoints > 0);
+
     function buildClone() {
+      if (!isMagnifierEnabled) return;
       if (magReady) return;
       magReady = true;
       Array.from(document.body.children).forEach(child => {
@@ -2182,19 +2185,6 @@
       });
       // Force clone to exactly match body width, accounting for scrollbars
       magZoomInner.style.width = document.body.clientWidth + 'px';
-      let diffLogs = [];
-      Array.from(document.body.children).forEach((child, i) => {
-        if (!child.id && !child.className) return;
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
-        const cloneMatches = Array.from(magZoomInner.children).filter(c => c.tagName === child.tagName && c.className === child.className);
-        if (cloneMatches.length > 0) {
-           const clone = cloneMatches[0];
-           if (child.offsetTop !== clone.offsetTop || child.offsetHeight !== clone.offsetHeight) {
-              diffLogs.push(`${child.className || child.id}: MAIN top=${child.offsetTop} h=${child.offsetHeight} | CLONE top=${clone.offsetTop} h=${clone.offsetHeight}`);
-           }
-        }
-      });
-      console.log('DIFFS:', diffLogs.join(''));
     }
 
     document.addEventListener('mousemove', (e) => {
@@ -2371,67 +2361,67 @@
     lightbox.addEventListener('click', closeLightbox);
     lbImg.addEventListener('click', (e) => e.stopPropagation());
 
+    // ── Detect touch / mobile ────────────────────────────────
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
     const sliderWrappers = document.querySelectorAll('.slider-wrapper');
     sliderWrappers.forEach(wrapper => {
       const slider = wrapper.querySelector('.image-strip-scroll');
       if (!slider) return;
 
-      // Clone all children to create a seamless loop
-      const origItems = Array.from(slider.children);
-      origItems.forEach(item => {
-        const clone = item.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        // Ensure click on clone also opens lightbox
-        clone.addEventListener('click', (e) => {
-          e.stopPropagation();
-          updateLightboxMedia(item);
-          lightbox.classList.add('active');
-          const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-          if (cloneLb) {
-            cloneLb.classList.add('active');
-            cloneLb.style.top = window.scrollY + 'px';
-          }
-        });
-        slider.appendChild(clone);
-      });
-      // Re-query to include clones for auto-playing videos
-      slider.querySelectorAll('video').forEach(v => {
-        v.muted = true;
-        v.play().catch(() => {});
-      });
+      // On mobile: lazy-load video src via IntersectionObserver to avoid loading
+      // all videos simultaneously (major cause of slowness).
+      if (isTouchDevice) {
+        const mobileVideoObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const v = entry.target;
+              if (v.dataset.src && !v.src) {
+                v.src = v.dataset.src;
+                v.load();
+                v.play().catch(() => {});
+              }
+              mobileVideoObserver.unobserve(v);
+            }
+          });
+        }, { rootMargin: '200px' });
 
-      let isHovered = false;
-      let manualOffset = window.innerWidth / 6;
+        slider.querySelectorAll('video').forEach(v => {
+          if (v.src && !v.dataset.src) {
+            v.dataset.src = v.src;
+            v.removeAttribute('src');
+          }
+          mobileVideoObserver.observe(v);
+        });
+      }
+
+      // On desktop only: clone items for seamless loop
+      if (!isTouchDevice) {
+        const origItems = Array.from(slider.children);
+        origItems.forEach(item => {
+          const clone = item.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateLightboxMedia(item);
+            lightbox.classList.add('active');
+            const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+            if (cloneLb) {
+              cloneLb.classList.add('active');
+              cloneLb.style.top = window.scrollY + 'px';
+            }
+          });
+          slider.appendChild(clone);
+        });
+        slider.querySelectorAll('video').forEach(v => {
+          v.muted = true;
+          v.play().catch(() => {});
+        });
+      }
+
+      const manualOffset = window.innerWidth / 6;
       const prevBtn = wrapper.querySelector('.slider-prev');
       const nextBtn = wrapper.querySelector('.slider-next');
-
-      wrapper.addEventListener('mouseenter', () => isHovered = true);
-      wrapper.addEventListener('mouseleave', () => isHovered = false);
-
-      function autoScroll() {
-        if (!isHovered && !lightbox.classList.contains('active')) {
-          slider.scrollLeft += 0.25;
-        }
-
-        // Seamless loop: when we've scrolled through the first half (originals),
-        // jump back silently — the clone set looks identical so there's no flash.
-        const half = slider.scrollWidth / 2;
-        if (slider.scrollLeft >= half) {
-          slider.scrollLeft -= half;
-        }
-
-        requestAnimationFrame(autoScroll);
-      }
-
-      // Center initial position on load (specifically centering the first item)
-      const firstMedia = slider.querySelector('video, img');
-      if (firstMedia) {
-        const itemWidth = firstMedia.offsetWidth;
-        const totalWidth = slider.scrollWidth;
-        slider.scrollLeft = (totalWidth / 2) - (window.innerWidth / 2) + (itemWidth / 2);
-      }
-
-      requestAnimationFrame(autoScroll);
 
       prevBtn?.addEventListener('click', () => {
         slider.scrollBy({ left: -manualOffset, behavior: 'smooth' });
