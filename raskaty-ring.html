@@ -1327,7 +1327,7 @@
 </div>
 </div>
 <!-- LIGHTBOX -->
-<div id="lightbox">
+<div id="lightbox" data-no-clone="true">
 <button class="lb-close" id="lb-close">[ CLOSE ]</button>
 <button class="lb-arrow lb-prev" id="lb-prev">←</button>
 <img alt="" id="lb-img" src=""/>
@@ -1336,186 +1336,161 @@
 <div class="lb-counter" id="lb-counter"></div>
 </div>
 <!-- FULL ALBUM GRID OVERLAY -->
-<div id="grid-overlay" style="display:none; position:fixed; inset:0; background:var(--bg); z-index:20000; overflow-y:auto; padding:80px 40px 40px;">
+<div id="grid-overlay" style="display:none; position:fixed; inset:0; background:var(--bg); z-index:20000; overflow-y:auto; padding:80px 40px 40px;" data-no-clone="true">
 <button class="lb-close" onclick="closeGrid()" style="top:30px; right:40px; position:fixed;">[ CLOSE ]</button>
 <div class="full-album-grid" id="full-album-grid-content">
 <!-- Populated by JS -->
 </div>
 </div>
 <!-- CATALOGUE OVERLAY -->
-<div id="catalogue-overlay">
-<div class="cat-header">
-<span class="cat-title">Babaika</span>
-<button onclick="closeCatalogue()" style="background:none; border:none; font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; color:var(--text-faint); cursor:none; text-transform:uppercase;">[ CLOSE ]</button>
+<div id="catalogue-overlay" data-no-clone="true">
+  <div class="cat-header">
+    <span class="cat-title">Babaika</span>
+    <button onclick="closeCatalogue()" style="background:none; border:none; font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; color:var(--text-faint); cursor:none; text-transform:uppercase;">[ CLOSE ]</button>
+  </div>
+  <div class="cat-chapter">
+    <p class="cat-chapter-title">Chapter 01 — Tuman</p>
+    <div class="cat-row">
+      <a href="tuman-kimono.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777229442/babaika_film_18_aglteu.jpg" alt=""></div>
+        <span class="cat-item-name">Tuman Kimono</span>
+      </a>
+      <a href="tuman-bra.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777232154/babaika_film_12_kisi4o.jpg" alt=""></div>
+        <span class="cat-item-name">Tuman Soft Bra</span>
+      </a>
+      <a href="tuman-earring.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777231902/te1_kjzxym.png" alt=""></div>
+        <span class="cat-item-name">Tuman Earring</span>
+      </a>
+      <a href="tuman-ring.html" class="cat-item">
+        <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085507/tuman-ring_cgwnu3.mp4" autoplay loop muted playsinline></video></div>
+        <span class="cat-item-name">Tuman Ring</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="cat-chapter">
+    <p class="cat-chapter-title">Chapter 02 — Tamarisk</p>
+    <div class="cat-row">
+      <a href="tamarisk-kimono.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182363/tmr111_smm4lt.png" alt=""></div>
+        <span class="cat-item-name">Tamarisk Kimono</span>
+      </a>
+      <a href="tamarisk-bra.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777167754/tmr123_mjl8ib.png" alt=""></div>
+        <span class="cat-item-name">Tamarisk Bra</span>
+      </a>
+      <a href="tamarisk-ring.html" class="cat-item">
+        <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777082418/tamarisk_ring_vxj0td.mp4" autoplay loop muted playsinline></video></div>
+        <span class="cat-item-name">Tamarisk Ring</span>
+      </a>
+      <a href="tamarisk-scarf.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777152062/tmsc1_s1v1y5.png" alt=""></div>
+        <span class="cat-item-name">Tamarisk Scarf</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="cat-chapter">
+    <p class="cat-chapter-title">Chapter 03 — Polói</p>
+    <div class="cat-row">
+      <a href="poloi-kimono.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173937/babaika_film_03_hnyeed.jpg" alt=""></div>
+        <span class="cat-item-name">Polói Kimono</span>
+      </a>
+      <a href="poloi-kimono-cotton.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777233449/poloidd_bzraoq.png" alt=""></div>
+        <span class="cat-item-name">Polói Kimono (Cotton)</span>
+      </a>
+      <a href="poloi-bra.html" class="cat-item">
+        <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777172643/poloic_uyjq9u.mp4" autoplay loop muted playsinline></video></div>
+        <span class="cat-item-name">Polói Bra</span>
+      </a>
+      <a href="poloi-ring.html" class="cat-item">
+        <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085497/raskaty-ring_rqvurs.mp4" autoplay loop muted playsinline></video></div>
+        <span class="cat-item-name">The Flooded Surface</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="cat-chapter">
+    <p class="cat-chapter-title">Chapter 04 — Il</p>
+    <div class="cat-row">
+      <a href="il-kimono.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182384/il111111_ft12bx.png" alt=""></div>
+        <span class="cat-item-name">Il Kimono</span>
+      </a>
+      <a href="il-ring.html" class="cat-item">
+        <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085494/il-ring_lpipgo.mp4" autoplay loop muted playsinline></video></div>
+        <span class="cat-item-name">Il Ring</span>
+      </a>
+      <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
+      <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
+    </div>
+  </div>
+
+  <div class="cat-chapter">
+    <p class="cat-chapter-title">Chapter 05 — Raskáty</p>
+    <div class="cat-row">
+      <a href="raskaty-kimono.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777255323/raskaty-kimono2_hzu2xz.png" alt=""></div>
+        <span class="cat-item-name">05.01 Kimono</span>
+      </a>
+      <a href="raskaty-stockings.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182275/SHE00304_prorin.png" alt=""></div>
+        <span class="cat-item-name">05.02 Stockings</span>
+      </a>
+      <a href="raskaty-ring.html" class="cat-item">
+        <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085493/raskaty-ring2_qok5zn.mp4" autoplay loop muted playsinline></video></div>
+        <span class="cat-item-name">05.03 Ring</span>
+      </a>
+      <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
+    </div>
+  </div>
+
+  <div class="cat-chapter">
+    <p class="cat-chapter-title">Chapter 06 — Kamýsh</p>
+    <div class="cat-row">
+      <a href="kamysh-kimono-beige.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png" alt=""></div>
+        <span class="cat-item-name">06.01 Kimono (Beige)</span>
+      </a>
+      <a href="kamysh-kimono-green.html" class="cat-item">
+        <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777175218/kamish1_vrnrqx.mp4" autoplay loop muted playsinline></video></div>
+        <span class="cat-item-name">06.02 Kimono (Green)</span>
+      </a>
+      <a href="kamysh-bag.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png" alt=""></div>
+        <span class="cat-item-name">06.03 Bag</span>
+      </a>
+      <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
+    </div>
+  </div>
+
+  <div class="cat-chapter">
+    <p class="cat-chapter-title">Chapter 07 — Cheshuya</p>
+    <div class="cat-row">
+      <a href="cheshuya-bra.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256108/babaika_delta_04_drfdvt.jpg" alt=""></div>
+        <span class="cat-item-name">07.01 Bra</span>
+      </a>
+      <a href="cheshuya-necklace.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777233016/babaika_delta_13_fbfukt.jpg" alt=""></div>
+        <span class="cat-item-name">07.02 Necklace I</span>
+      </a>
+      <a href="cheshuya-necklace-2.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184289/kamchesh_lbxt5y.png" alt=""></div>
+        <span class="cat-item-name">07.03 Necklace II</span>
+      </a>
+      <a href="cheshuya-belt.html" class="cat-item">
+        <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184287/kam45_fkonri.png" alt=""></div>
+        <span class="cat-item-name">07.04 Belt</span>
+      </a>
+    </div>
+  </div>
 </div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 01 — Tuman</p>
-<div class="cat-row">
-<a class="cat-item" href="tuman-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777229442/babaika_film_18_aglteu.jpg"/></div>
-<span class="cat-item-name">Tuman Kimono</span>
-</a>
-<a class="cat-item" href="tuman-bra.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777232154/babaika_film_12_kisi4o.jpg"/></div>
-<span class="cat-item-name">Tuman Soft Bra</span>
-</a>
-<a class="cat-item" href="tuman-earring.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777231902/te1_kjzxym.png"/></div>
-<span class="cat-item-name">Tuman Earring</span>
-</a>
-<a class="cat-item" href="tuman-ring.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085507/tuman-ring_cgwnu3.mp4"></video></div>
-<span class="cat-item-name">Tuman Ring</span>
-</a>
-</div>
-</div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 02 — Tamarisk</p>
-<div class="cat-row">
-<a class="cat-item" href="tamarisk-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182363/tmr111_smm4lt.png"/></div>
-<span class="cat-item-name">Tamarisk Kimono</span>
-</a>
-<a class="cat-item" href="tamarisk-bra.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777167754/tmr123_mjl8ib.png"/></div>
-<span class="cat-item-name">Tamarisk Bra</span>
-</a>
-<a class="cat-item" href="tamarisk-ring.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777082418/tamarisk_ring_vxj0td.mp4"></video></div>
-<span class="cat-item-name">Tamarisk Ring</span>
-</a>
-<a class="cat-item" href="tamarisk-scarf.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777152062/tmsc1_s1v1y5.png"/></div>
-<span class="cat-item-name">Tamarisk Scarf</span>
-</a>
-</div>
-</div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 03 — Polói</p>
-<div class="cat-row">
-<a class="cat-item" href="poloi-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173937/babaika_film_03_hnyeed.jpg"/></div>
-<span class="cat-item-name">Polói Kimono</span>
-</a>
-<a class="cat-item" href="poloi-kimono-cotton.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777233449/poloidd_bzraoq.png"/></div>
-<span class="cat-item-name">Polói Kimono (Cotton)</span>
-</a>
-<a class="cat-item" href="poloi-bra.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777172643/poloic_uyjq9u.mp4"></video></div>
-<span class="cat-item-name">Polói Bra</span>
-</a>
-<a class="cat-item" href="poloi-ring.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085497/raskaty-ring_rqvurs.mp4"></video></div>
-<span class="cat-item-name">The Flooded Surface</span>
-</a>
-</div>
-</div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 04 — Il</p>
-<div class="cat-row">
-<a class="cat-item" href="il-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182384/il111111_ft12bx.png"/></div>
-<span class="cat-item-name">Il Kimono</span>
-</a>
-<a class="cat-item" href="il-ring.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085494/il-ring_lpipgo.mp4"></video></div>
-<span class="cat-item-name">Il Ring</span>
-</a>
-<div class="cat-item" style="opacity:0; pointer-events:none;"></div>
-<div class="cat-item" style="opacity:0; pointer-events:none;"></div>
-</div>
-</div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 05 — Raskáty</p>
-<div class="cat-row">
-<a class="cat-item" href="raskaty-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777255323/raskaty-kimono2_hzu2xz.png"/></div>
-<span class="cat-item-name">05.01 Kimono</span>
-</a>
-<a class="cat-item" href="raskaty-stockings.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182275/SHE00304_prorin.png"/></div>
-<span class="cat-item-name">05.02 Stockings</span>
-</a>
-<a class="cat-item" href="raskaty-ring.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085493/raskaty-ring2_qok5zn.mp4"></video></div>
-<span class="cat-item-name">05.03 Ring</span>
-</a>
-<div class="cat-item" style="opacity:0; pointer-events:none;"></div>
-</div>
-</div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 06 — Kamýsh</p>
-<div class="cat-row">
-<a class="cat-item" href="kamysh-kimono-beige.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png"/></div>
-<span class="cat-item-name">06.01 Kimono (Beige)</span>
-</a>
-<a class="cat-item" href="kamysh-kimono-green.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777175218/kamish1_vrnrqx.mp4"></video></div>
-<span class="cat-item-name">06.02 Kimono (Green)</span>
-</a>
-<a class="cat-item" href="kamysh-bag.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png"/></div>
-<span class="cat-item-name">06.03 Bag</span>
-</a>
-<div class="cat-item" style="opacity:0; pointer-events:none;"></div>
-</div>
-</div>
-</div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 02 — Tamarisk</p>
-<div class="cat-row">
-<a class="cat-item" href="tamarisk-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182363/tmr111_smm4lt.png"/></div>
-<span class="cat-item-name">Tamarisk Kimono</span>
-</a>
-<a class="cat-item" href="tamarisk-bra.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777167754/tmr123_mjl8ib.png"/></div>
-<span class="cat-item-name">Tamarisk Bra</span>
-</a>
-<a class="cat-item" href="tamarisk-ring.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777082418/tamarisk_ring_vxj0td.mp4"></video></div>
-<span class="cat-item-name">Tamarisk Ring</span>
-</a>
-</div>
-</div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 03 — Raskáty</p>
-<div class="cat-row">
-<a class="cat-item" href="poloi-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173937/babaika_film_03_hnyeed.jpg"/></div>
-<span class="cat-item-name">Raskáty Kimono</span>
-</a>
-<a class="cat-item" href="poloi-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777233449/poloidd_bzraoq.png"/></div>
-<span class="cat-item-name">Raskáty Kimono — Silk Cotton</span>
-</a>
-<a class="cat-item" href="poloi-bra.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777172643/poloic_uyjq9u.mp4"></video></div>
-<span class="cat-item-name">Raskáty Bra</span>
-</a>
-<div class="cat-item" style="opacity:0; pointer-events:none;"></div>
-<div class="cat-chapter">
-<p class="cat-chapter-title">Chapter 05 — Raskáty</p>
-<div class="cat-row">
-<a class="cat-item" href="raskaty-kimono.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777255323/raskaty-kimono2_hzu2xz.png"/></div>
-<span class="cat-item-name">05.01 Kimono</span>
-</a>
-<a class="cat-item" href="raskaty-stockings.html">
-<div class="cat-item-thumb"><img alt="" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182275/SHE00304_prorin.png"/></div>
-<span class="cat-item-name">05.02 Stockings</span>
-</a>
-<a class="cat-item" href="raskaty-ring.html">
-<div class="cat-item-thumb"><video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085493/raskaty-ring2_qok5zn.mp4"></video></div>
-<span class="cat-item-name">05.03 Ring</span>
-</a>
-<div class="cat-item" style="opacity:0; pointer-events:none;"></div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- FOOTER -->
 <footer>
 <div class="footer-brand">
@@ -2065,9 +2040,9 @@
     });
   </script>
 <!-- ── CART OVERLAY ──────────────────────────────────────────── -->
-<div id="cart-overlay"></div>
+<div id="cart-overlay" data-no-clone="true"></div>
 <!-- ── CART SIDEBAR ──────────────────────────────────────────── -->
-<aside aria-label="Shopping cart" id="cart-sidebar">
+<aside aria-label="Shopping cart" id="cart-sidebar" data-no-clone="true">
 <div class="cart-header">
 <h2>[ Selected Artifacts ]</h2>
 <button aria-label="Close cart" id="cart-close">×</button>
@@ -2085,7 +2060,7 @@
 </div>
 </aside>
 <!-- ── CHECKOUT MODAL ─────────────────────────────────────────── -->
-<div aria-label="Checkout" aria-modal="true" id="checkout-modal" role="dialog">
+<div aria-label="Checkout" aria-modal="true" id="checkout-modal" role="dialog" data-no-clone="true">
 <div id="checkout-modal-bg"></div>
 <div class="checkout-panel">
 <button aria-label="Close checkout" id="checkout-modal-close">×</button>
@@ -2125,7 +2100,7 @@
 </div>
 </div>
 <!-- ── SUCCESS MODAL ──────────────────────────────────────────── -->
-<div aria-modal="true" id="success-modal" role="dialog">
+<div aria-modal="true" id="success-modal" role="dialog" data-no-clone="true">
 <div id="success-modal-bg"></div>
 <div class="success-panel">
 <span class="script">Babaika</span>
