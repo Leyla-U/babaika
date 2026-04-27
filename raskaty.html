@@ -150,7 +150,7 @@
       max-width: 1400px;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
     }
     
     .hero-video-top {
@@ -169,10 +169,11 @@
     .hero-video-bottom {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 2px;
+      gap: 1px;
     }
     
-    .hero-video-bottom video {
+    .hero-video-bottom video,
+    .hero-video-bottom img {
       width: 100%;
       aspect-ratio: 1 / 1.1;
       object-fit: cover;
@@ -181,7 +182,7 @@
     }
 
     @media (max-width: 768px) {
-      .hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll, .artifact-grid, .kimono-grid { gap: 10px !important; }
+      .artifact-grid, .kimono-grid { gap: 10px !important; }.hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll { gap: 1px !important; }
       .page-nav {
         width: 100vw;
         padding: 20px 80px;
@@ -206,7 +207,7 @@
         grid-template-columns: 1fr 1fr 1fr;
       }
       .hero-video-grid {
-        width: 100vw; gap: 10px;
+        width: 100vw; gap: 1px;
       }
     }
 
@@ -1059,9 +1060,9 @@
         <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777053281/raskaty_jj4aud.mp4" autoplay loop muted playsinline></video>
       </div>
       <div class="hero-video-bottom">
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777053281/raskaty_jj4aud.mp4" autoplay loop muted playsinline></video>
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777053281/raskaty_jj4aud.mp4" autoplay loop muted playsinline></video>
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777053281/raskaty_jj4aud.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081963/raskaty-fabric_obq0ns.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085493/raskaty-ring2_qok5zn.mp4" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182275/SHE00304_prorin.png" alt="Raskaty Media">
       </div>
     </div>
   </section>
@@ -1157,7 +1158,7 @@
       </div>
       <div class="artifact-center" onclick="window.location='raskaty-stockings.html'">
         <div class="photo-viewer">
-          <img src="images/foggy.png" class="main-photo" alt="Stockings" style="cursor: none;" />
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777260477/raskaty_stocking_bw_twri4c.png" class="main-photo" alt="Stockings" style="cursor: none;" />
         </div>
       </div>
       <div class="artifact-right">
@@ -1165,6 +1166,11 @@
           <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
           The textured mesh represents the dense reed walls, while the continuous front seam cuts straight down the middle - just like a narrow water channel (erik) slicing through the overgrowth.
         </p>
+        <div style="margin-top: 32px; width: 100%;">
+          <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777173365/raskaty-video-corridor_ewnmck.mp4" 
+                 autoplay loop muted playsinline 
+                 style="width: 100%; display: block; filter: brightness(0.95);"></video>
+        </div>
       </div>
     </div>
   </div>

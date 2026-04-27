@@ -743,8 +743,8 @@
     .reveal-stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.48s; }
 
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .hero-video-grid, .hero-video-bottom, .artifact-grid, .kimono-grid { gap: 10px !important; }
+    @media (max-width: 768px) {.artifact-grid, .kimono-grid { gap: 10px !important; }
+      .hero-video-grid, .hero-video-bottom { gap: 1px !important; }
       .image-strip, .image-strip-scroll { gap: 1px !important; }
       .chapter-body {
         grid-template-columns: 1fr;

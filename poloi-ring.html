@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Babaika — Polói Ring</title>
+<meta content="Chapter 03: Polói — the flooded surface. Babaika, a wearable landscape archive." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300&amp;display=swap" rel="stylesheet"/>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #EEEDEB;
+      --text: #535E69;
+      --text-muted: #888880;
+      --text-faint: #b0aea8;
+      --line: rgba(60,60,55,0.18);
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 100;
+      line-height: 1.8;
+      overflow-x: hidden;
+      cursor: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    @font-face {
+      font-family: 'Figuea Granatae';
+      src: url('fonts/Figuea_Granatae.otf') format('opentype');
+      font-weight: normal; font-style: normal;
+    }
+    .script { font-family: 'Figuea Granatae', cursive; font-weight: 400; }
+    a, button { cursor: none; }
+
+    /* ─── MAGNIFYING GLASS CURSOR ─── */
+    #mag-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 336px;
+      height: 336px;
+      pointer-events: none;
+      z-index: 10002;
+      will-change: transform;
+      transition: opacity 0.25s ease;
+      opacity: 0;
+    }
+    #mag-cursor.visible { opacity: 1; }
+    #mag-cursor svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* ─── MAGNIFICATION OVERLAY ──────────────────────────── */
+    #mag-zoom {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10001;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    #mag-zoom.visible { opacity: 1; }
+    #mag-zoom-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--bg);
+      transform-origin: 0 0;
+    }
+
+    /* NAV */
+    .page-nav { position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; justify-content: space-between; align-items: center; max-width: 1400px; width: 90vw; padding: 28px 0; box-sizing: border-box; }
+    .page-nav a {
+      font-size: 11px; color: var(--text); text-decoration: none;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      transition: color 0.4s ease, opacity 0.2s;
+    }
+    .page-nav .nav-brand { font-family: 'Figuea Granatae', cursive; font-size: 28px; letter-spacing: normal; text-transform: none; }
+    .page-nav a:hover { opacity: 0.6; }
+
+    /* ARTIFACT SECTION */
+    .artifact-container { max-width: 1400px; width: 90vw; margin: 0 auto; padding: 120px 0 72px; }
+    .artifact-grid { 
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .artifact-left { display: flex; flex-direction: column; justify-content: flex-start; position: sticky; top: 80px; }
+    .artifact-name { font-size: 25px; letter-spacing: 0.15em; color: var(--text); text-transform: none; margin-bottom: 28px; font-weight: 100; }
+    .artifact-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; color: var(--text-faint); text-transform: uppercase; }
+    .artifact-detail-row { font-size: 13px; color: var(--text); font-style: italic; line-height: 2; margin-bottom: 8px; }
+    .artifact-note { font-size: 12px; color: var(--text); font-style: italic; line-height: 1.9; }
+
+    .artifact-center { width: 100%; position: relative; overflow: hidden; background: var(--bg); display: flex; flex-direction: column; }
+    .gallery-block { width: 100%; display: flex; flex-direction: column; position: relative; }
+    
+    .vertical-gallery { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .vertical-gallery img, .vertical-gallery video { width: 100%; height: auto; object-fit: cover; display: block; filter: brightness(0.98); }
+
+    /* BUTTONS */
+    .btn-glass {
+      border-radius: 100px;
+      background: var(--bg);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 16px 24px;
+      cursor: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      width: 100%;
+      margin-top: 24px;
+    }
+    .btn-glass:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); }
+
+    /* FOOTER */
+    footer { padding: 80px 48px 60px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; width: 100%; margin-top: 120px; }
+    .footer-brand .script { font-size: 42px; color: var(--text); }
+    .footer-nav { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-nav a { font-size: 12px; color: var(--text-faint); text-decoration: none; letter-spacing: 0.1em; }
+    .footer-copy { font-size: 11px; color: var(--text-faint); letter-spacing: 0.05em; width: 100%; }
+
+    @media (max-width: 768px) {
+      .artifact-grid { display: block; }
+      .artifact-left { position: static; width: 100%; margin-top: 32px; }
+      #mag-cursor { width: 168px !important; height: 168px !important; }
+    }
+  </style>
+</head>
+<body>
+<!-- SVG FILTER DEFS -->
+<svg aria-hidden="true" id="filter-svg" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter color-interpolation-filters="sRGB" height="110%" id="barrel-lens" primitiveunits="userSpaceOnUse" width="110%" x="-5%" y="-5%">
+<feimage height="224" href="" id="barrel-map-img" preserveaspectratio="none" result="dmap" width="224" x="0" y="0"></feimage>
+<feflood flood-color="rgb(128,128,128)" flood-opacity="1" result="neutral"></feflood>
+<fecomposite in="dmap" in2="neutral" operator="over" result="combined"></fecomposite>
+<fedisplacementmap in="SourceGraphic" in2="combined" result="distorted" scale="110" xchannelselector="R" ychannelselector="G"></fedisplacementmap>
+<fegaussianblur in="distorted" result="blurred" stddeviation="4"></fegaussianblur>
+<feimage height="224" href="" id="edge-mask-img" preserveaspectratio="none" result="edgemask" width="224" x="0" y="0"></feimage>
+<fecomposite in="blurred" in2="distorted" k1="0" k2="0" k3="1" k4="0" operator="arithmetic" result="blurred-masked"></fecomposite>
+<feblend in="distorted" in2="blurred" mode="normal" result="pre-blend"></feblend>
+<fecomposite in="pre-blend" in2="edgemask" operator="in" result="edge-blur-part"></fecomposite>
+<fecomposite in="distorted" in2="edgemask" operator="out" result="sharp-part"></fecomposite>
+<fecomposite in="sharp-part" in2="edge-blur-part" operator="over"></fecomposite>
+</filter>
+</defs>
+</svg>
+<div aria-hidden="true" id="mag-cursor">
+<svg overflow="visible" viewbox="0 0 336 336" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="lens-rim-grad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#535E69" stop-opacity="0.4"></stop><stop offset="100%" stop-color="#535E69" stop-opacity="0.4"></stop>
+</lineargradient>
+</defs>
+<circle cx="168" cy="168" fill="var(--bg)" opacity="0.1" r="167"></circle>
+<circle cx="168" cy="168" fill="none" r="167" stroke="url(#lens-rim-grad)" stroke-width="1"></circle>
+<circle cx="168" cy="168" fill="white" r="3"></circle>
+</svg>
+</div>
+<div aria-hidden="true" id="mag-zoom"><div id="mag-zoom-inner"></div></div>
+<nav class="page-nav">
+<a href="index.html">← Back to Archive</a>
+<a class="nav-brand script" href="index.html">Babaika</a>
+<a href="#">CART <span id="cart-count-nav">0</span></a>
+</nav>
+<div class="artifact-container">
+<div class="artifact-grid">
+<div class="artifact-left">
+<h1 class="artifact-name">Polói Ring</h1>
+<p class="artifact-tag">[ HARDWARE ARTIFACT 03.04 ]</p>
+<p class="artifact-detail-row" style="margin-top:24px;">Material: Sculpted 925 Silver</p>
+<p class="artifact-detail-row">Finish: High Polish</p>
+<button class="btn-glass">Inquire</button>
+<div style="margin-top: 48px;">
+<p class="artifact-tag" style="font-size: 10px; margin-bottom: 12px;">[ TRANSLATION NOTE ]</p>
+<p class="artifact-note">
+            The Flooded Surface. A landscape compressed into a single object. The ring’s distorted, organic form mimics the way the delta’s surface breaks when the floods arrive—shifting from solid ground to a series of liquid mirrors.
+          </p>
+</div>
+</div>
+<div class="artifact-center">
+<div class="gallery-block">
+<div class="vertical-gallery"><img alt="Poloi Ring" src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777257313/poloi_ring_bw_ut3b82.png"/>
+          <video autoplay="" loop="" muted="" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085497/raskaty-ring_rqvurs.mp4"></video>
+          </div>
+</div>
+</div>
+</div>
+</div>
+<footer>
+<div class="footer-brand"><p class="script">Babaika</p></div>
+<div class="footer-nav">
+<a href="about.html">About</a>
+<a href="catalogue.html">Catalogue</a>
+</div>
+<p class="footer-copy">© 2026 Babaika</p>
+</footer>
+<script>
+    const magCursor = document.getElementById('mag-cursor');
+    const magZoom = document.getElementById('mag-zoom');
+    const magZoomInner = document.getElementById('mag-zoom-inner');
+    const barrelImg = document.getElementById('barrel-map-img');
+    const edgeMaskImg = document.getElementById('edge-mask-img');
+    const LENS_R = window.innerWidth <= 768 ? 84 : 168;
+    const MAG_SCALE = 1.5;
+
+    (function initBarrelMap() {
+      const size = LENS_R * 2;
+      const c = document.createElement('canvas'); c.width = c.height = size;
+      const ctx = c.getContext('2d'); const img = ctx.createImageData(size, size);
+      const d = img.data; const h = size / 2;
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+          const nx = (x - h) / h, ny = (y - h) / h;
+          const r2 = nx * nx + ny * ny;
+          const str = (r2 > 0.1 && r2 < 1) ? r2 * r2 * 130 : 0;
+          const i = (y * size + x) * 4;
+          d[i] = Math.min(255, Math.max(0, Math.round(128 + nx * str)));
+          d[i+1] = Math.min(255, Math.max(0, Math.round(128 + ny * str)));
+          d[i+2] = 0; d[i+3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      barrelImg.setAttribute('href', c.toDataURL('image/png'));
+      barrelImg.setAttribute('width', size); barrelImg.setAttribute('height', size);
+      const ec = document.createElement('canvas'); ec.width = ec.height = size;
+      const ectx = ec.getContext('2d'); ectx.clearRect(0, 0, size, size);
+      const grd = ectx.createRadialGradient(h, h, h - 20, h, h, h - 5);
+      grd.addColorStop(0, 'rgba(255,255,255,0)'); grd.addColorStop(1, 'rgba(255,255,255,1)');
+      ectx.fillStyle = grd; ectx.beginPath(); ectx.arc(h, h, h, 0, Math.PI * 2); ectx.fill();
+      edgeMaskImg.setAttribute('href', ec.toDataURL('image/png'));
+      edgeMaskImg.setAttribute('width', size); edgeMaskImg.setAttribute('height', size);
+      magZoom.style.filter = 'url(#barrel-lens)';
+    })();
+
+    let mouseX = 0, mouseY = 0, curX = 0, curY = 0, magReady = false;
+    function buildClone() {
+      if (magReady) return; magReady = true;
+      Array.from(document.body.children).forEach(child => {
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.tagName === 'NAV') return;
+        const clone = child.cloneNode(true);
+        clone.querySelectorAll('script').forEach(s => s.remove());
+        clone.querySelectorAll('video').forEach(v => { v.muted = true; v.play().catch(() => {}); });
+        magZoomInner.appendChild(clone);
+      });
+      magZoomInner.style.width = document.body.clientWidth + 'px';
+    }
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      buildClone(); magCursor.classList.add('visible'); magZoom.classList.add('visible');
+    });
+    function animate() {
+      curX += (mouseX - curX) * 0.12; curY += (mouseY - curY) * 0.12;
+      magCursor.style.transform = `translate(${curX - LENS_R}px, ${curY - LENS_R}px)`;
+      if (magReady) {
+        const scrollY = window.scrollY;
+        magZoomInner.style.top = `${-scrollY}px`;
+        magZoomInner.style.transformOrigin = `${curX}px ${curY + scrollY}px`;
+        magZoomInner.style.transform = `scale(${MAG_SCALE})`;
+        const bx = Math.round(curX - LENS_R), by = Math.round(curY - LENS_R);
+        barrelImg.setAttribute('x', bx); barrelImg.setAttribute('y', by);
+        edgeMaskImg.setAttribute('x', bx); edgeMaskImg.setAttribute('y', by);
+        magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY}px)`;
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

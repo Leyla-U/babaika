@@ -150,7 +150,7 @@
       max-width: 1400px;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
     }
     
     .hero-video-top {
@@ -169,10 +169,20 @@
     .hero-video-bottom {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 2px;
+      gap: 1px;
     }
     
-    .hero-video-bottom video {
+    .hero-video-bottom-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 2px;
+    }
+    
+    .hero-video-bottom video,
+    .hero-video-bottom-2 video,
+    .hero-video-bottom img,
+    .hero-video-bottom-2 img {
       width: 100%;
       aspect-ratio: 1 / 1.1;
       object-fit: cover;
@@ -181,7 +191,7 @@
     }
 
     @media (max-width: 768px) {
-      .hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll, .artifact-grid, .kimono-grid { gap: 10px !important; }
+      .artifact-grid, .kimono-grid { gap: 10px !important; }.hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll { gap: 1px !important; }
       .page-nav {
         width: 100vw;
         padding: 20px 80px;
@@ -205,8 +215,11 @@
       .hero-video-bottom {
         grid-template-columns: 1fr 1fr 1fr;
       }
+      .hero-video-bottom-2 {
+        grid-template-columns: 1fr 1fr;
+      }
       .hero-video-grid {
-        width: 100vw; gap: 10px;
+        width: 100vw; gap: 1px;
       }
     }
 
@@ -1059,9 +1072,13 @@
         <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969566/il_vkmmxg.mp4" autoplay loop muted playsinline></video>
       </div>
       <div class="hero-video-bottom">
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969566/il_vkmmxg.mp4" autoplay loop muted playsinline></video>
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969566/il_vkmmxg.mp4" autoplay loop muted playsinline></video>
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969566/il_vkmmxg.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081964/il-fabric_meixsr.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085494/il-ring_lpipgo.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777172873/il-8_k4sfnf.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="hero-video-bottom-2">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777276181/il-video-lotus_aphbqw.mp4" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777277477/WhatsApp_Image_2026-04-15_at_10.29.18_zq3umm.jpg" alt="Il photo">
       </div>
     </div>
   </section>
@@ -1091,14 +1108,7 @@
       <p class="col-body">
         Organic Type ("Nyasha"): 60–90% decomposed algae and plankton. Zero shear strength. Functions as a slick, viscous suspension.<br><br>Mineral Type ("Building Silt"): Clay particles act as glue, while sand grains act as reinforcement. High plasticity; ideal for modeling and structural retention.<br><br>State: The transitional "golden mean" between liquid mud and dry dust.
       </p>
-      <div style="margin-top: 40px; width: 100%;">
-        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777264681/Group_14_yvv1cv.png" 
-             alt="Il Classification Drawing" 
-             style="width: 100%; cursor: zoom-in; opacity: 0.75; transition: opacity 0.3s;"
-             onmouseover="this.style.opacity='1'"
-             onmouseout="this.style.opacity='0.75'"
-             onclick="openLightboxDirect('https://res.cloudinary.com/dejpm4v8y/image/upload/v1777264681/Group_14_yvv1cv.png')" />
-      </div>
+
     </div>
 
     <!-- RIGHT: Field Notes -->
@@ -1137,6 +1147,14 @@
           <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
           Translates the highly soft, saturated variation of the silt. The velvet is deeply opaque and lacks structural memory, melting against the body in a heavy, enveloping drape to capture the sudden, yielding softness of the mud.
         </p>
+        <div style="margin-top: 40px; width: 100%;">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777273501/d82d01b1045a8cefdb0334c50f75a22b_kpyxmn.png" 
+               alt="Il Kimono Translation Drawing" 
+               style="width: 100%; cursor: zoom-in; opacity: 0.75; transition: opacity 0.3s;"
+               onmouseover="this.style.opacity='1'"
+               onmouseout="this.style.opacity='0.75'"
+               onclick="openLightboxDirect('https://res.cloudinary.com/dejpm4v8y/image/upload/v1777273501/d82d01b1045a8cefdb0334c50f75a22b_kpyxmn.png')" />
+        </div>
       </div>
     </div>
   </div>
@@ -1166,6 +1184,14 @@
           <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
           Represents the heavier, compacted variation of silt—the rare form dense enough to build castles on the shore. The silver avoids looking traditionally cast; instead, it holds a heavier, deliberate shape, gripping the stone with the structural memory of dense, wet sediment.
         </p>
+        <div style="margin-top: 40px; width: 100%;">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777273821/dsdfwd_tvugsx.png" 
+               alt="Il Ring Translation Drawing" 
+               style="width: 100%; cursor: zoom-in; opacity: 0.75; transition: opacity 0.3s;"
+               onmouseover="this.style.opacity='1'"
+               onmouseout="this.style.opacity='0.75'"
+               onclick="openLightboxDirect('https://res.cloudinary.com/dejpm4v8y/image/upload/v1777273821/dsdfwd_tvugsx.png')" />
+        </div>
       </div>
     </div>
   </div>
