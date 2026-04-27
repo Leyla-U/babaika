@@ -98,30 +98,96 @@
     /* white state over video */
     .page-nav.nav--light a { color: #fff; }
 
-    /* HERO */
-    .chapter-hero {
-      position: relative; width: 100%; height: 60vh; min-height: 400px; overflow: hidden;
+    /* NEW HERO LAYOUT */
+    .chapter-hero-new {
+      padding-top: 140px; /* Space for nav */
+      padding-bottom: 60px;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .chapter-hero video {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(0.82) saturate(0.88); display: block;
+
+    .hero-text-block {
+      width: 90vw;
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      margin-bottom: 36px;
     }
-    .chapter-hero-overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 56px 64px;
+
+    .hero-text-block .hero-chapter-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      justify-self: start;
+      align-self: center;
     }
-    .hero-chapter-label {
-      font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.55);
-      text-transform: uppercase; margin-bottom: 12px;
-    }
-    .hero-title {
+
+    .hero-text-block .hero-title {
       font-family: 'Figuea Granatae', cursive;
-      font-size: clamp(64px, 9vw, 120px);
-      color: #fff; line-height: 0.9; margin-bottom: 16px;
+      font-size: clamp(60px, 9vw, 120px);
+      color: var(--text);
+      line-height: 1;
+      text-align: center;
+      justify-self: center;
     }
-    .hero-subtitle {
-      font-size: 11px; letter-spacing: 0.18em; color: rgba(255,255,255,0.5);
+
+    .hero-text-block .hero-subtitle {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-faint);
+      justify-self: end;
+      align-self: center;
+    }
+
+    .hero-video-grid {
+      width: 90vw;
+      max-width: 1400px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .hero-video-top {
+      width: 100%;
+      height: 800px;
+    }
+    
+    .hero-video-top video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95);
+    }
+    
+    .hero-video-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+    }
+    
+    .hero-video-bottom video {
+      width: 100%;
+      aspect-ratio: 1 / 1.1;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95);
+    }
+
+    @media (max-width: 900px) {
+      .hero-video-top {
+        height: 800px;
+        aspect-ratio: auto;
+      }
+      .hero-video-bottom {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
     }
 
     /* THREE-COLUMN INFO BAND */
@@ -167,7 +233,7 @@
       border-bottom: 1px solid var(--line);
       min-height: 560px;
     }
-    .artifact-left {
+    .artifact-left { cursor: pointer;
       padding: 72px 64px;
       border-right: 1px solid var(--line);
       display: flex; flex-direction: column; justify-content: flex-start;
@@ -194,7 +260,8 @@
       display: flex; flex-direction: column;
     }
     .photo-viewer {
-      position: relative; flex: 1; overflow: hidden; min-height: 460px;
+      position: relative; flex: 1; overflow: hidden;
+      aspect-ratio: 3 / 4;
     }
     .photo-viewer img.main-photo {
       width: 100%; height: 100%; object-fit: cover; object-position: center top;
@@ -242,13 +309,13 @@
       background: #d8d7d4; flex-shrink: 0;
     }
     .thumb-strip::-webkit-scrollbar { display: none; }
-    .thumb-strip img {
+    .thumb-strip img, .thumb-strip video {
       height: 72px; width: auto; flex: 0 0 auto;
       object-fit: cover; filter: brightness(0.92) saturate(0.8);
       transition: filter 0.3s; cursor: none;
     }
-    .thumb-strip img:hover { filter: brightness(1) saturate(1); }
-    .thumb-strip img.active { outline: 1px solid var(--text); }
+    .thumb-strip img:hover, .thumb-strip video:hover { filter: brightness(1) saturate(1); }
+    .thumb-strip img.active, .thumb-strip video.active { outline: 1px solid var(--text); }
 
     /* FULLSCREEN LIGHTBOX */
     #lightbox {
@@ -290,37 +357,6 @@
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
     .reveal.visible { opacity: 1; transform: none; }
-
-    /* FOOTER */
-    footer {
-      padding: 72px 64px 48px;
-      
-      display: flex; justify-content: space-between;
-      align-items: flex-end; flex-wrap: wrap; gap: 32px;
-    }
-    footer .footer-brand .script { font-size: 38px; color: var(--text-faint); }
-    footer .footer-brand p:not(.script) {
-      font-size: 13px; color: var(--text-faint); letter-spacing: 0.08em; line-height: 1.6; margin-top: 10px;
-    }
-    footer .footer-nav { display: flex; gap: 32px; }
-    footer .footer-nav a {
-      font-size: 12px; color: var(--text-faint); text-decoration: none;
-      letter-spacing: 0.1em; transition: opacity 0.2s;
-    }
-    footer .footer-nav a:hover { opacity: 0.5; }
-    footer .footer-copy { font-size: 11px; color: var(--text-faint); width: 100%; }
-
-    @media (max-width: 900px) {
-      .page-nav { padding: 20px 24px; }
-      .page-nav .nav-brand { display: none; }
-      .chapter-hero-overlay { padding: 40px 24px; }
-      .info-band { grid-template-columns: 1fr; }
-      .info-col { border-right: none; border-bottom: 1px solid var(--line); padding: 40px 24px; }
-      .artifact-section { display: flex; flex-direction: column; }
-      .artifact-left { order: 2; padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--line); }
-      .artifact-right { order: 1; min-height: 460px; width: 100%; }
-      footer { padding: 48px 24px 32px; flex-direction: column; align-items: flex-start; }
-    }
     /* ─── CART BUTTON (fixed top-right) ──────────────────────── */
             #cart-btn {
       position: fixed;
@@ -500,11 +536,7 @@
     .cart-qty-btn:hover { border-color: var(--text); }
     .cart-qty-num { font-size: 12px; color: var(--text); min-width: 16px; text-align: center; }
 
-    .cart-footer {
-      padding: 24px 32px 36px;
-      border-top: 1px solid var(--line);
-      flex-shrink: 0;
-    }
+    .cart-
     .cart-total-row {
       display: flex;
       justify-content: space-between;
@@ -807,6 +839,104 @@
       .form-row { grid-template-columns: 1fr; }
     }
 
+  
+    
+    /* ─── GLASS BUTTONS ─────────────────────────────────────────── */
+    .btn-glass {
+      border-radius: 100px !important;
+      background: var(--bg) !important;
+      border: 1px solid rgba(255, 255, 255, 0.8) !important;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+      color: var(--text) !important;
+      font-family: var(--font-mono) !important;
+      font-size: 11px !important;
+      font-weight: 300 !important;
+      letter-spacing: 0.15em !important;
+      text-transform: uppercase !important;
+      padding: 16px 24px !important;
+      cursor: none !important;
+      transition: all 0.3s ease !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-decoration: none !important;
+    }
+    .btn-glass:hover {
+      box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.08),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8) !important;
+      transform: translateY(-1px);
+      background: var(--bg-dark) !important;
+    }
+    .btn-glass:active {
+      transform: translateY(1px);
+      box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+    }
+
+  
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 80px 48px 60px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+      width: 100%;
+    }
+    footer .footer-brand .script {
+      font-size: 42px;
+      color: var(--text);
+      letter-spacing: normal;
+    }
+    footer .footer-brand p:not(.script) {
+      font-size: 14px;
+      color: var(--text-faint);
+      letter-spacing: 0.10em;
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+    footer .footer-nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-nav a {
+      font-size: 12px;
+      color: var(--text-faint);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    footer .footer-nav a:hover { color: var(--text); }
+    footer .footer-copy {
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+      width: 100%;
+    }
+    .footer-lang { display: flex; gap: 12px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
+    .footer-lang span, .footer-lang a {
+      cursor: pointer;
+      color: var(--text-faint) !important;
+      text-decoration: none !important;
+      transition: opacity 0.2s;
+    }
+    .footer-lang span.active, .footer-lang a.active {
+      text-decoration: underline !important;
+      text-underline-offset: 4px;
+      color: var(--text) !important;
+    }
+    .footer-lang span:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -882,19 +1012,27 @@
 
   <!-- NAV -->
   <nav class="page-nav">
-    <a href="index.html">← Back to Archive</a>
+    <a href="index.html" data-i18n="nav_back">← Back to Archive</a>
     <a href="index.html" class="nav-brand script">Babaika</a>
     <a href="about.html">About</a>
   </nav>
 
   <!-- HERO -->
-  <section class="chapter-hero">
-    <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969570/tamarisk_ze64td.mp4"
-           autoplay loop muted playsinline></video>
-    <div class="chapter-hero-overlay">
+  <section class="chapter-hero-new">
+    <div class="hero-text-block">
       <p class="hero-chapter-label">Chapter 02:</p>
       <h1 class="hero-title script">Tamarisk</h1>
       <p class="hero-subtitle">// The Resilient Shrub</p>
+    </div>
+    <div class="hero-video-grid reveal">
+      <div class="hero-video-top">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777144550/tmr-v67_uqesir.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="hero-video-bottom">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777144391/tmr-v3_sdm17t.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085761/Tamarisk-video-1_qfx1ck.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777083701/tamrisk-fabric_imxohi.mp4" autoplay loop muted playsinline></video>
+      </div>
     </div>
   </section>
 
@@ -923,6 +1061,15 @@
       <p class="col-body">
         Structural Resilience: Slender, flexible branches minimize wind resistance and prevent breakage under pressure.<br><br>Substrate Stabilization: Deep, expansive root systems anchor marginal, chemically stressed substrates.
       </p>
+
+      <div style="margin-top: 40px; width: 100%;">
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777141533/tamarisk_drawing_pfoo89.png" 
+             alt="Tamarisk Classification Drawing" 
+             style="width: 100%; cursor: zoom-in; opacity: 0.75; transition: opacity 0.3s;"
+             onmouseover="this.style.opacity='1'"
+             onmouseout="this.style.opacity='0.75'"
+             onclick="openLightboxDirect('https://res.cloudinary.com/dejpm4v8y/image/upload/v1777141533/tamarisk_drawing_pfoo89.png')" />
+      </div>
     </div>
 
     <!-- RIGHT: Field Notes -->
@@ -937,148 +1084,121 @@
 
   
   <!-- ARTIFACT 01: KIMONO -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 02.01 ]</p>
-      <p class="artifact-name">KIMONO</p>
-      <p class="artifact-detail-row">Material: Chiffon silk with rose pattern</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        The "naive" floral print masks the biological aggression required to survive in salt. The chiffon is light and playful but requires a bold presence to carry its delicate appearance in a harsh landscape.
-      </p>
-      
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="02.01" data-name="Tamarisk — Kimono" data-desc="Chiffon silk with rose pattern" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="02.01" data-name="Tamarisk — Kimono" data-desc="Chiffon silk with rose pattern" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="02_01">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="KIMONO look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left" onclick="window.location='tamarisk-kimono.html'">
+        <p class="artifact-name">KIMONO</p>
+        <p class="artifact-detail-row">Material: Chiffon silk with rose pattern</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Size: One size (length can be customized)</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='tamarisk-kimono.html'" class="btn-glass" style="width:100%;">View</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="02_01">
-        <img src="images/kimono-cream.png" alt="KIMONO 1" />
-<img src="images/foggy.png" alt="KIMONO 2" />
+      <div class="artifact-center" onclick="window.location='tamarisk-kimono.html'">
+        <div class="photo-viewer">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182371/tmr11111_plmslu.png" class="main-photo" alt="Kimono" style="cursor: none;" />
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          The "naive" floral print masks the biological aggression required to survive in salt. The chiffon is light and playful but requires a bold presence to carry its delicate appearance in a harsh landscape.
+        </p>
       </div>
     </div>
   </div>
 
   <!-- ARTIFACT 02: BRA -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 02.02 ]</p>
-      <p class="artifact-name">BRA</p>
-      <p class="artifact-detail-row">Material: Chiffon silk with rose pattern</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        The "naive" floral print masks the biological aggression required to survive in salt. The chiffon is light and playful but requires a bold presence to carry its delicate appearance in a harsh landscape.
-      </p>
-      
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="02.02" data-name="Tamarisk — Bra" data-desc="Chiffon silk with rose pattern" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="02.02" data-name="Tamarisk — Bra" data-desc="Chiffon silk with rose pattern" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="02_02">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="BRA look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left" onclick="window.location='tamarisk-bra.html'">
+        <p class="artifact-name">BRA</p>
+        <p class="artifact-detail-row">Material: Chiffon silk with rose pattern</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='tamarisk-bra.html'" class="btn-glass" style="width:100%;">View</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="02_02">
-        <img src="images/kimono-cream.png" alt="BRA 1" />
-<img src="images/foggy.png" alt="BRA 2" />
+      <div class="artifact-center" onclick="window.location='tamarisk-bra.html'">
+        <div class="photo-viewer">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777167751/Copy_of_TMR_3_niibpq.png" class="main-photo" alt="Bra" style="cursor: none;" />
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          The "naive" floral print masks the biological aggression required to survive in salt. The chiffon is light and playful but requires a bold presence to carry its delicate appearance in a harsh landscape.
+        </p>
       </div>
     </div>
   </div>
 
-  <!-- ARTIFACT 03: SCARF -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
-      <p class="artifact-tag">[ TEXTILE ARTIFACT 02.03 ]</p>
-      <p class="artifact-name">SCARF</p>
-      <p class="artifact-detail-row">Material: Chiffon silk with rose pattern</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        The "naive" floral print masks the biological aggression required to survive in salt. The chiffon is light and playful but requires a bold presence to carry its delicate appearance in a harsh landscape.
-      </p>
-      
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="02.03" data-name="Tamarisk — Scarf" data-desc="Chiffon silk with rose pattern" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="02.03" data-name="Tamarisk — Scarf" data-desc="Chiffon silk with rose pattern" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
+
+
+  <!-- ARTIFACT 03: RING -->
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
+      <p class="artifact-tag">[ HARDWARE ARTIFACT 02.03 ]</p>
     </div>
-    <div class="artifact-right" data-gallery="02_03">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="SCARF look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left" onclick="window.location='tamarisk-ring.html'">
+        <p class="artifact-name">RING</p>
+        <p class="artifact-detail-row">Material: Silver</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='tamarisk-ring.html'" class="btn-glass" style="width:100%;">View</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="02_03">
-        <img src="images/kimono-cream.png" alt="SCARF 1" />
-<img src="images/foggy.png" alt="SCARF 2" />
+      <div class="artifact-center" onclick="window.location='tamarisk-ring.html'">
+        <div class="photo-viewer">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777257089/tamrisk-ring1_ncder8.png" class="main-photo" alt="Ring" style="cursor: none;" />
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          A minimal structural element that captures the rigid essence of the Tamarisk's stem.
+        </p>
       </div>
     </div>
   </div>
 
-  <!-- ARTIFACT 04: RING -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
-      <p class="artifact-tag">[ HARDWARE ARTIFACT 02.04 ]</p>
-      <p class="artifact-name">RING</p>
-      <p class="artifact-detail-row">Material: Cast silver, lab-grown rubies or garnets</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        Brutal, heavy silver forms that represent the "hard" survival of the shrub. The deep red of the rubies acts as the concentrated life force—the blood of the plant—vibrant against the restrained, dusty colors of the exterior.
-      </p>
-      
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="02.04" data-name="Tamarisk — Ring" data-desc="Cast silver, lab-grown rubies or garnets" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="02.04" data-name="Tamarisk — Ring" data-desc="Cast silver, lab-grown rubies or garnets" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
-    </div>
-    <div class="artifact-right" data-gallery="02_04">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="RING look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
-      </div>
-      <div class="thumb-strip" data-thumbs="02_04">
-        <img src="images/kimono-cream.png" alt="RING 1" />
-<img src="images/foggy.png" alt="RING 2" />
-      </div>
-    </div>
-  </div>
-\n  <!-- LIGHTBOX -->
-  <div id="lightbox">
-    <button class="lb-close" id="lb-close">[ CLOSE ]</button>
-    <button class="lb-arrow lb-prev" id="lb-prev">&#8592;</button>
-    <img id="lb-img" src="" alt="" />
-    <button class="lb-arrow lb-next" id="lb-next">&#8594;</button>
-    <div class="lb-counter" id="lb-counter"></div>
+
+    <div style="display: flex; justify-content: center; padding: 120px 24px 60px;">
+    <button onclick="window.location='poloi.html'" class="btn-glass">Next Chapter // Poloi</button>
   </div>
 
   <!-- FOOTER -->
-  <footer>
+      <footer>
     <div class="footer-brand">
       <p class="script">Babaika</p>
-      <p>A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
     </div>
-    <nav class="footer-nav">
-      <a href="about.html">About</a>
-      <a href="index.html">Chapters</a>
-      <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </nav>
+    <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="about.html">About</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="index.html">Index (Main Page)</a>
+        <a href="tuman.html">01 // Tuman</a>
+        <a href="tamarisk.html">02 // Tamarisk</a>
+        <a href="poloi.html">03 // Poloi</a>
+        <a href="il.html">04 // Il</a>
+        <a href="raskaty.html">05 // Raskaty</a>
+        <a href="kamysh.html">06 // Kamysh</a>
+        <a href="cheshuya.html">07 // Cheshuya</a>
+      </nav>
+    </div>
+        <div class="footer-lang">
+      <span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span> / <span id="footer-lang-ru" onclick="setLang('ru')">RU</span>
+    </div>
     <p class="footer-copy">© 2026 Babaika</p>
   </footer>
 
@@ -1164,7 +1284,7 @@
       if (magReady) return;
       magReady = true;
       Array.from(document.body.children).forEach(child => {
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true') return;
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
         const clone = child.cloneNode(true);
         clone.querySelectorAll('script').forEach(s => s.remove());
         clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
@@ -1284,21 +1404,13 @@
 
         // Clip the entire overlay to the offset lens circle
         magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
       }
 
       requestAnimationFrame(animateCursor);
     }
     animateCursor();
 
-    // ── Nav color on hero ──
-    const pageNav = document.querySelector('.page-nav');
-    const heroSection = document.querySelector('.chapter-hero');
-    const heroObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        pageNav.classList.toggle('nav--light', entry.isIntersecting);
-      });
-    }, { threshold: 0.1 });
-    heroObserver.observe(heroSection);
 
     const revealObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -1323,23 +1435,45 @@
 
     function setGalleryIndex(id, idx, animate = true) {
       const g = galleries[id];
-      const imgs = g.thumbImgs;
-      idx = (idx + imgs.length) % imgs.length;
+      const items = g.thumbImgs;
+      idx = (idx + items.length) % items.length;
       g.currentIndex = idx;
 
-      const src = imgs[idx].src;
+      const item = items[idx];
+      const isVideo = item.tagName.toLowerCase() === 'video';
+      const mainImg = g.mainImg;
+      const mainVid = g.mainVid;
+
       if (animate) {
         g.viewer.classList.add('fading');
         setTimeout(() => {
-          g.mainImg.src = src;
+          if (isVideo && mainVid) {
+            mainImg.style.display = 'none';
+            mainVid.style.display = 'block';
+            mainVid.src = item.src;
+            mainVid.play();
+          } else {
+            if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
+            mainImg.style.display = 'block';
+            mainImg.src = item.src;
+          }
           g.viewer.classList.remove('fading');
         }, 180);
       } else {
-        g.mainImg.src = src;
+        if (isVideo && mainVid) {
+          mainImg.style.display = 'none';
+          mainVid.style.display = 'block';
+          mainVid.src = item.src;
+          mainVid.play();
+        } else {
+          if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
+          mainImg.style.display = 'block';
+          mainImg.src = item.src;
+        }
       }
 
-      // update thumbs
-      imgs.forEach((t, i) => t.classList.toggle('active', i === idx));
+      // update thumb active state
+      items.forEach((t, i) => t.classList.toggle('active', i === idx));
 
       // update dots
       g.dots.querySelectorAll('.photo-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
@@ -1351,24 +1485,36 @@
       const mainImg = viewer.querySelector('.main-photo');
       const dotsEl = viewer.querySelector('.photo-dots');
       const thumbStrip = wrapper.querySelector('[data-thumbs]');
-      const thumbImgs = Array.from(thumbStrip.querySelectorAll('img'));
+      const allThumbImgs = Array.from(thumbStrip.querySelectorAll('img, video'));
+      const mainVid = viewer.querySelector('.main-video');
 
-      buildDots(dotsEl, thumbImgs.length);
+      function getVisibleThumbs() {
+        return allThumbImgs.filter(el => !el.classList.contains('hidden'));
+      }
 
-      galleries[id] = { viewer, mainImg, dots: dotsEl, thumbImgs, currentIndex: 0 };
+      function initGallery(startIdx = 0) {
+        const visibleThumbs = getVisibleThumbs();
+        dotsEl.innerHTML = '';
+        buildDots(dotsEl, visibleThumbs.length);
+        galleries[id] = { viewer, mainImg, mainVid, dots: dotsEl, thumbImgs: visibleThumbs, currentIndex: 0 };
+        setGalleryIndex(id, startIdx, false);
 
-      // init first image
-      setGalleryIndex(id, 0, false);
+        dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
+          dot.addEventListener('click', () => setGalleryIndex(id, i));
+        });
+      }
 
       // thumbnail clicks
-      thumbImgs.forEach((thumb, i) => {
-        thumb.addEventListener('click', () => setGalleryIndex(id, i));
+      allThumbImgs.forEach((thumb, i) => {
+        thumb.addEventListener('click', () => {
+          const visible = getVisibleThumbs();
+          const visIdx = visible.indexOf(thumb);
+          if (visIdx >= 0) setGalleryIndex(id, visIdx);
+        });
       });
 
-      // dot clicks
-      dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
-        dot.addEventListener('click', () => setGalleryIndex(id, i));
-      });
+
+      initGallery(0);
 
       // in-page arrow buttons
       viewer.querySelector('.prev').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex - 1));
@@ -1396,30 +1542,60 @@
     function openLightbox(galleryId, idx) {
       lbGalleryId = galleryId;
       lbIndex = idx;
+      if (lbCounter) lbCounter.style.display = 'block';
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      if (lbPrev) lbPrev.style.display = 'block';
+      if (lbNext) lbNext.style.display = 'block';
       updateLightbox(false);
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
       activeGalleryId = galleryId;
+      
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        cloneLb.style.position = 'absolute';
+        cloneLb.style.top = window.scrollY + 'px';
+        cloneLb.style.bottom = 'auto';
+        cloneLb.style.height = window.innerHeight + 'px';
+      }
     }
 
     function closeLightbox() {
       lb.classList.remove('open');
       document.body.style.overflow = '';
       activeGalleryId = null;
+      
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) cloneLb.classList.remove('open');
     }
 
     function updateLightbox(animate = true) {
       const imgs = galleries[lbGalleryId].thumbImgs;
       lbIndex = (lbIndex + imgs.length) % imgs.length;
       const src = imgs[lbIndex].src;
+      const syncClone = () => {
+        const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+        if (cloneLb) {
+          const cloneImg = cloneLb.querySelector('#lb-img');
+          if (cloneImg) {
+            cloneImg.src = src;
+            cloneImg.classList.remove('fading');
+          }
+        }
+      };
+
       if (animate) {
         lbImg.classList.add('fading');
         setTimeout(() => {
           lbImg.src = src;
           lbImg.classList.remove('fading');
+          syncClone();
         }, 180);
       } else {
         lbImg.src = src;
+        syncClone();
       }
       lbCounter.textContent = `${lbIndex + 1} / ${imgs.length}`;
       // sync gallery
@@ -1471,7 +1647,7 @@
         <span class="cart-total-label">[ Total ]</span>
         <span class="cart-total-price" id="cart-total">Price on inquiry</span>
       </div>
-      <button id="checkout-btn" disabled>Proceed to Inquiry</button>
+      <button id="checkout-btn" class="btn-glass" disabled>Proceed to Inquiry</button>
       <p class="cart-note">Each artifact is handcrafted to order.<br>We'll confirm availability and timeline by email.</p>
     </div>
   </aside>
@@ -1518,7 +1694,7 @@
           <textarea id="field-sizes" name="sizes_and_notes" placeholder="Sizes (XS/S/M/L/XL), any special requests, or questions…"></textarea>
         </div>
 
-        <button type="submit" id="checkout-submit">Send Inquiry</button>
+        <button type="submit" id="checkout-submit" class="btn-glass">Send Inquiry</button>
         <p class="checkout-legal">By submitting you agree to be contacted by Babaika regarding your inquiry. No payment is taken at this stage.</p>
       </form>
     </div>
@@ -1531,244 +1707,933 @@
       <span class="script">Babaika</span>
       <p>Your inquiry has been received.</p>
       <p>We'll be in touch within 48 hours to confirm your selection, sizing, and shipping details.</p>
-      <button class="success-close" id="success-close">Continue browsing</button>
+      <button class="success-close btn-glass" id="success-close">Continue Browsing</button>
     </div>
   </div>
 
 
   <!-- ── CART + CHECKOUT LOGIC ────────────────────────────── -->
   <script>
-  (function() {
-    // ── State ──────────────────────────────────────────────────
-    
-    // -- Cart Button Dynamic Color --
-    window.addEventListener("scroll", () => {
-      const btn = document.getElementById("cart-btn");
-      if (btn) {
-        const rect = btn.getBoundingClientRect();
-        const x = rect.left + rect.width / 2;
-        const y = rect.top + rect.height / 2;
-        const old = btn.style.pointerEvents;
-        btn.style.pointerEvents = "none";
-        const el = document.elementFromPoint(x, y);
-        btn.style.pointerEvents = old;
-        if (el && el.closest(".hero, .landscape-full")) {
-          btn.style.color = "#fff";
-        } else {
-          btn.style.color = "var(--text)";
+        // ── Magnifying glass cursor + magnification ────────────────
+    const magCursor    = document.getElementById('mag-cursor');
+    const magZoom      = document.getElementById('mag-zoom');
+    const magZoomInner = document.getElementById('mag-zoom-inner');
+    const barrelImg    = document.getElementById('barrel-map-img');
+
+    const LENS_R    = 168;  // px — lens radius
+    const MAG_SCALE = 1.5;  // zoom factor inside the lens
+    const EDGE_BLUR_W = 10; // px — width of blur zone at border
+
+    const edgeMaskImg = document.getElementById('edge-mask-img');
+
+    // ── Generate barrel distortion map (once) ────────────────────
+    (function initBarrelMap() {
+      const size = LENS_R * 2; // 224px
+
+      // --- barrel displacement map ---
+      const c = document.createElement('canvas');
+      c.width = c.height = size;
+      const ctx = c.getContext('2d');
+      const img = ctx.createImageData(size, size);
+      const d = img.data;
+      const h = size / 2;
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+          const nx = (x - h) / h;
+          const ny = (y - h) / h;
+          const r2 = nx * nx + ny * ny;
+          // Flat zone: central ~105px diameter (52px radius in a 168px-radius lens)
+          const flatR = 52 / h;
+          const flatR2 = flatR * flatR;
+          const str = (r2 > flatR2 && r2 < 1) ? r2 * r2 * 130 : 0;
+          const i = (y * size + x) * 4;
+          d[i]   = Math.min(255, Math.max(0, Math.round(128 + nx * str)));
+          d[i+1] = Math.min(255, Math.max(0, Math.round(128 + ny * str)));
+          d[i+2] = 0;
+          d[i+3] = 255;
         }
       }
-    }, { passive: true });
+      ctx.putImageData(img, 0, 0);
+      barrelImg.setAttribute('href', c.toDataURL('image/png'));
+      barrelImg.setAttribute('width', size);
+      barrelImg.setAttribute('height', size);
 
-    let cart = JSON.parse(localStorage.getItem('babaika_cart') || '[]');
+      // --- edge blur mask: 0% at 20px from border, 100% at 5px from border, 100% at edge ---
+      const ec = document.createElement('canvas');
+      ec.width = ec.height = size;
+      const ectx = ec.getContext('2d');
+      ectx.clearRect(0, 0, size, size);
+      // Inner radius = R-20 (0% blur), stops at R-5 (100% blur), stays opaque to R
+      const grd = ectx.createRadialGradient(h, h, h - 20, h, h, h - 5);
+      grd.addColorStop(0, 'rgba(255,255,255,0)');
+      grd.addColorStop(1, 'rgba(255,255,255,1)');
+      ectx.fillStyle = grd;
+      ectx.beginPath();
+      ectx.arc(h, h, h, 0, Math.PI * 2);
+      ectx.fill();
+      edgeMaskImg.setAttribute('href', ec.toDataURL('image/png'));
+      edgeMaskImg.setAttribute('width', size);
+      edgeMaskImg.setAttribute('height', size);
 
-    const cartBtn      = document.getElementById('cart-btn');
-    const cartCount    = document.getElementById('cart-count');
-    const cartSidebar  = document.getElementById('cart-sidebar');
-    const cartOverlay  = document.getElementById('cart-overlay');
-    const cartClose    = document.getElementById('cart-close');
-    const cartItemsEl  = document.getElementById('cart-items');
-    const cartTotal    = document.getElementById('cart-total');
-    const checkoutBtn  = document.getElementById('checkout-btn');
+      magZoom.style.filter = 'url(#barrel-lens)';
+    })();
 
-    const checkoutModal      = document.getElementById('checkout-modal');
-    const checkoutModalBg    = document.getElementById('checkout-modal-bg');
-    const checkoutModalClose = document.getElementById('checkout-modal-close');
-    const checkoutForm       = document.getElementById('checkout-form');
-    const checkoutSummary    = document.getElementById('checkout-order-summary');
-    const hiddenOrder        = document.getElementById('hidden-order-details');
-    const checkoutSubmit     = document.getElementById('checkout-submit');
+    let mouseX = 0, mouseY = 0;
+    let curX = 0, curY = 0;
+    let magReady = false;
 
-    const successModal = document.getElementById('success-modal');
-    const successClose = document.getElementById('success-close');
-    const successBg    = document.getElementById('success-modal-bg');
+    // ── Touch / Mobile State ─────────────────────────────────────
+    let touchTimer = null;
+    let isLoupeActive = false;
+    let startTouchX = 0;
+    let startTouchY = 0;
+    let currentOffset = 0; // smoothly animates to 120 on touch
 
-    // ── Save + Render ─────────────────────────────────────────
-    function save() { localStorage.setItem('babaika_cart', JSON.stringify(cart)); }
 
-    function renderCart() {
-      const total = cart.reduce((s, i) => s + i.qty, 0);
-      cartCount.textContent = total;
-      checkoutBtn.disabled = cart.length === 0;
+    // Build DOM clone once on first mouse entry
+    function buildClone() {
+      if (magReady) return;
+      magReady = true;
+      Array.from(document.body.children).forEach(child => {
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
+        const clone = child.cloneNode(true);
+        clone.querySelectorAll('script').forEach(s => s.remove());
+        clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
+        clone.querySelectorAll('.reveal-stagger > *').forEach(el => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+        // Ensure videos in the clone also play
+        clone.querySelectorAll('video').forEach(v => {
+          v.muted = true;
+          v.play().catch(() => {});
+        });
+        magZoomInner.appendChild(clone);
+      });
+      // Force clone to exactly match body width, accounting for scrollbars
+      magZoomInner.style.width = document.body.clientWidth + 'px';
+    }
 
-      if (cart.length === 0) {
-        cartItemsEl.innerHTML = '<p class="cart-empty">No artifacts selected.<br>Each piece is made to order.</p>';
-        cartTotal.textContent = 'Price on inquiry';
+    document.addEventListener('mousemove', (e) => {
+      // Ignore mousemove if touch loupe is active (prevents conflicts on certain touch devices)
+      if (isLoupeActive) return;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      buildClone();
+      magCursor.classList.add('visible');
+      magZoom.classList.add('visible');
+    });
+
+    document.addEventListener('mouseleave', () => {
+      magCursor.classList.remove('visible');
+      magZoom.classList.remove('visible');
+    });
+
+    // ── Touch Events for Long-Press ("Hold & Pan") ───────────────
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1) return; // ignore multi-touch
+      const t = e.touches[0];
+      startTouchX = t.clientX;
+      startTouchY = t.clientY;
+      
+      clearTimeout(touchTimer);
+      isLoupeActive = false;
+      
+      touchTimer = setTimeout(() => {
+        isLoupeActive = true;
+        mouseX = t.clientX;
+        mouseY = t.clientY;
+        curX = mouseX; // snap to touch instantly to avoid sliding from old mouse position
+        curY = mouseY;
+        buildClone();
+        magCursor.classList.add('visible');
+        magZoom.classList.add('visible');
+        if (navigator.vibrate) navigator.vibrate(50);
+      }, 400); // 400ms hold required
+    }, { passive: false });
+
+    document.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      if (!isLoupeActive) {
+        // Cancel long-press if user moves finger significantly
+        if (Math.abs(t.clientX - startTouchX) > 10 || Math.abs(t.clientY - startTouchY) > 10) {
+          clearTimeout(touchTimer);
+        }
         return;
       }
+      e.preventDefault(); // prevent page scroll while panning loupe
+      mouseX = t.clientX;
+      mouseY = t.clientY;
+    }, { passive: false });
 
-      cartItemsEl.innerHTML = '';
-      cart.forEach((item, idx) => {
-        const div = document.createElement('div');
-        div.className = 'cart-item';
-        div.innerHTML = `
-          <div class="cart-item-header">
-            <span class="cart-item-title">${item.name}</span>
-            <button class="cart-item-remove" data-idx="${idx}" aria-label="Remove">×</button>
-          </div>
-          <span class="cart-item-meta">${item.desc}</span>
-          <div class="cart-qty-row">
-            <button class="cart-qty-btn" data-action="dec" data-idx="${idx}">−</button>
-            <span class="cart-qty-num">${item.qty}</span>
-            <button class="cart-qty-btn" data-action="inc" data-idx="${idx}">+</button>
-            <span class="cart-item-price">Price on inquiry</span>
-          </div>`;
-        cartItemsEl.appendChild(div);
-      });
+    const endTouch = () => {
+      clearTimeout(touchTimer);
+      if (isLoupeActive) {
+        isLoupeActive = false;
+        magCursor.classList.remove('visible');
+        magZoom.classList.remove('visible');
+      }
+    };
+    document.addEventListener('touchend', endTouch);
+    document.addEventListener('touchcancel', endTouch);
 
-      const totalItems = cart.reduce((s, i) => s + i.qty, 0);
-      cartTotal.textContent = `${totalItems} piece${totalItems > 1 ? 's' : ''} — price on inquiry`;
-
-      // qty / remove handlers
-      cartItemsEl.querySelectorAll('.cart-item-remove').forEach(btn => {
-        btn.addEventListener('click', () => { cart.splice(+btn.dataset.idx, 1); save(); renderCart(); bumpCount(); });
-      });
-      cartItemsEl.querySelectorAll('.cart-qty-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const i = +btn.dataset.idx;
-          if (btn.dataset.action === 'inc') { cart[i].qty++; }
-          else { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); }
-          save(); renderCart(); bumpCount();
-        });
-      });
-    }
-
-    function bumpCount() {
-      cartCount.classList.remove('bump');
-      void cartCount.offsetWidth; // reflow
-      cartCount.classList.add('bump');
-      setTimeout(() => cartCount.classList.remove('bump'), 300);
-    }
-
-    // ── Open / Close Cart ─────────────────────────────────────
-    function openCart() {
-      cartSidebar.classList.add('open');
-      cartOverlay.classList.add('visible');
-    }
-    function closeCart() {
-      cartSidebar.classList.remove('open');
-      cartOverlay.classList.remove('visible');
-    }
-
-    cartBtn.addEventListener('click', openCart);
-    cartClose.addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
-
-    // ── Add to Cart buttons ───────────────────────────────────
-    document.querySelectorAll('.btn-add-cart').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        const { id, name, desc } = btn.dataset;
-        const existing = cart.find(i => i.id === id);
-        if (existing) { existing.qty++; }
-        else { cart.push({ id, name, desc, qty: 1 }); }
-        save(); renderCart(); bumpCount();
-        btn.textContent = '✓ Added';
-        btn.classList.add('added');
-        setTimeout(() => { btn.textContent = '+ Add'; btn.classList.remove('added'); }, 1800);
-        openCart();
-      });
+    window.addEventListener('resize', () => {
+      magReady = false;
+      magZoomInner.innerHTML = '';
     });
 
-    // ── Buy Now buttons ───────────────────────────────────────
-    document.querySelectorAll('.btn-buy-now').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        const { id, name, desc } = btn.dataset;
-        // Add to cart if not there, then go straight to checkout
-        if (!cart.find(i => i.id === id)) {
-          cart.push({ id, name, desc, qty: 1 });
-          save(); renderCart(); bumpCount();
-        }
-        openCheckout();
+    function animateCursor() {
+      curX += (mouseX - curX) * 0.12;
+      curY += (mouseY - curY) * 0.12;
+
+      // Smoothly jump the offset to -120px when long-pressing
+      const targetOffset = isLoupeActive ? 120 : 0;
+      currentOffset += (targetOffset - currentOffset) * 0.15;
+
+      // Position the visual ring so its centre aligns with cursor (minus offset)
+      magCursor.style.transform = `translate(${curX - LENS_R}px, ${curY - LENS_R - currentOffset}px)`;
+
+      if (magReady) {
+        const scrollY = window.scrollY;
+
+        // Translate layer to match scroll position AND the offset.
+        // The transformOrigin acts around curY. The -currentOffset shift perfectly places 
+        // the magnified spot of `curY` precisely into the center of our offset visual lens!
+        const f = MAG_SCALE;
+        magZoomInner.style.top = `${-scrollY - currentOffset}px`;
+        magZoomInner.style.left = '0px';
+        magZoomInner.style.transformOrigin = `${curX}px ${curY + scrollY}px`;
+        magZoomInner.style.transform = `scale(${f})`;
+
+        // Barrel / edge-mask maps follow offset cursor in viewport space
+        const bx = Math.round(curX - LENS_R);
+        const by = Math.round(curY - LENS_R - currentOffset);
+        barrelImg.setAttribute('x', bx);
+        barrelImg.setAttribute('y', by);
+        edgeMaskImg.setAttribute('x', bx);
+        edgeMaskImg.setAttribute('y', by);
+
+        // Clip the entire overlay to the offset lens circle
+        magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+      }
+
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
       });
-    });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-    // ── Checkout Modal ────────────────────────────────────────
-    checkoutBtn.addEventListener('click', () => { closeCart(); openCheckout(); });
+    // ── Gallery system ──
+    // Each gallery: { mainImg, dots, thumbImgs, currentIndex }
+    const galleries = {};
+    let activeGalleryId = null;
 
-    function openCheckout() {
-      // Build order summary
-      const lines = cart.map(i => `<p>${i.name} × ${i.qty}<br><em>${i.desc}</em></p>`).join('');
-      const totalItems = cart.reduce((s, i) => s + i.qty, 0);
-      checkoutSummary.innerHTML = lines + `<div class="checkout-order-total"><span>[ Total items ]</span><span>${totalItems}</span></div>`;
-      hiddenOrder.value = cart.map(i => `${i.name} ×${i.qty} (${i.desc})`).join('; ');
-      checkoutModal.classList.add('open');
+    function buildDots(dotsEl, count) {
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        const d = document.createElement('div');
+        d.className = 'photo-dot';
+        dotsEl.appendChild(d);
+      }
     }
 
-    function closeCheckout() { checkoutModal.classList.remove('open'); }
+    function setGalleryIndex(id, idx, animate = true) {
+      const g = galleries[id];
+      const items = g.thumbImgs;
+      idx = (idx + items.length) % items.length;
+      g.currentIndex = idx;
 
-    checkoutModalClose.addEventListener('click', closeCheckout);
-    checkoutModalBg.addEventListener('click', closeCheckout);
+      const item = items[idx];
+      const isVideo = item.tagName.toLowerCase() === 'video';
+      const mainImg = g.mainImg;
+      const mainVid = g.mainVid;
 
-    // ── Form Submit ───────────────────────────────────────────
-    checkoutForm.addEventListener('submit', async e => {
-      e.preventDefault();
-      checkoutSubmit.textContent = 'Sending…';
-      checkoutSubmit.disabled = true;
-
-      const data = new FormData(checkoutForm);
-
-      try {
-        const res = await fetch(checkoutForm.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          closeCheckout();
-          successModal.classList.add('open');
-          cart = []; save(); renderCart();
-          checkoutForm.reset();
+      if (animate) {
+        g.viewer.classList.add('fading');
+        setTimeout(() => {
+          if (isVideo && mainVid) {
+            mainImg.style.display = 'none';
+            mainVid.style.display = 'block';
+            mainVid.src = item.src;
+            mainVid.play();
+          } else {
+            if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
+            mainImg.style.display = 'block';
+            mainImg.src = item.src;
+          }
+          g.viewer.classList.remove('fading');
+        }, 180);
+      } else {
+        if (isVideo && mainVid) {
+          mainImg.style.display = 'none';
+          mainVid.style.display = 'block';
+          mainVid.src = item.src;
+          mainVid.play();
         } else {
-          checkoutSubmit.textContent = 'Send Inquiry';
-          checkoutSubmit.disabled = false;
-          alert('Something went wrong. Please try again or email us directly.');
+          if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
+          mainImg.style.display = 'block';
+          mainImg.src = item.src;
         }
-      } catch(err) {
-        checkoutSubmit.textContent = 'Send Inquiry';
-        checkoutSubmit.disabled = false;
-        alert('Network error. Please check your connection and try again.');
       }
+
+      // update thumb active state
+      items.forEach((t, i) => t.classList.toggle('active', i === idx));
+
+      // update dots
+      g.dots.querySelectorAll('.photo-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    document.querySelectorAll('[data-gallery]').forEach(wrapper => {
+      const id = wrapper.dataset.gallery;
+      const viewer = wrapper.querySelector('.photo-viewer');
+      const mainImg = viewer.querySelector('.main-photo');
+      const dotsEl = viewer.querySelector('.photo-dots');
+      const thumbStrip = wrapper.querySelector('[data-thumbs]');
+      const allThumbImgs = Array.from(thumbStrip.querySelectorAll('img, video'));
+      const mainVid = viewer.querySelector('.main-video');
+
+      function getVisibleThumbs() {
+        return allThumbImgs.filter(el => !el.classList.contains('hidden'));
+      }
+
+      function initGallery(startIdx = 0) {
+        const visibleThumbs = getVisibleThumbs();
+        dotsEl.innerHTML = '';
+        buildDots(dotsEl, visibleThumbs.length);
+        galleries[id] = { viewer, mainImg, mainVid, dots: dotsEl, thumbImgs: visibleThumbs, currentIndex: 0 };
+        setGalleryIndex(id, startIdx, false);
+
+        dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
+          dot.addEventListener('click', () => setGalleryIndex(id, i));
+        });
+      }
+
+      // thumbnail clicks
+      allThumbImgs.forEach((thumb, i) => {
+        thumb.addEventListener('click', () => {
+          const visible = getVisibleThumbs();
+          const visIdx = visible.indexOf(thumb);
+          if (visIdx >= 0) setGalleryIndex(id, visIdx);
+        });
+      });
+
+
+      initGallery(0);
+
+      // in-page arrow buttons
+      viewer.querySelector('.prev').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex - 1));
+      viewer.querySelector('.next').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex + 1));
+
+      // click main image → open lightbox
+      mainImg.addEventListener('click', () => openLightbox(id, galleries[id].currentIndex));
+
+      // touch swipe on viewer
+      let touchStartX = 0;
+      viewer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      viewer.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) setGalleryIndex(id, galleries[id].currentIndex + (dx < 0 ? 1 : -1));
+      });
     });
 
-    // ── Success Modal ─────────────────────────────────────────
-    successClose.addEventListener('click', () => successModal.classList.remove('open'));
-    successBg.addEventListener('click', () => successModal.classList.remove('open'));
+    // ── Lightbox ──
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCounter = document.getElementById('lb-counter');
+    let lbGalleryId = null;
+    let lbIndex = 0;
 
-    // ── Keyboard close ────────────────────────────────────────
+    function openLightbox(galleryId, idx) {
+      lbGalleryId = galleryId;
+      lbIndex = idx;
+      if (lbCounter) lbCounter.style.display = 'block';
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      if (lbPrev) lbPrev.style.display = 'block';
+      if (lbNext) lbNext.style.display = 'block';
+      updateLightbox(false);
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      activeGalleryId = galleryId;
+      
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        cloneLb.style.position = 'absolute';
+        cloneLb.style.top = window.scrollY + 'px';
+        cloneLb.style.bottom = 'auto';
+        cloneLb.style.height = window.innerHeight + 'px';
+      }
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      activeGalleryId = null;
+      
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) cloneLb.classList.remove('open');
+    }
+
+    function updateLightbox(animate = true) {
+      const imgs = galleries[lbGalleryId].thumbImgs;
+      lbIndex = (lbIndex + imgs.length) % imgs.length;
+      const src = imgs[lbIndex].src;
+      const syncClone = () => {
+        const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+        if (cloneLb) {
+          const cloneImg = cloneLb.querySelector('#lb-img');
+          if (cloneImg) {
+            cloneImg.src = src;
+            cloneImg.classList.remove('fading');
+          }
+        }
+      };
+
+      if (animate) {
+        lbImg.classList.add('fading');
+        setTimeout(() => {
+          lbImg.src = src;
+          lbImg.classList.remove('fading');
+          syncClone();
+        }, 180);
+      } else {
+        lbImg.src = src;
+        syncClone();
+      }
+      lbCounter.textContent = `${lbIndex + 1} / ${imgs.length}`;
+      // sync gallery
+      setGalleryIndex(lbGalleryId, lbIndex, false);
+    }
+
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', () => { lbIndex--; updateLightbox(); });
+    document.getElementById('lb-next').addEventListener('click', () => { lbIndex++; updateLightbox(); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+    // keyboard
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        closeCart();
-        closeCheckout();
-        successModal.classList.remove('open');
+      if (lb.classList.contains('open')) {
+        if (e.key === 'ArrowLeft') { lbIndex--; updateLightbox(); }
+        else if (e.key === 'ArrowRight') { lbIndex++; updateLightbox(); }
+        else if (e.key === 'Escape') closeLightbox();
       }
     });
 
-    // ── Prevent cart/modal from triggering magnifier clone issues ─
-    const uiIds = ['cart-btn','cart-sidebar','cart-overlay','checkout-modal','success-modal'];
-    uiIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.setAttribute('data-no-clone', 'true');
+    // lightbox touch swipe
+    let lbTouchX = 0;
+    lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - lbTouchX;
+      if (Math.abs(dx) > 40) { lbIndex += (dx < 0 ? 1 : -1); updateLightbox(); }
     });
-
-    // ── Init ──────────────────────────────────────────────────
-    renderCart();
-  })();
   </script>
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
-    lucide.createIcons({
-      attrs: {
-        width: 16,
-        height: 16,
-        'stroke-width': 1
+        // ── Magnifying glass cursor + magnification ────────────────
+    const magCursor    = document.getElementById('mag-cursor');
+    const magZoom      = document.getElementById('mag-zoom');
+    const magZoomInner = document.getElementById('mag-zoom-inner');
+    const barrelImg    = document.getElementById('barrel-map-img');
+
+    const LENS_R    = 168;  // px — lens radius
+    const MAG_SCALE = 1.5;  // zoom factor inside the lens
+    const EDGE_BLUR_W = 10; // px — width of blur zone at border
+
+    const edgeMaskImg = document.getElementById('edge-mask-img');
+
+    // ── Generate barrel distortion map (once) ────────────────────
+    (function initBarrelMap() {
+      const size = LENS_R * 2; // 224px
+
+      // --- barrel displacement map ---
+      const c = document.createElement('canvas');
+      c.width = c.height = size;
+      const ctx = c.getContext('2d');
+      const img = ctx.createImageData(size, size);
+      const d = img.data;
+      const h = size / 2;
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+          const nx = (x - h) / h;
+          const ny = (y - h) / h;
+          const r2 = nx * nx + ny * ny;
+          // Flat zone: central ~105px diameter (52px radius in a 168px-radius lens)
+          const flatR = 52 / h;
+          const flatR2 = flatR * flatR;
+          const str = (r2 > flatR2 && r2 < 1) ? r2 * r2 * 130 : 0;
+          const i = (y * size + x) * 4;
+          d[i]   = Math.min(255, Math.max(0, Math.round(128 + nx * str)));
+          d[i+1] = Math.min(255, Math.max(0, Math.round(128 + ny * str)));
+          d[i+2] = 0;
+          d[i+3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      barrelImg.setAttribute('href', c.toDataURL('image/png'));
+      barrelImg.setAttribute('width', size);
+      barrelImg.setAttribute('height', size);
+
+      // --- edge blur mask: 0% at 20px from border, 100% at 5px from border, 100% at edge ---
+      const ec = document.createElement('canvas');
+      ec.width = ec.height = size;
+      const ectx = ec.getContext('2d');
+      ectx.clearRect(0, 0, size, size);
+      // Inner radius = R-20 (0% blur), stops at R-5 (100% blur), stays opaque to R
+      const grd = ectx.createRadialGradient(h, h, h - 20, h, h, h - 5);
+      grd.addColorStop(0, 'rgba(255,255,255,0)');
+      grd.addColorStop(1, 'rgba(255,255,255,1)');
+      ectx.fillStyle = grd;
+      ectx.beginPath();
+      ectx.arc(h, h, h, 0, Math.PI * 2);
+      ectx.fill();
+      edgeMaskImg.setAttribute('href', ec.toDataURL('image/png'));
+      edgeMaskImg.setAttribute('width', size);
+      edgeMaskImg.setAttribute('height', size);
+
+      magZoom.style.filter = 'url(#barrel-lens)';
+    })();
+
+    let mouseX = 0, mouseY = 0;
+    let curX = 0, curY = 0;
+    let magReady = false;
+
+    // ── Touch / Mobile State ─────────────────────────────────────
+    let touchTimer = null;
+    let isLoupeActive = false;
+    let startTouchX = 0;
+    let startTouchY = 0;
+    let currentOffset = 0; // smoothly animates to 120 on touch
+
+
+    // Build DOM clone once on first mouse entry
+    function buildClone() {
+      if (magReady) return;
+      magReady = true;
+      Array.from(document.body.children).forEach(child => {
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
+        const clone = child.cloneNode(true);
+        clone.querySelectorAll('script').forEach(s => s.remove());
+        clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
+        clone.querySelectorAll('.reveal-stagger > *').forEach(el => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+        // Ensure videos in the clone also play
+        clone.querySelectorAll('video').forEach(v => {
+          v.muted = true;
+          v.play().catch(() => {});
+        });
+        magZoomInner.appendChild(clone);
+      });
+      // Force clone to exactly match body width, accounting for scrollbars
+      magZoomInner.style.width = document.body.clientWidth + 'px';
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      // Ignore mousemove if touch loupe is active (prevents conflicts on certain touch devices)
+      if (isLoupeActive) return;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      buildClone();
+      magCursor.classList.add('visible');
+      magZoom.classList.add('visible');
+    });
+
+    document.addEventListener('mouseleave', () => {
+      magCursor.classList.remove('visible');
+      magZoom.classList.remove('visible');
+    });
+
+    // ── Touch Events for Long-Press ("Hold & Pan") ───────────────
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1) return; // ignore multi-touch
+      const t = e.touches[0];
+      startTouchX = t.clientX;
+      startTouchY = t.clientY;
+      
+      clearTimeout(touchTimer);
+      isLoupeActive = false;
+      
+      touchTimer = setTimeout(() => {
+        isLoupeActive = true;
+        mouseX = t.clientX;
+        mouseY = t.clientY;
+        curX = mouseX; // snap to touch instantly to avoid sliding from old mouse position
+        curY = mouseY;
+        buildClone();
+        magCursor.classList.add('visible');
+        magZoom.classList.add('visible');
+        if (navigator.vibrate) navigator.vibrate(50);
+      }, 400); // 400ms hold required
+    }, { passive: false });
+
+    document.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      if (!isLoupeActive) {
+        // Cancel long-press if user moves finger significantly
+        if (Math.abs(t.clientX - startTouchX) > 10 || Math.abs(t.clientY - startTouchY) > 10) {
+          clearTimeout(touchTimer);
+        }
+        return;
+      }
+      e.preventDefault(); // prevent page scroll while panning loupe
+      mouseX = t.clientX;
+      mouseY = t.clientY;
+    }, { passive: false });
+
+    const endTouch = () => {
+      clearTimeout(touchTimer);
+      if (isLoupeActive) {
+        isLoupeActive = false;
+        magCursor.classList.remove('visible');
+        magZoom.classList.remove('visible');
+      }
+    };
+    document.addEventListener('touchend', endTouch);
+    document.addEventListener('touchcancel', endTouch);
+
+    window.addEventListener('resize', () => {
+      magReady = false;
+      magZoomInner.innerHTML = '';
+    });
+
+    function animateCursor() {
+      curX += (mouseX - curX) * 0.12;
+      curY += (mouseY - curY) * 0.12;
+
+      // Smoothly jump the offset to -120px when long-pressing
+      const targetOffset = isLoupeActive ? 120 : 0;
+      currentOffset += (targetOffset - currentOffset) * 0.15;
+
+      // Position the visual ring so its centre aligns with cursor (minus offset)
+      magCursor.style.transform = `translate(${curX - LENS_R}px, ${curY - LENS_R - currentOffset}px)`;
+
+      if (magReady) {
+        const scrollY = window.scrollY;
+
+        // Translate layer to match scroll position AND the offset.
+        // The transformOrigin acts around curY. The -currentOffset shift perfectly places 
+        // the magnified spot of `curY` precisely into the center of our offset visual lens!
+        const f = MAG_SCALE;
+        magZoomInner.style.top = `${-scrollY - currentOffset}px`;
+        magZoomInner.style.left = '0px';
+        magZoomInner.style.transformOrigin = `${curX}px ${curY + scrollY}px`;
+        magZoomInner.style.transform = `scale(${f})`;
+
+        // Barrel / edge-mask maps follow offset cursor in viewport space
+        const bx = Math.round(curX - LENS_R);
+        const by = Math.round(curY - LENS_R - currentOffset);
+        barrelImg.setAttribute('x', bx);
+        barrelImg.setAttribute('y', by);
+        edgeMaskImg.setAttribute('x', bx);
+        edgeMaskImg.setAttribute('y', by);
+
+        // Clip the entire overlay to the offset lens circle
+        magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+      }
+
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ── Gallery system ──
+    // Each gallery: { mainImg, dots, thumbImgs, currentIndex }
+    const galleries = {};
+    let activeGalleryId = null;
+
+    function buildDots(dotsEl, count) {
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        const d = document.createElement('div');
+        d.className = 'photo-dot';
+        dotsEl.appendChild(d);
+      }
+    }
+
+    function setGalleryIndex(id, idx, animate = true) {
+      const g = galleries[id];
+      const items = g.thumbImgs;
+      idx = (idx + items.length) % items.length;
+      g.currentIndex = idx;
+
+      const item = items[idx];
+      const isVideo = item.tagName.toLowerCase() === 'video';
+      const mainImg = g.mainImg;
+      const mainVid = g.mainVid;
+
+      if (animate) {
+        g.viewer.classList.add('fading');
+        setTimeout(() => {
+          if (isVideo && mainVid) {
+            mainImg.style.display = 'none';
+            mainVid.style.display = 'block';
+            mainVid.src = item.src;
+            mainVid.play();
+          } else {
+            if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
+            mainImg.style.display = 'block';
+            mainImg.src = item.src;
+          }
+          g.viewer.classList.remove('fading');
+        }, 180);
+      } else {
+        if (isVideo && mainVid) {
+          mainImg.style.display = 'none';
+          mainVid.style.display = 'block';
+          mainVid.src = item.src;
+          mainVid.play();
+        } else {
+          if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
+          mainImg.style.display = 'block';
+          mainImg.src = item.src;
+        }
+      }
+
+      // update thumb active state
+      items.forEach((t, i) => t.classList.toggle('active', i === idx));
+
+      // update dots
+      g.dots.querySelectorAll('.photo-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    document.querySelectorAll('[data-gallery]').forEach(wrapper => {
+      const id = wrapper.dataset.gallery;
+      const viewer = wrapper.querySelector('.photo-viewer');
+      const mainImg = viewer.querySelector('.main-photo');
+      const dotsEl = viewer.querySelector('.photo-dots');
+      const thumbStrip = wrapper.querySelector('[data-thumbs]');
+      const allThumbImgs = Array.from(thumbStrip.querySelectorAll('img, video'));
+      const mainVid = viewer.querySelector('.main-video');
+
+      function getVisibleThumbs() {
+        return allThumbImgs.filter(el => !el.classList.contains('hidden'));
+      }
+
+      function initGallery(startIdx = 0) {
+        const visibleThumbs = getVisibleThumbs();
+        dotsEl.innerHTML = '';
+        buildDots(dotsEl, visibleThumbs.length);
+        galleries[id] = { viewer, mainImg, mainVid, dots: dotsEl, thumbImgs: visibleThumbs, currentIndex: 0 };
+        setGalleryIndex(id, startIdx, false);
+
+        dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
+          dot.addEventListener('click', () => setGalleryIndex(id, i));
+        });
+      }
+
+      // thumbnail clicks
+      allThumbImgs.forEach((thumb, i) => {
+        thumb.addEventListener('click', () => {
+          const visible = getVisibleThumbs();
+          const visIdx = visible.indexOf(thumb);
+          if (visIdx >= 0) setGalleryIndex(id, visIdx);
+        });
+      });
+
+
+      initGallery(0);
+
+      // in-page arrow buttons
+      viewer.querySelector('.prev').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex - 1));
+      viewer.querySelector('.next').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex + 1));
+
+      // click main image → open lightbox
+      mainImg.addEventListener('click', () => openLightbox(id, galleries[id].currentIndex));
+
+      // touch swipe on viewer
+      let touchStartX = 0;
+      viewer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      viewer.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) setGalleryIndex(id, galleries[id].currentIndex + (dx < 0 ? 1 : -1));
+      });
+    });
+
+    // ── Lightbox ──
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCounter = document.getElementById('lb-counter');
+    let lbGalleryId = null;
+    let lbIndex = 0;
+
+    function openLightbox(galleryId, idx) {
+      lbGalleryId = galleryId;
+      lbIndex = idx;
+      if (lbCounter) lbCounter.style.display = 'block';
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      if (lbPrev) lbPrev.style.display = 'block';
+      if (lbNext) lbNext.style.display = 'block';
+      updateLightbox(false);
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      activeGalleryId = galleryId;
+      
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        cloneLb.style.position = 'absolute';
+        cloneLb.style.top = window.scrollY + 'px';
+        cloneLb.style.bottom = 'auto';
+        cloneLb.style.height = window.innerHeight + 'px';
+      }
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      activeGalleryId = null;
+      
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) cloneLb.classList.remove('open');
+    }
+
+    function updateLightbox(animate = true) {
+      const imgs = galleries[lbGalleryId].thumbImgs;
+      lbIndex = (lbIndex + imgs.length) % imgs.length;
+      const src = imgs[lbIndex].src;
+      const syncClone = () => {
+        const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+        if (cloneLb) {
+          const cloneImg = cloneLb.querySelector('#lb-img');
+          if (cloneImg) {
+            cloneImg.src = src;
+            cloneImg.classList.remove('fading');
+          }
+        }
+      };
+
+      if (animate) {
+        lbImg.classList.add('fading');
+        setTimeout(() => {
+          lbImg.src = src;
+          lbImg.classList.remove('fading');
+          syncClone();
+        }, 180);
+      } else {
+        lbImg.src = src;
+        syncClone();
+      }
+      lbCounter.textContent = `${lbIndex + 1} / ${imgs.length}`;
+      // sync gallery
+      setGalleryIndex(lbGalleryId, lbIndex, false);
+    }
+
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', () => { lbIndex--; updateLightbox(); });
+    document.getElementById('lb-next').addEventListener('click', () => { lbIndex++; updateLightbox(); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+    // keyboard
+    document.addEventListener('keydown', e => {
+      if (lb.classList.contains('open')) {
+        if (e.key === 'ArrowLeft') { lbIndex--; updateLightbox(); }
+        else if (e.key === 'ArrowRight') { lbIndex++; updateLightbox(); }
+        else if (e.key === 'Escape') closeLightbox();
       }
     });
-  </script>
 
+    // lightbox touch swipe
+    let lbTouchX = 0;
+    lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - lbTouchX;
+      if (Math.abs(dx) > 40) { lbIndex += (dx < 0 ? 1 : -1); updateLightbox(); }
+    });
+        function openLightboxDirect(url) {
+      const lbImg = document.getElementById('lb-img');
+      const lbCounter = document.getElementById('lb-counter');
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      const lb = document.getElementById('lightbox');
+      
+      lbImg.src = url;
+      lbImg.style.display = 'block';
+      if (lbCounter) lbCounter.textContent = '';
+      if (lbPrev) lbPrev.style.display = 'none';
+      if (lbNext) lbNext.style.display = 'none';
+      
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        const cloneImg = cloneLb.querySelector('#lb-img');
+        if (cloneImg) cloneImg.src = url;
+      }
+    }
+  </script>
+  <!-- ── TRANSLATION SYSTEM ── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        nav_back:     '← Back to Archive',
+        footer_brand: 'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+      },
+      es: {
+        nav_back:     '← Volver al Archivo',
+        footer_brand: 'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
+      },
+      ru: {
+        nav_back:     '← Назад к Архиву',
+        footer_brand: 'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+      }
+    };
+
+    var lang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(l) {
+      if (!TRANSLATIONS[l]) l = 'en';
+      lang = l;
+      localStorage.setItem('babaika_lang', l);
+      document.documentElement.lang = l;
+
+      var t = TRANSLATIONS[l];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      ['en','es','ru'].forEach(function(code) {
+        ['footer-lang-', 'lang-'].forEach(function(prefix) {
+          var el = document.getElementById(prefix + code);
+          if (!el) return;
+          if (code === l) {
+            el.classList.add('active');
+            el.style.textDecoration = 'underline';
+            el.style.textUnderlineOffset = '4px';
+          } else {
+            el.classList.remove('active');
+            el.style.textDecoration = 'none';
+          }
+        });
+      });
+    }
+
+    window.setLang = function(l) { applyLang(l); };
+    applyLang(lang);
+  })();
+  </script>
 </body>
 </html>

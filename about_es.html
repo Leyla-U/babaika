@@ -75,78 +75,11 @@
       line-height: 1.9;
     }
 
-    /* ─── FOOTER ────────────────────────────────────────────── */
-    footer {
-      padding: 80px 48px 60px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 32px;
-      width: 100%;
-    }
-
-    footer .footer-brand .script {
-      font-size: 42px;
-      color: var(--text-faint);
-      letter-spacing: 0.15em;
-    }
-
-    footer .footer-brand p:not(.script) {
-      font-size: 14px;
-      color: var(--text-faint);
-      letter-spacing: 0.10em;
-      line-height: 1.6;
-      margin-top: 12px;
-    }
-
-    footer .footer-nav {
-      display: flex;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-
-    footer .footer-nav a {
-      font-size: 12px;
-      color: var(--text-faint);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      transition: color 0.2s;
-    }
-
-    footer .footer-nav a:hover,
-    footer .footer-nav a.active {
-      color: var(--text);
-    }
     
-    .footer-lang { display: flex; gap: 12px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
-    .footer-lang span, .footer-lang a {
-      cursor: pointer;
-      color: var(--text-faint) !important;
-      text-decoration: none !important;
-      transition: opacity 0.2s;
-    }
-    .footer-lang span.active, .footer-lang a.active {
-      text-decoration: underline !important;
-      text-underline-offset: 4px;
-    }
-    .footer-lang span {
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    .footer-lang span:hover, 
-
-    footer .footer-copy {
-      font-size: 11px;
-      color: var(--text-faint);
-      letter-spacing: 0.05em;
-      width: 100%;
-    }
     
     @media (max-width: 768px) {
+      .hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll, .artifact-grid, .kimono-grid { gap: 10px !important; }
        main { padding: 0 75px; margin: 80px auto; }
-       footer { padding: 60px 75px 40px; flex-direction: column; align-items: flex-start; }
     }
   
     .about-hero {
@@ -174,11 +107,71 @@
       filter: brightness(0.9) saturate(0.95);
     }
     @media (max-width: 768px) {
+      .hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll, .artifact-grid, .kimono-grid { gap: 10px !important; }
       .about-hero { height: 50vh; margin-bottom: 40px; }
       .media-grid { grid-template-columns: 1fr; }
       .media-grid video, .media-grid img { height: 300px; }
     }
-
+  
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 80px 48px 60px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+      width: 100%;
+    }
+    footer .footer-brand .script {
+      font-size: 42px;
+      color: var(--text);
+      letter-spacing: normal;
+    }
+    footer .footer-brand p:not(.script) {
+      font-size: 14px;
+      color: var(--text-faint);
+      letter-spacing: 0.10em;
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+    footer .footer-nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-nav a {
+      font-size: 12px;
+      color: var(--text-faint);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    footer .footer-nav a:hover { color: var(--text); }
+    footer .footer-copy {
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+      width: 100%;
+    }
+    .footer-lang { display: flex; gap: 12px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
+    .footer-lang span, .footer-lang a {
+      cursor: pointer;
+      color: var(--text-faint) !important;
+      text-decoration: none !important;
+      transition: opacity 0.2s;
+    }
+    .footer-lang span.active, .footer-lang a.active {
+      text-decoration: underline !important;
+      text-underline-offset: 4px;
+      color: var(--text) !important;
+    }
+    .footer-lang span:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -216,18 +209,84 @@
 
   </main>
 <!-- ── FOOTER ──────────────────────────────────────────────── -->
-<footer>
-<div class="footer-brand">
-<p class="script">Babaika</p>
-<p>Un Archivo de Paisaje Vestible.<br/><br/>El Delta del Volga, mapeado a través de textura, memoria y mito.</p>
-</div>
-<nav class="footer-nav">
-<a class="active" href="about.html">Acerca de</a>
-<a href="index.html">Capítulos</a>
-<a href="https://www.instagram.com/babaika.babaika.babaika/" rel="noopener noreferrer" target="_blank">Instagram</a>
-</nav>
-<div class="footer-lang"><a href="about.html">EN</a> / <span class="active">ES</span> / <a href="about_ru.html">RU</a></div>
-<p class="footer-copy">© 2026 Babaika</p>
-</footer>
+    <footer>
+    <div class="footer-brand">
+      <p class="script">Babaika</p>
+      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+    </div>
+    <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="about.html">About</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="index.html">Index (Main Page)</a>
+        <a href="tuman.html">01 // Tuman</a>
+        <a href="tamarisk.html">02 // Tamarisk</a>
+        <a href="poloi.html">03 // Poloi</a>
+        <a href="il.html">04 // Il</a>
+        <a href="raskaty.html">05 // Raskaty</a>
+        <a href="kamysh.html">06 // Kamysh</a>
+        <a href="cheshuya.html">07 // Cheshuya</a>
+      </nav>
+    </div>
+        <div class="footer-lang">
+      <span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span> / <span id="footer-lang-ru" onclick="setLang('ru')">RU</span>
+    </div>
+    <p class="footer-copy">© 2026 Babaika</p>
+  </footer>
+  <!-- ── TRANSLATION SYSTEM ── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        nav_back:     '← Back to Archive',
+        footer_brand: 'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+      },
+      es: {
+        nav_back:     '← Volver al Archivo',
+        footer_brand: 'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
+      },
+      ru: {
+        nav_back:     '← Назад к Архиву',
+        footer_brand: 'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+      }
+    };
+
+    var lang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(l) {
+      if (!TRANSLATIONS[l]) l = 'en';
+      lang = l;
+      localStorage.setItem('babaika_lang', l);
+      document.documentElement.lang = l;
+
+      var t = TRANSLATIONS[l];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      ['en','es','ru'].forEach(function(code) {
+        ['footer-lang-', 'lang-'].forEach(function(prefix) {
+          var el = document.getElementById(prefix + code);
+          if (!el) return;
+          if (code === l) {
+            el.classList.add('active');
+            el.style.textDecoration = 'underline';
+            el.style.textUnderlineOffset = '4px';
+          } else {
+            el.classList.remove('active');
+            el.style.textDecoration = 'none';
+          }
+        });
+      });
+    }
+
+    window.setLang = function(l) { applyLang(l); };
+    applyLang(lang);
+  })();
+  </script>
 </body>
 </html>

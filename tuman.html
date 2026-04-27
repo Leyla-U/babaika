@@ -161,7 +161,7 @@
     
     .hero-video-top {
       width: 100%;
-      aspect-ratio: 21 / 9;
+      height: 800px;
     }
     
     .hero-video-top video {
@@ -187,6 +187,7 @@
     }
 
     @media (max-width: 768px) {
+      .hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll, .artifact-grid, .kimono-grid { gap: 10px !important; }
       .page-nav {
         width: 100vw;
         padding: 20px 80px;
@@ -204,13 +205,14 @@
       .hero-text-block .hero-chapter-label { justify-self: center; }
       .hero-text-block .hero-subtitle { justify-self: center; }
       .hero-video-top {
-        aspect-ratio: 16 / 9;
+        height: 800px;
+        aspect-ratio: auto;
       }
       .hero-video-bottom {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
       }
       .hero-video-grid {
-        width: 100vw;
+        width: 100vw; gap: 10px;
       }
     }
 
@@ -274,7 +276,7 @@
     .sticky-content { position: sticky; top: 50vh; transform: translateY(-50%); }
     .kimono-sliders { display: flex; flex-direction: column; gap: 80px; width: 100%; }
     .gallery-block { width: 100%; display: flex; flex-direction: column; position: relative; }
-    .artifact-left {
+    .artifact-left { cursor: pointer;
       display: flex; flex-direction: column; justify-content: center;
     }
     .artifact-name {
@@ -297,7 +299,8 @@
       line-height: 1.9;
     }
     .photo-viewer {
-      position: relative; flex: 1; overflow: hidden; min-height: 460px;
+      position: relative; flex: 1; overflow: hidden;
+      aspect-ratio: 3 / 4;
     }
     .photo-viewer img.main-photo {
       width: 100%; height: 100%; object-fit: cover; object-position: center top;
@@ -403,47 +406,6 @@
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
     .reveal.visible { opacity: 1; transform: none; }
-
-    /* FOOTER */
-    footer {
-      padding: 72px 64px 48px;
-      
-      display: flex; justify-content: space-between;
-      align-items: flex-end; flex-wrap: wrap; gap: 32px;
-    }
-    footer .footer-brand .script { font-size: 38px; color: var(--text-faint); }
-    footer .footer-brand p:not(.script) {
-      font-size: 13px; color: var(--text-faint); letter-spacing: 0.08em; line-height: 1.6; margin-top: 10px;
-    }
-    footer .footer-nav { display: flex; gap: 32px; }
-    footer .footer-nav a {
-      font-size: 12px; color: var(--text-faint); text-decoration: none;
-      letter-spacing: 0.1em; transition: opacity 0.2s;
-    }
-    footer .footer-nav a:hover { opacity: 0.5; }
-    footer .footer-copy { font-size: 11px; color: var(--text-faint); width: 100%; }
-
-    @media (max-width: 900px) {
-      .page-nav { padding: 20px 24px; }
-      .page-nav .nav-brand { display: none; }
-      .chapter-hero-overlay { padding: 40px 24px; }
-      .info-band { grid-template-columns: 1fr; }
-      .info-col { border-right: none; border-bottom: 1px solid var(--line); padding: 40px 24px; }
-      .artifact-container { padding: 48px 24px; }
-      .artifact-grid { display: flex; flex-direction: column; gap: 40px; align-items: flex-start; width: 100%; }
-      .artifact-center { order: 1; width: 100%; min-height: 460px; }
-      .artifact-left { order: 2; width: 100%; text-align: left; }
-      .artifact-right { order: 3; width: 100%; text-align: left; }
-      .kimono-grid { display: flex; flex-direction: column; gap: 40px; }
-      .kimono-sliders { display: contents; }
-      .kimono-grid .artifact-left { order: 2; }
-      .kimono-grid .gallery-block[data-gallery="kimono1"] { order: 1; }
-      .kimono-grid .gallery-block[data-gallery="kimono2"] { order: 3; }
-      .kimono-grid .gallery-block[data-gallery="kimono3"] { order: 4; }
-      .kimono-grid .gallery-block[data-gallery="kimono4"] { order: 5; }
-      .kimono-grid .artifact-right { order: 6; }
-      footer { padding: 48px 24px 32px; flex-direction: column; align-items: flex-start; }
-    }
     /* ─── CART BUTTON (fixed top-right) ──────────────────────── */
             #cart-btn {
       display: none;
@@ -623,11 +585,7 @@
     .cart-qty-btn:hover { border-color: var(--text); }
     .cart-qty-num { font-size: 12px; color: var(--text); min-width: 16px; text-align: center; }
 
-    .cart-footer {
-      padding: 24px 32px 36px;
-      border-top: 1px solid var(--line);
-      flex-shrink: 0;
-    }
+    .cart-
     .cart-total-row {
       display: flex;
       justify-content: space-between;
@@ -930,6 +888,104 @@
       .form-row { grid-template-columns: 1fr; }
     }
 
+  
+    
+    /* ─── GLASS BUTTONS ─────────────────────────────────────────── */
+    .btn-glass {
+      border-radius: 100px !important;
+      background: var(--bg) !important;
+      border: 1px solid rgba(255, 255, 255, 0.8) !important;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+      color: var(--text) !important;
+      font-family: var(--font-mono) !important;
+      font-size: 11px !important;
+      font-weight: 300 !important;
+      letter-spacing: 0.15em !important;
+      text-transform: uppercase !important;
+      padding: 16px 24px !important;
+      cursor: none !important;
+      transition: all 0.3s ease !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-decoration: none !important;
+    }
+    .btn-glass:hover {
+      box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.08),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8) !important;
+      transform: translateY(-1px);
+      background: var(--bg-dark) !important;
+    }
+    .btn-glass:active {
+      transform: translateY(1px);
+      box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+    }
+
+  
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 80px 48px 60px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+      width: 100%;
+    }
+    footer .footer-brand .script {
+      font-size: 42px;
+      color: var(--text);
+      letter-spacing: normal;
+    }
+    footer .footer-brand p:not(.script) {
+      font-size: 14px;
+      color: var(--text-faint);
+      letter-spacing: 0.10em;
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+    footer .footer-nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-nav a {
+      font-size: 12px;
+      color: var(--text-faint);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    footer .footer-nav a:hover { color: var(--text); }
+    footer .footer-copy {
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+      width: 100%;
+    }
+    .footer-lang { display: flex; gap: 12px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
+    .footer-lang span, .footer-lang a {
+      cursor: pointer;
+      color: var(--text-faint) !important;
+      text-decoration: none !important;
+      transition: opacity 0.2s;
+    }
+    .footer-lang span.active, .footer-lang a.active {
+      text-decoration: underline !important;
+      text-underline-offset: 4px;
+      color: var(--text) !important;
+    }
+    .footer-lang span:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -1005,7 +1061,7 @@
 
   <!-- NAV -->
   <nav class="page-nav">
-    <a href="index.html">← Back to Archive</a>
+    <a href="index.html" data-i18n="nav_back">← Back to Archive</a>
     <a href="index.html" class="nav-brand script">Babaika</a>
     <a id="cart-btn-nav" href="#" onclick="document.getElementById('cart-sidebar').classList.toggle('open'); return false;">CART <span id="cart-count-nav">0</span></a>
   </nav>
@@ -1057,6 +1113,14 @@
         Luminance Diffusion: High albedo effect mutes chromatic contrast.<br><br>
         Spatial Compression: Collapses the land-water boundary into a single, low-contrast depth plane.
       </p>
+      <div style="margin-top: 40px; width: 100%;">
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777253569/tuman-drawing_bt5rt0.png" 
+             alt="Tuman Classification Drawing" 
+             style="width: 100%; cursor: zoom-in; opacity: 0.75; transition: opacity 0.3s;"
+             onmouseover="this.style.opacity='1'"
+             onmouseout="this.style.opacity='0.75'"
+             onclick="openLightboxDirect('https://res.cloudinary.com/dejpm4v8y/image/upload/v1777253569/tuman-drawing_bt5rt0.png')" />
+      </div>
     </div>
 
     <!-- RIGHT: Field Notes -->
@@ -1074,94 +1138,27 @@
     <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 01.01 ]</p>
     </div>
-    <div class="artifact-grid kimono-grid">
-      <div class="artifact-left sticky-col">
-        <div class="sticky-content">
-          <p class="artifact-name">KIMONO</p>
-          <p class="artifact-detail-row">Base: Mulberry Silk</p>
-          <p class="artifact-detail-row">Pile: Rayon</p>
-          <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-          <p class="artifact-detail-row">Length: Customizable by request</p>
-          <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-            <button class="btn-add-cart" data-id="01.01" data-name="Tuman — Kimono" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-            <button class="btn-buy-now" data-id="01.01" data-name="Tuman — Kimono" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-          </div>
+    <div class="artifact-grid">
+      <div class="artifact-left" onclick="window.location='tuman-kimono.html'">
+        <p class="artifact-name">KIMONO</p>
+        <p class="artifact-detail-row">Base: Mulberry Silk</p>
+        <p class="artifact-detail-row">Pile: Rayon</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Size: One size (length can be customized)</p>
+        <p class="artifact-detail-row">Length: Customizable by request</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='tuman-kimono.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
       </div>
-      <div class="artifact-center kimono-sliders">
-        <!-- Slider 1 -->
-        <div class="gallery-block" data-gallery="kimono1">
-          <div class="photo-viewer">
-            <img class="main-photo" alt="Kimono look" />
-            <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-            <button class="photo-nav next" aria-label="Next">&#8594;</button>
-            <div class="photo-dots"></div>
-          </div>
-          <div class="thumb-strip" data-thumbs="kimono1">
-            <img src="images/Tuman chapter/tuman kimono/babaika_film_10.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/babaika_film_11.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/babaika_film_15.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/babaika_film_18.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/babaika_film_20.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/Copy of TMN.png" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/IMG_4430 (1).png" alt="Kimono" />
-          </div>
-        </div>
-        <!-- Slider 2 -->
-        <div class="gallery-block" data-gallery="kimono2">
-          <div class="photo-viewer">
-            <img class="main-photo" alt="Kimono look" />
-            <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-            <button class="photo-nav next" aria-label="Next">&#8594;</button>
-            <div class="photo-dots"></div>
-          </div>
-          <div class="thumb-strip" data-thumbs="kimono2">
-            <img src="images/Tuman chapter/tuman kimono/SHE00077.png" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/SHE00099.png" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/SHE00116.png" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/SHE00126.png" alt="Kimono" />
-          </div>
-        </div>
-        <!-- Slider 3 -->
-        <div class="gallery-block" data-gallery="kimono3">
-          <div class="photo-viewer">
-            <img class="main-photo" alt="Kimono look" />
-            <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-            <button class="photo-nav next" aria-label="Next">&#8594;</button>
-            <div class="photo-dots"></div>
-          </div>
-          <div class="thumb-strip" data-thumbs="kimono3">
-            <img src="images/Tuman chapter/tuman kimono/IMG_3660.png" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/IMG_3664.png" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/IMG_3682.png" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/IMG_4004.png" alt="Kimono" />
-          </div>
-        </div>
-        <!-- Slider 4 -->
-        <div class="gallery-block" data-gallery="kimono4">
-          <div class="photo-viewer">
-            <img class="main-photo" alt="Kimono look" />
-            <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-            <button class="photo-nav next" aria-label="Next">&#8594;</button>
-            <div class="photo-dots"></div>
-          </div>
-          <div class="thumb-strip" data-thumbs="kimono4">
-            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_06.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_20.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_25.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_26.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/babaika_tuman_52.JPG" alt="Kimono" />
-            <img src="images/Tuman chapter/tuman kimono/Copy of TMN (2).jpg" alt="Kimono" />
-          </div>
+      <div class="artifact-center" onclick="window.location='tuman-kimono.html'">
+        <div class="photo-viewer">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777229442/babaika_film_18_aglteu.jpg" class="main-photo" alt="Kimono" style="cursor: none;" />
         </div>
       </div>
-      <div class="artifact-right sticky-col">
-        <div class="sticky-content">
-          <p class="artifact-note">
-            <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
-            Velvet was selected for its light-absorbing quality. It prevents sharp highlights, ensuring the wearer's form remains present but softened, mimicking the visual density of fog.
-          </p>
-        </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          Velvet was selected for its light-absorbing quality. It prevents sharp highlights, ensuring the wearer's form remains present but softened, mimicking the visual density of fog.
+        </p>
       </div>
     </div>
   </div>
@@ -1172,26 +1169,18 @@
       <p class="artifact-tag">[ TEXTILE ARTIFACT 01.02 ]</p>
     </div>
     <div class="artifact-grid">
-      <div class="artifact-left">
+      <div class="artifact-left" onclick="window.location='tuman-bra.html'">
         <p class="artifact-name">SOFT BRA</p>
         <p class="artifact-detail-row">Material: White Silk Chiffon</p>
         <p class="artifact-detail-row">Mulberry Silk Chiffon 8 Momme</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-        <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-          <button class="btn-add-cart" data-id="01.02" data-name="Tuman — Soft Bra" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-          <button class="btn-buy-now" data-id="01.02" data-name="Tuman — Soft Bra" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='tuman-bra.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
       </div>
-      <div class="artifact-center" data-gallery="bra">
+      <div class="artifact-center" onclick="window.location='tuman-bra.html'">
         <div class="photo-viewer">
-          <img class="main-photo" alt="Bra look" />
-          <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-          <button class="photo-nav next" aria-label="Next">&#8594;</button>
-          <div class="photo-dots"></div>
-        </div>
-        <div class="thumb-strip" data-thumbs="bra">
-          <img src="images/Tuman chapter/tuman bra/babaika_film_12.JPG" alt="Bra 1" />
-          <img src="images/Tuman chapter/tuman bra/babaika_tuman_03.JPG" alt="Bra 2" />
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777232154/babaika_film_12_kisi4o.jpg" class="main-photo" alt="Bra" style="cursor: none;" />
         </div>
       </div>
       <div class="artifact-right">
@@ -1209,26 +1198,17 @@
       <p class="artifact-tag">[ HARDWARE ARTIFACT 01.03 ]</p>
     </div>
     <div class="artifact-grid">
-      <div class="artifact-left">
+      <div class="artifact-left" onclick="window.location='tuman-earring.html'">
         <p class="artifact-name">EARRING</p>
         <p class="artifact-detail-row">Material: Silver, miniature pearl drops</p>
         <p class="artifact-detail-row">River Pearls</p>
-        <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-          <button class="btn-add-cart" data-id="01.03" data-name="Tuman — Earring" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-          <button class="btn-buy-now" data-id="01.03" data-name="Tuman — Earring" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='tuman-earring.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
       </div>
-      <div class="artifact-center" data-gallery="earring">
+      <div class="artifact-center" onclick="window.location='tuman-earring.html'">
         <div class="photo-viewer">
-          <img class="main-photo" alt="Earring" />
-          <video class="main-video" src="" autoplay loop muted playsinline style="display:none; width:100%; height:100%; object-fit:cover;"></video>
-          <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-          <button class="photo-nav next" aria-label="Next">&#8594;</button>
-          <div class="photo-dots"></div>
-        </div>
-        <div class="thumb-strip" data-thumbs="earring">
-          <img src="images/Tuman chapter/tuman earring/DSC04889.png" alt="Earring 1" />
-          <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777096239/tuman_video_earring_fkqiwa.mp4" muted playsinline style="height:72px; width:auto; object-fit:cover; cursor:none; flex-shrink:0;"></video>
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777251248/tuman-earring-bw_pzc97b.png" class="main-photo" alt="Earring" style="cursor: none;" />
         </div>
       </div>
       <div class="artifact-right">
@@ -1246,27 +1226,17 @@
       <p class="artifact-tag">[ HARDWARE ARTIFACT 01.04 ]</p>
     </div>
     <div class="artifact-grid">
-      <div class="artifact-left">
+      <div class="artifact-left" onclick="window.location='tuman-ring.html'">
         <p class="artifact-name">RING</p>
         <p class="artifact-detail-row">Material: Silver</p>
         <p class="artifact-detail-row">River Pearls</p>
-        <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-          <button class="btn-add-cart" data-id="01.04" data-name="Tuman — Ring" data-desc="Chapter 01" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-          <button class="btn-buy-now" data-id="01.04" data-name="Tuman — Ring" data-desc="Chapter 01" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='tuman-ring.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
       </div>
-      <div class="artifact-center" data-gallery="ring">
+      <div class="artifact-center" onclick="window.location='tuman-ring.html'">
         <div class="photo-viewer">
-          <img class="main-photo" alt="Ring" />
-          <video class="main-video" src="" autoplay loop muted playsinline style="display:none; width:100%; height:100%; object-fit:cover;"></video>
-          <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-          <button class="photo-nav next" aria-label="Next">&#8594;</button>
-          <div class="photo-dots"></div>
-        </div>
-        <div class="thumb-strip" data-thumbs="ring">
-          <img src="images/Tuman chapter/Tuman ring/DSC04877.png" alt="Ring 1" />
-          <img src="images/Tuman chapter/Tuman ring/DSC04880.png" alt="Ring 2" />
-          <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085507/tuman-ring_cgwnu3.mp4" muted playsinline style="height:72px; width:auto; object-fit:cover; cursor:none; flex-shrink:0;"></video>
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777251167/tuman-ring-bw_z6b1qd.png" class="main-photo" alt="Ring" style="cursor: none;" />
         </div>
       </div>
       <div class="artifact-right">
@@ -1287,17 +1257,36 @@
     <div class="lb-counter" id="lb-counter"></div>
   </div>
 
+    <div style="display: flex; justify-content: center; padding: 120px 24px 60px;">
+    <button onclick="window.location='tamarisk.html'" class="btn-glass" data-i18n="next_chapter_tamarisk">Next Chapter // Tamarisk</button>
+  </div>
+
   <!-- FOOTER -->
-  <footer>
+      <footer>
     <div class="footer-brand">
       <p class="script">Babaika</p>
-      <p>A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
     </div>
-    <nav class="footer-nav">
-      <a href="about.html">About</a>
-      <a href="index.html">Chapters</a>
-      <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </nav>
+    <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="about.html">About</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="index.html">Index (Main Page)</a>
+        <a href="tuman.html">01 // Tuman</a>
+        <a href="tamarisk.html">02 // Tamarisk</a>
+        <a href="poloi.html">03 // Poloi</a>
+        <a href="il.html">04 // Il</a>
+        <a href="raskaty.html">05 // Raskaty</a>
+        <a href="kamysh.html">06 // Kamysh</a>
+        <a href="cheshuya.html">07 // Cheshuya</a>
+      </nav>
+    </div>
+        <div class="footer-lang">
+      <span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span> / <span id="footer-lang-ru" onclick="setLang('ru')">RU</span>
+    </div>
     <p class="footer-copy">© 2026 Babaika</p>
   </footer>
 
@@ -1383,7 +1372,7 @@
       if (magReady) return;
       magReady = true;
       Array.from(document.body.children).forEach(child => {
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true') return;
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
         const clone = child.cloneNode(true);
         clone.querySelectorAll('script').forEach(s => s.remove());
         clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
@@ -1503,6 +1492,7 @@
 
         // Clip the entire overlay to the offset lens circle
         magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
       }
 
       requestAnimationFrame(animateCursor);
@@ -1640,6 +1630,11 @@
     function openLightbox(galleryId, idx) {
       lbGalleryId = galleryId;
       lbIndex = idx;
+      if (lbCounter) lbCounter.style.display = 'block';
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      if (lbPrev) lbPrev.style.display = 'block';
+      if (lbNext) lbNext.style.display = 'block';
       updateLightbox(false);
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -1740,7 +1735,7 @@
         <span class="cart-total-label">[ Total ]</span>
         <span class="cart-total-price" id="cart-total">Price on inquiry</span>
       </div>
-      <button id="checkout-btn" disabled>Proceed to Inquiry</button>
+      <button id="checkout-btn" class="btn-glass" disabled>Proceed to Inquiry</button>
       <p class="cart-note">Each artifact is handcrafted to order.<br>We'll confirm availability and timeline by email.</p>
     </div>
   </aside>
@@ -1787,7 +1782,7 @@
           <textarea id="field-sizes" name="sizes_and_notes" placeholder="Sizes (XS/S/M/L/XL), any special requests, or questions…"></textarea>
         </div>
 
-        <button type="submit" id="checkout-submit">Send Inquiry</button>
+        <button type="submit" id="checkout-submit" class="btn-glass">Send Inquiry</button>
         <p class="checkout-legal">By submitting you agree to be contacted by Babaika regarding your inquiry. No payment is taken at this stage.</p>
       </form>
     </div>
@@ -1800,7 +1795,7 @@
       <span class="script">Babaika</span>
       <p>Your inquiry has been received.</p>
       <p>We'll be in touch within 48 hours to confirm your selection, sizing, and shipping details.</p>
-      <button class="success-close" id="success-close">Continue browsing</button>
+      <button class="success-close btn-glass" id="success-close">Continue Browsing</button>
     </div>
   </div>
 
@@ -2039,7 +2034,87 @@
         'stroke-width': 1
       }
     });
+        function openLightboxDirect(url) {
+      const lbImg = document.getElementById('lb-img');
+      const lbCounter = document.getElementById('lb-counter');
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      const lb = document.getElementById('lightbox');
+      
+      lbImg.src = url;
+      lbImg.style.display = 'block';
+      if (lbCounter) lbCounter.textContent = '';
+      if (lbPrev) lbPrev.style.display = 'none';
+      if (lbNext) lbNext.style.display = 'none';
+      
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        const cloneImg = cloneLb.querySelector('#lb-img');
+        if (cloneImg) cloneImg.src = url;
+      }
+    }
   </script>
 
+
+  <!-- ── TRANSLATION SYSTEM ── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        nav_back:               '← Back to Archive',
+        btn_view:               'View',
+        next_chapter_tamarisk:  'Next Chapter // Tamarisk',
+        footer_brand:           'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+      },
+      es: {
+        nav_back:               '← Volver al Archivo',
+        btn_view:               'Ver',
+        next_chapter_tamarisk:  'Siguiente Capítulo // Tamarisk',
+        footer_brand:           'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
+      },
+      ru: {
+        nav_back:               '← Назад к Архиву',
+        btn_view:               'Посмотреть',
+        next_chapter_tamarisk:  'Следующая Глава // Tamarisk',
+        footer_brand:           'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+      }
+    };
+
+    var lang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(l) {
+      if (!TRANSLATIONS[l]) l = 'en';
+      lang = l;
+      localStorage.setItem('babaika_lang', l);
+      document.documentElement.lang = l;
+
+      var t = TRANSLATIONS[l];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      ['en','es','ru'].forEach(function(code) {
+        var el = document.getElementById('footer-lang-' + code);
+        if (!el) return;
+        if (code === l) {
+          el.classList.add('active');
+          el.style.textDecoration = 'underline';
+          el.style.textUnderlineOffset = '4px';
+        } else {
+          el.classList.remove('active');
+          el.style.textDecoration = 'none';
+        }
+      });
+    }
+
+    window.setLang = function(l) { applyLang(l); };
+    applyLang(lang);
+  })();
+  </script>
 </body>
 </html>

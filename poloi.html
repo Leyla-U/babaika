@@ -98,37 +98,123 @@
     /* white state over video */
     .page-nav.nav--light a { color: #fff; }
 
-    /* HERO */
-    .chapter-hero {
-      position: relative; width: 100%; height: 60vh; min-height: 400px; overflow: hidden;
+    /* NEW HERO LAYOUT */
+    .chapter-hero-new {
+      padding-top: 140px; /* Space for nav */
+      padding-bottom: 60px;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .chapter-hero video {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(0.82) saturate(0.88); display: block;
+
+    .hero-text-block {
+      width: 90vw;
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      margin-bottom: 36px;
     }
-    .chapter-hero-overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 56px 64px;
+
+    .hero-text-block .hero-chapter-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      justify-self: start;
+      align-self: center;
     }
-    .hero-chapter-label {
-      font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.55);
-      text-transform: uppercase; margin-bottom: 12px;
-    }
-    .hero-title {
+
+    .hero-text-block .hero-title {
       font-family: 'Figuea Granatae', cursive;
-      font-size: clamp(64px, 9vw, 120px);
-      color: #fff; line-height: 0.9; margin-bottom: 16px;
+      font-size: clamp(60px, 9vw, 120px);
+      color: var(--text);
+      line-height: 1;
+      text-align: center;
+      justify-self: center;
     }
-    .hero-subtitle {
-      font-size: 11px; letter-spacing: 0.18em; color: rgba(255,255,255,0.5);
+
+    .hero-text-block .hero-subtitle {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-faint);
+      justify-self: end;
+      align-self: center;
+    }
+
+    .hero-video-grid {
+      width: 90vw;
+      max-width: 1400px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .hero-video-top {
+      width: 100%;
+      height: 800px;
+    }
+    
+    .hero-video-top video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95);
+    }
+    
+    .hero-video-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+    }
+    
+    .hero-video-bottom video {
+      width: 100%;
+      aspect-ratio: 1 / 1.1;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95);
+    }
+
+    @media (max-width: 768px) {
+      .hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll, .artifact-grid, .kimono-grid { gap: 10px !important; }
+      .page-nav {
+        width: 100vw;
+        padding: 20px 80px;
+        transform: translateX(-50%);
+      }
+      .hero-text-block {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        text-align: center;
+        gap: 12px;
+        padding: 0 80px;
+        width: 100vw;
+        box-sizing: border-box;
+      }
+      .hero-text-block .hero-chapter-label { justify-self: center; }
+      .hero-text-block .hero-subtitle { justify-self: center; }
+      .hero-video-top {
+        height: 800px;
+        aspect-ratio: auto;
+      }
+      .hero-video-bottom {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .hero-video-grid {
+        width: 100vw; gap: 10px;
+      }
     }
 
     /* THREE-COLUMN INFO BAND */
     .info-band {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      
+      border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
     .info-col {
@@ -161,20 +247,31 @@
     }
 
     /* ARTIFACT SECTION */
-    .artifact-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .artifact-container {
+      padding: 72px 48px;
       border-bottom: 1px solid var(--line);
-      min-height: 560px;
     }
-    .artifact-left {
-      padding: 72px 64px;
-      border-right: 1px solid var(--line);
-      display: flex; flex-direction: column; justify-content: flex-start;
+    .artifact-header {
+      margin-bottom: 48px;
     }
     .artifact-tag {
-      font-size: 11px; letter-spacing: 0.2em; color: var(--text);
-      text-transform: uppercase; margin-bottom: 28px;
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.2em; color: var(--text-faint);
+      text-transform: uppercase;
+    }
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .kimono-grid { align-items: start; }
+    .sticky-col { height: 100%; position: relative; }
+    .sticky-content { position: sticky; top: 50vh; transform: translateY(-50%); }
+    .kimono-sliders { display: flex; flex-direction: column; gap: 80px; width: 100%; }
+    .gallery-block { width: 100%; display: flex; flex-direction: column; position: relative; }
+    .artifact-left { cursor: pointer;
+      display: flex; flex-direction: column; justify-content: center;
     }
     .artifact-name {
       font-size: 18px; letter-spacing: 0.15em; color: var(--text);
@@ -184,17 +281,20 @@
       font-size: 13px; color: var(--text); font-style: italic;
       line-height: 2; margin-bottom: 8px;
     }
-    .artifact-note {
-      font-size: 12px; color: var(--text); font-style: italic;
-      line-height: 1.9; margin-top: 24px; 
-      padding-top: 20px;
-    }
-    .artifact-right {
+    .artifact-center {
       position: relative; overflow: hidden; background: var(--bg);
       display: flex; flex-direction: column;
     }
+    .artifact-right {
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .artifact-note {
+      font-size: 12px; color: var(--text); font-style: italic;
+      line-height: 1.9;
+    }
     .photo-viewer {
-      position: relative; flex: 1; overflow: hidden; min-height: 460px;
+      position: relative; flex: 1; overflow: hidden;
+      aspect-ratio: 3 / 4;
     }
     .photo-viewer img.main-photo {
       width: 100%; height: 100%; object-fit: cover; object-position: center top;
@@ -205,121 +305,17 @@
     .photo-viewer img.main-photo:hover { filter: brightness(1) saturate(1); }
     .photo-viewer.fading img.main-photo { opacity: 0; }
 
-    /* IN-PAGE ARROW NAV */
-    .photo-nav {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      z-index: 10; background: rgba(238,237,235,0.7);
-      border: none; width: 36px; height: 36px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; color: var(--text);
-      opacity: 0; transition: opacity 0.2s;
-      cursor: none;
-    }
-    .photo-viewer:hover .photo-nav { opacity: 1; }
-    .photo-nav.prev { left: 12px; }
-    .photo-nav.next { right: 12px; }
-    .photo-nav:hover { background: rgba(238,237,235,0.95); opacity: 1 !important; }
-
-    /* DOT PAGINATION */
-    .photo-dots {
-      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 6px; z-index: 10;
-    }
-    .photo-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: rgba(255,255,255,0.45);
-      transition: background 0.3s, transform 0.3s;
-    }
-    .photo-dot.active {
-      background: rgba(255,255,255,0.95);
-      transform: scale(1.4);
-    }
-
-    /* THUMBNAIL STRIP */
-    .thumb-strip {
-      display: none; gap: 2px; overflow-x: auto;
-      scrollbar-width: none; -ms-overflow-style: none;
-      background: #d8d7d4; flex-shrink: 0;
-    }
-    .thumb-strip::-webkit-scrollbar { display: none; }
-    .thumb-strip img {
-      height: 72px; width: auto; flex: 0 0 auto;
-      object-fit: cover; filter: brightness(0.92) saturate(0.8);
-      transition: filter 0.3s; cursor: none;
-    }
-    .thumb-strip img:hover { filter: brightness(1) saturate(1); }
-    .thumb-strip img.active { outline: 1px solid var(--text); }
-
-    /* FULLSCREEN LIGHTBOX */
-    #lightbox {
-      position: fixed; inset: 0; z-index: 10000;
-      background: rgba(22,22,20,0.96);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    #lightbox.open { opacity: 1; pointer-events: all; }
-    #lb-img {
-      max-width: 90vw; max-height: 90vh;
-      object-fit: contain; display: block;
-      transition: opacity 0.25s ease;
-    }
-    #lb-img.fading { opacity: 0; }
-    .lb-close {
-      position: absolute; top: 24px; right: 32px;
-      background: none; border: none; color: rgba(255,255,255,0.5);
-      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em;
-      text-transform: uppercase; cursor: none;
-      transition: color 0.2s;
-    }
-    .lb-close:hover { color: #fff; }
-    .lb-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: none; border: none; color: rgba(255,255,255,0.4);
-      font-size: 28px; cursor: none; padding: 16px;
-      transition: color 0.2s;
-    }
-    .lb-arrow:hover { color: #fff; }
-    .lb-prev { left: 16px; }
-    .lb-next { right: 16px; }
-    .lb-counter {
-      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
-      font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.35);
-    }
-
-    /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* FOOTER */
-    footer {
-      padding: 72px 64px 48px;
-      
-      display: flex; justify-content: space-between;
-      align-items: flex-end; flex-wrap: wrap; gap: 32px;
-    }
-    footer .footer-brand .script { font-size: 38px; color: var(--text-faint); }
-    footer .footer-brand p:not(.script) {
-      font-size: 13px; color: var(--text-faint); letter-spacing: 0.08em; line-height: 1.6; margin-top: 10px;
-    }
-    footer .footer-nav { display: flex; gap: 32px; }
-    footer .footer-nav a {
-      font-size: 12px; color: var(--text-faint); text-decoration: none;
-      letter-spacing: 0.1em; transition: opacity 0.2s;
-    }
-    footer .footer-nav a:hover { opacity: 0.5; }
-    footer .footer-copy { font-size: 11px; color: var(--text-faint); width: 100%; }
-
     @media (max-width: 900px) {
       .page-nav { padding: 20px 24px; }
       .page-nav .nav-brand { display: none; }
       .chapter-hero-overlay { padding: 40px 24px; }
       .info-band { grid-template-columns: 1fr; }
       .info-col { border-right: none; border-bottom: 1px solid var(--line); padding: 40px 24px; }
-      .artifact-section { display: flex; flex-direction: column; }
-      .artifact-left { order: 2; padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--line); }
-      .artifact-right { order: 1; min-height: 460px; width: 100%; }
-      footer { padding: 48px 24px 32px; flex-direction: column; align-items: flex-start; }
+      .artifact-container { padding: 48px 24px; }
+      .artifact-grid { display: flex; flex-direction: column; gap: 40px; align-items: flex-start; width: 100%; }
+      .artifact-center { order: 1; width: 100%; }
+      .artifact-left { cursor: pointer; order: 2; width: 100%; text-align: left; margin-bottom: 30px; }
+      .artifact-right { order: 3; width: 100%; text-align: left; }
     }
     /* ─── CART BUTTON (fixed top-right) ──────────────────────── */
             #cart-btn {
@@ -500,11 +496,7 @@
     .cart-qty-btn:hover { border-color: var(--text); }
     .cart-qty-num { font-size: 12px; color: var(--text); min-width: 16px; text-align: center; }
 
-    .cart-footer {
-      padding: 24px 32px 36px;
-      border-top: 1px solid var(--line);
-      flex-shrink: 0;
-    }
+    .cart-
     .cart-total-row {
       display: flex;
       justify-content: space-between;
@@ -807,6 +799,103 @@
       .form-row { grid-template-columns: 1fr; }
     }
 
+  
+    
+    /* ─── GLASS BUTTONS ─────────────────────────────────────────── */
+    .btn-glass {
+      border-radius: 100px !important;
+      background: var(--bg) !important;
+      border: 1px solid rgba(255, 255, 255, 0.8) !important;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+      color: var(--text) !important;
+      font-family: var(--font-mono) !important;
+      font-size: 11px !important;
+      font-weight: 300 !important;
+      letter-spacing: 0.15em !important;
+      text-transform: uppercase !important;
+      padding: 16px 24px !important;
+      cursor: none !important;
+      transition: all 0.3s ease !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-decoration: none !important;
+    }
+    .btn-glass:hover {
+      box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.08),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8) !important;
+      transform: translateY(-1px);
+      background: var(--bg-dark) !important;
+    }
+    .btn-glass:active {
+      transform: translateY(1px);
+      box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+    }
+  
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 80px 48px 60px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+      width: 100%;
+    }
+    footer .footer-brand .script {
+      font-size: 42px;
+      color: var(--text);
+      letter-spacing: normal;
+    }
+    footer .footer-brand p:not(.script) {
+      font-size: 14px;
+      color: var(--text-faint);
+      letter-spacing: 0.10em;
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+    footer .footer-nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-nav a {
+      font-size: 12px;
+      color: var(--text-faint);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    footer .footer-nav a:hover { color: var(--text); }
+    footer .footer-copy {
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+      width: 100%;
+    }
+    .footer-lang { display: flex; gap: 12px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
+    .footer-lang span, .footer-lang a {
+      cursor: pointer;
+      color: var(--text-faint) !important;
+      text-decoration: none !important;
+      transition: opacity 0.2s;
+    }
+    .footer-lang span.active, .footer-lang a.active {
+      text-decoration: underline !important;
+      text-underline-offset: 4px;
+      color: var(--text) !important;
+    }
+    .footer-lang span:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -882,19 +971,27 @@
 
   <!-- NAV -->
   <nav class="page-nav">
-    <a href="index.html">← Back to Archive</a>
+    <a href="index.html" data-i18n="nav_back">← Back to Archive</a>
     <a href="index.html" class="nav-brand script">Babaika</a>
     <a href="about.html">About</a>
   </nav>
 
   <!-- HERO -->
-  <section class="chapter-hero">
-    <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969569/poloi_id3nuc.mp4"
-           autoplay loop muted playsinline></video>
-    <div class="chapter-hero-overlay">
+  <section class="chapter-hero-new">
+    <div class="hero-text-block">
       <p class="hero-chapter-label">Chapter 03:</p>
       <h1 class="hero-title script">Polói</h1>
       <p class="hero-subtitle">// The Seasonal Floodplains</p>
+    </div>
+    <div class="hero-video-grid reveal">
+      <div class="hero-video-top">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969569/poloi_id3nuc.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="hero-video-bottom">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777172643/poloic_uyjq9u.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088810/poloi-video_aw19zc.mp4" autoplay loop muted playsinline></video>
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081971/poloi-chiffon-fabric_pcsqfm.mp4" autoplay loop muted playsinline></video>
+      </div>
     </div>
   </section>
 
@@ -923,6 +1020,14 @@
       <p class="col-body">
         Reflective Logic: Still surface mimics the sky evenly due to minimal current disturbance.<br><br>Sedimentation: High-rate deposition of nutrient-rich alluvial material.
       </p>
+      <div style="margin-top: 40px; width: 100%;">
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777264681/Group_14_yvv1cv.png" 
+             alt="Polói Classification Drawing" 
+             style="width: 100%; cursor: zoom-in; opacity: 0.75; transition: opacity 0.3s;"
+             onmouseover="this.style.opacity='1'"
+             onmouseout="this.style.opacity='0.75'"
+             onclick="openLightboxDirect('https://res.cloudinary.com/dejpm4v8y/image/upload/v1777264681/Group_14_yvv1cv.png')" />
+      </div>
     </div>
 
     <!-- RIGHT: Field Notes -->
@@ -936,149 +1041,149 @@
   </div>
 
   
-  <!-- ARTIFACT 01: KIMONO -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <!-- ARTIFACT 01: KIMONO (Chiffon) -->
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 03.01 ]</p>
-      <p class="artifact-name">KIMONO</p>
-      <p class="artifact-detail-row">Material: Blue chiffon silk</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        Selected for its weightless transparency. When worn, the blue chiffon functions exactly as the polói water does—as a thin, fluid layer that covers the body in the color of the reflected sky.
-      </p>
-      
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="03.01" data-name="Polói — Kimono" data-desc="Blue chiffon silk" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="03.01" data-name="Polói — Kimono" data-desc="Blue chiffon silk" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="03_01">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="KIMONO look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left" onclick="window.location='poloi-kimono.html'">
+        <p class="artifact-name">POLÓI KIMONO</p>
+        <p class="artifact-detail-row">Material: Blue chiffon silk</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Size: One size (length can be customized)</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='poloi-kimono.html'" class="btn-glass" style="width:100%;">View</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="03_01">
-        <img src="images/kimono-blue.png" alt="KIMONO 1" />
-<img src="images/water.png" alt="KIMONO 2" />
+      <div class="artifact-center" onclick="window.location='poloi-kimono.html'">
+        <div class="photo-viewer">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173937/babaika_film_03_hnyeed.jpg" class="main-photo" alt="Kimono" style="cursor: none;" />
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          Selected for its weightless transparency. When worn, the blue chiffon functions exactly as the polói water does—as a thin, fluid layer that covers the body in the color of the reflected sky.
+        </p>
       </div>
     </div>
   </div>
 
-  <!-- ARTIFACT 02: KIMONO -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <!-- ARTIFACT 02: KIMONO (Cotton) -->
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 03.02 ]</p>
-      <p class="artifact-name">KIMONO</p>
-      <p class="artifact-detail-row">Material: Silk cotton poplin</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        This fabric was chosen for its optical instability. It shifts color between golden brown (the silted riverbed) and blue (the sky). It captures the dual nature of the shallow water—the tension between what lies beneath and what is reflected on top.
-      </p>
-      
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="03.02" data-name="Polói — Kimono" data-desc="Silk cotton poplin" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="03.02" data-name="Polói — Kimono" data-desc="Silk cotton poplin" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="03_02">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="KIMONO look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left" onclick="window.location='poloi-kimono.html'">
+        <p class="artifact-name">POLÓI KIMONO</p>
+        <p class="artifact-detail-row">Material: 50% Cotton 50% Silk Poplin</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Size: One size (length can be customized)</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='poloi-kimono.html'" class="btn-glass" style="width:100%;">View</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="03_02">
-        <img src="images/kimono-blue.png" alt="KIMONO 1" />
-<img src="images/water.png" alt="KIMONO 2" />
+      <div class="artifact-center" onclick="window.location='poloi-kimono.html'">
+        <div class="photo-viewer">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777233449/poloidd_bzraoq.png" class="main-photo" alt="Kimono Cotton" style="cursor: none;" />
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          This fabric was chosen for its optical instability. It shifts color between golden brown (the silted riverbed) and blue (the sky). It captures the dual nature of the shallow water.
+        </p>
       </div>
     </div>
   </div>
 
   <!-- ARTIFACT 03: BRA -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 03.03 ]</p>
-      <p class="artifact-name">BRA</p>
-      <p class="artifact-detail-row">Material: Blue chiffon silk</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        Selected for its weightless transparency. When worn, the blue chiffon functions exactly as the polói water does—as a thin, fluid layer that covers the body in the color of the reflected sky.
-      </p>
-      
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="03.03" data-name="Polói — Bra" data-desc="Blue chiffon silk" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="03.03" data-name="Polói — Bra" data-desc="Blue chiffon silk" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
     </div>
-    <div class="artifact-right" data-gallery="03_03">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="BRA look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left" onclick="window.location='poloi-bra.html'">
+        <p class="artifact-name">SOFT BRA</p>
+        <p class="artifact-detail-row">Material: Blue chiffon silk</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='poloi-bra.html'" class="btn-glass" style="width:100%;">View</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="03_03">
-        <img src="images/kimono-blue.png" alt="BRA 1" />
-<img src="images/water.png" alt="BRA 2" />
+      <div class="artifact-center" onclick="window.location='poloi-bra.html'">
+        <div class="photo-viewer">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173884/babaika_film_24_fbfgiy.jpg" class="main-photo" alt="Bra" style="cursor: none;" />
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          Selected for its weightless transparency. When worn, the blue chiffon functions exactly as the polói water does—as a thin, fluid layer that covers the body in the color of the reflected sky.
+        </p>
       </div>
     </div>
   </div>
 
-  <!-- ARTIFACT 04: SCARF -->
-  <div class="artifact-section reveal">
-    <div class="artifact-left">
-      <p class="artifact-tag">[ TEXTILE ARTIFACT 03.04 ]</p>
-      <p class="artifact-name">SCARF</p>
-      <p class="artifact-detail-row">Material: Blue chiffon silk</p>
-      <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-      <p class="artifact-note">
-        <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br>
-        Selected for its weightless transparency. When worn, the blue chiffon functions exactly as the polói water does—as a thin, fluid layer that covers the body in the color of the reflected sky.
-      </p>
-      
-      <div class="artifact-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn-add-cart" data-id="03.04" data-name="Polói — Scarf" data-desc="Blue chiffon silk" style="flex:1; padding:12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer;">+ ADD</button>
-        <button class="btn-buy-now" data-id="03.04" data-name="Polói — Scarf" data-desc="Blue chiffon silk" style="flex:1; padding:12px; background:var(--text-faint); border:1px solid var(--text-faint); color:#fff; cursor:pointer;">INQUIRE</button>
-      </div>
+
+  <!-- ARTIFACT 05: RING -->
+  <div class="artifact-container reveal">
+    <div class="artifact-header">
+      <p class="artifact-tag">[ HARDWARE ARTIFACT 03.04 ]</p>
     </div>
-    <div class="artifact-right" data-gallery="03_04">
-      <div class="photo-viewer">
-        <img class="main-photo" alt="SCARF look" />
-        <button class="photo-nav prev" aria-label="Previous">&#8592;</button>
-        <button class="photo-nav next" aria-label="Next">&#8594;</button>
-        <div class="photo-dots"></div>
+    <div class="artifact-grid">
+      <div class="artifact-left" onclick="window.location='poloi-ring.html'">
+        <p class="artifact-name">THE FLOODED SURFACE</p>
+        <p class="artifact-detail-row">Material: Sculpted silver.</p>
+        <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button onclick="window.location='poloi-ring.html'" class="btn-glass" style="width:100%;">View</button>
+        </div>
       </div>
-      <div class="thumb-strip" data-thumbs="03_04">
-        <img src="images/kimono-blue.png" alt="SCARF 1" />
-<img src="images/water.png" alt="SCARF 2" />
+      <div class="artifact-center" onclick="window.location='poloi-ring.html'">
+        <div class="photo-viewer">
+          <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777257313/poloi_ring_bw_ut3b82.png" class="main-photo" alt="Ring" style="cursor: none;" />
+        </div>
+      </div>
+      <div class="artifact-right">
+        <p class="artifact-note">
+          <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
+          Translates the subtle kinetic energy of the shallow water claiming the land. The silver is sculpted to capture a continuous field of small, undulating waves - freezing the exact physical tension of the fluid layer as it evenly covers and consumes the terrestrial surface beneath it.
+        </p>
       </div>
     </div>
   </div>
-\n  <!-- LIGHTBOX -->
-  <div id="lightbox">
-    <button class="lb-close" id="lb-close">[ CLOSE ]</button>
-    <button class="lb-arrow lb-prev" id="lb-prev">&#8592;</button>
-    <img id="lb-img" src="" alt="" />
-    <button class="lb-arrow lb-next" id="lb-next">&#8594;</button>
-    <div class="lb-counter" id="lb-counter"></div>
+
+
+    <div style="display: flex; justify-content: center; padding: 120px 24px 60px;">
+    <button onclick="window.location='il.html'" class="btn-glass">Next Chapter // Il</button>
   </div>
 
   <!-- FOOTER -->
-  <footer>
+      <footer>
     <div class="footer-brand">
       <p class="script">Babaika</p>
-      <p>A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
     </div>
-    <nav class="footer-nav">
-      <a href="about.html">About</a>
-      <a href="index.html">Chapters</a>
-      <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </nav>
+    <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="about.html">About</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="index.html">Index (Main Page)</a>
+        <a href="tuman.html">01 // Tuman</a>
+        <a href="tamarisk.html">02 // Tamarisk</a>
+        <a href="poloi.html">03 // Poloi</a>
+        <a href="il.html">04 // Il</a>
+        <a href="raskaty.html">05 // Raskaty</a>
+        <a href="kamysh.html">06 // Kamysh</a>
+        <a href="cheshuya.html">07 // Cheshuya</a>
+      </nav>
+    </div>
+        <div class="footer-lang">
+      <span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span> / <span id="footer-lang-ru" onclick="setLang('ru')">RU</span>
+    </div>
     <p class="footer-copy">© 2026 Babaika</p>
   </footer>
 
@@ -1164,7 +1269,7 @@
       if (magReady) return;
       magReady = true;
       Array.from(document.body.children).forEach(child => {
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true') return;
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
         const clone = child.cloneNode(true);
         clone.querySelectorAll('script').forEach(s => s.remove());
         clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
@@ -1284,6 +1389,7 @@
 
         // Clip the entire overlay to the offset lens circle
         magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
       }
 
       requestAnimationFrame(animateCursor);
@@ -1396,6 +1502,11 @@
     function openLightbox(galleryId, idx) {
       lbGalleryId = galleryId;
       lbIndex = idx;
+      if (lbCounter) lbCounter.style.display = 'block';
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      if (lbPrev) lbPrev.style.display = 'block';
+      if (lbNext) lbNext.style.display = 'block';
       updateLightbox(false);
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -1447,6 +1558,29 @@
       const dx = e.changedTouches[0].clientX - lbTouchX;
       if (Math.abs(dx) > 40) { lbIndex += (dx < 0 ? 1 : -1); updateLightbox(); }
     });
+    function openLightboxDirect(url) {
+      const lbImg = document.getElementById('lb-img');
+      const lbCounter = document.getElementById('lb-counter');
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      const lb = document.getElementById('lightbox');
+      
+      lbImg.src = url;
+      lbImg.style.display = 'block';
+      if (lbCounter) lbCounter.textContent = '';
+      if (lbPrev) lbPrev.style.display = 'none';
+      if (lbNext) lbNext.style.display = 'none';
+      
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        const cloneImg = cloneLb.querySelector('#lb-img');
+        if (cloneImg) cloneImg.src = url;
+      }
+    }
   </script>
   <!-- ── CART BUTTON ────────────────────────────────────────────── -->
   <button id="cart-btn" aria-label="Open cart">
@@ -1471,7 +1605,7 @@
         <span class="cart-total-label">[ Total ]</span>
         <span class="cart-total-price" id="cart-total">Price on inquiry</span>
       </div>
-      <button id="checkout-btn" disabled>Proceed to Inquiry</button>
+      <button id="checkout-btn" class="btn-glass" disabled>Proceed to Inquiry</button>
       <p class="cart-note">Each artifact is handcrafted to order.<br>We'll confirm availability and timeline by email.</p>
     </div>
   </aside>
@@ -1518,7 +1652,7 @@
           <textarea id="field-sizes" name="sizes_and_notes" placeholder="Sizes (XS/S/M/L/XL), any special requests, or questions…"></textarea>
         </div>
 
-        <button type="submit" id="checkout-submit">Send Inquiry</button>
+        <button type="submit" id="checkout-submit" class="btn-glass">Send Inquiry</button>
         <p class="checkout-legal">By submitting you agree to be contacted by Babaika regarding your inquiry. No payment is taken at this stage.</p>
       </form>
     </div>
@@ -1531,7 +1665,7 @@
       <span class="script">Babaika</span>
       <p>Your inquiry has been received.</p>
       <p>We'll be in touch within 48 hours to confirm your selection, sizing, and shipping details.</p>
-      <button class="success-close" id="success-close">Continue browsing</button>
+      <button class="success-close btn-glass" id="success-close">Continue Browsing</button>
     </div>
   </div>
 
@@ -1756,6 +1890,29 @@
     // ── Init ──────────────────────────────────────────────────
     renderCart();
   })();
+    function openLightboxDirect(url) {
+      const lbImg = document.getElementById('lb-img');
+      const lbCounter = document.getElementById('lb-counter');
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      const lb = document.getElementById('lightbox');
+      
+      lbImg.src = url;
+      lbImg.style.display = 'block';
+      if (lbCounter) lbCounter.textContent = '';
+      if (lbPrev) lbPrev.style.display = 'none';
+      if (lbNext) lbNext.style.display = 'none';
+      
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        const cloneImg = cloneLb.querySelector('#lb-img');
+        if (cloneImg) cloneImg.src = url;
+      }
+    }
   </script>
 
   <!-- Lucide Icons -->
@@ -1768,7 +1925,81 @@
         'stroke-width': 1
       }
     });
-  </script>
+    function openLightboxDirect(url) {
+      const lbImg = document.getElementById('lb-img');
+      const lbCounter = document.getElementById('lb-counter');
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      const lb = document.getElementById('lightbox');
+      
+      lbImg.src = url;
+      lbImg.style.display = 'block';
+      if (lbCounter) lbCounter.textContent = '';
+      if (lbPrev) lbPrev.style.display = 'none';
+      if (lbNext) lbNext.style.display = 'none';
+      
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
 
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        const cloneImg = cloneLb.querySelector('#lb-img');
+        if (cloneImg) cloneImg.src = url;
+      }
+    }
+  </script>
+  <!-- ── TRANSLATION SYSTEM ── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        nav_back:     '← Back to Archive',
+        footer_brand: 'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+      },
+      es: {
+        nav_back:     '← Volver al Archivo',
+        footer_brand: 'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
+      },
+      ru: {
+        nav_back:     '← Назад к Архиву',
+        footer_brand: 'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+      }
+    };
+
+    var lang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(l) {
+      if (!TRANSLATIONS[l]) l = 'en';
+      lang = l;
+      localStorage.setItem('babaika_lang', l);
+      document.documentElement.lang = l;
+
+      var t = TRANSLATIONS[l];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      ['en','es','ru'].forEach(function(code) {
+        ['footer-lang-', 'lang-'].forEach(function(prefix) {
+          var el = document.getElementById(prefix + code);
+          if (!el) return;
+          if (code === l) {
+            el.classList.add('active');
+            el.style.textDecoration = 'underline';
+            el.style.textUnderlineOffset = '4px';
+          } else {
+            el.classList.remove('active');
+            el.style.textDecoration = 'none';
+          }
+        });
+      });
+    }
+
+    window.setLang = function(l) { applyLang(l); };
+    applyLang(lang);
+  })();
+  </script>
 </body>
 </html>

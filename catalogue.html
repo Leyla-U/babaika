@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Babaika — Catalogue</title>
+  <meta name="description" content="Catalogue of all Babaika products. A wearable landscape archive." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #EEEDEB;
+      --text: #535E69;
+      --text-muted: #888880;
+      --text-faint: #b0aea8;
+      --line: rgba(60,60,55,0.18);
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 100;
+      line-height: 1.7;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      cursor: none;
+    }
+
+    @font-face {
+      font-family: 'Figuea Granatae';
+      src: url('fonts/Figuea_Granatae.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .script {
+      font-family: 'Figuea Granatae', 'Georgia', cursive;
+      font-weight: 400;
+    }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    .page-nav { 
+      position: fixed; 
+      top: 0; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      z-index: 100; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      max-width: 1400px; 
+      width: 90vw; 
+      padding: 28px 0; 
+      box-sizing: border-box; 
+    }
+    .page-nav a {
+      font-size: 11px; 
+      color: var(--text); 
+      text-decoration: none;
+      letter-spacing: 0.15em; 
+      text-transform: uppercase;
+      transition: color 0.4s ease, opacity 0.2s;
+    }
+    .page-nav .nav-brand { 
+      font-family: 'Figuea Granatae', cursive; 
+      font-size: 28px; 
+      letter-spacing: normal; 
+      text-transform: none; 
+    }
+    .page-nav a:hover { opacity: 0.6; }
+
+    /* ─── CATALOGUE CONTENT ────────────────────────────────────── */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 90vw;
+      margin: 140px auto 120px;
+      padding: 0;
+    }
+
+    .catalogue-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .catalogue-title {
+      font-family: 'Figuea Granatae', cursive;
+      font-size: clamp(48px, 6vw, 80px);
+      color: var(--text);
+      line-height: 1;
+    }
+    .catalogue-subtitle {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-top: 16px;
+    }
+
+    .cat-chapter {
+      margin-bottom: 80px;
+    }
+
+    .cat-chapter-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 8px;
+    }
+
+    .cat-chapter-title {
+      font-family: 'Figuea Granatae', cursive;
+      font-size: 40px;
+      color: var(--text);
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+
+    .cat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .cat-item {
+      transition: opacity 0.2s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .cat-item:hover { opacity: 0.6; }
+
+    .cat-item-thumb {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: var(--line);
+    }
+
+    .cat-item-thumb img,
+    .cat-item-thumb video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cat-item-name {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      display: block;
+    }
+
+    .cat-item-desc {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-faint);
+      display: block;
+      margin-top: 4px;
+    }
+
+    
+    
+    @media (max-width: 768px) {
+       main { padding: 0; width: 90vw; margin: 100px auto 80px; }
+       .cat-row { gap: 8px; }
+       .cat-item-name { font-size: 8px; }
+       .cat-item-desc { font-size: 8px; }
+       .page-nav { padding: 20px 0; }
+    }
+
+    /* ── MAGNIFYING GLASS ── */
+    #mag-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 336px; height: 336px;
+      pointer-events: none;
+      z-index: 99999;
+      opacity: 0;
+      transition: opacity 0.2s;
+      will-change: transform;
+    }
+    #mag-cursor.visible { opacity: 1; }
+    #mag-zoom {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99998;
+      opacity: 0;
+      transition: opacity 0.3s;
+      overflow: hidden;
+    }
+    #mag-zoom.visible { opacity: 1; }
+    #mag-zoom-inner {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+  
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 80px 48px 60px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+      width: 100%;
+    }
+    footer .footer-brand .script {
+      font-size: 42px;
+      color: var(--text);
+      letter-spacing: normal;
+    }
+    footer .footer-brand p:not(.script) {
+      font-size: 14px;
+      color: var(--text-faint);
+      letter-spacing: 0.10em;
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+    footer .footer-nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-nav a {
+      font-size: 12px;
+      color: var(--text-faint);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    footer .footer-nav a:hover { color: var(--text); }
+    footer .footer-copy {
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+      width: 100%;
+    }
+    .footer-lang { display: flex; gap: 12px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
+    .footer-lang span, .footer-lang a {
+      cursor: pointer;
+      color: var(--text-faint) !important;
+      text-decoration: none !important;
+      transition: opacity 0.2s;
+    }
+    .footer-lang span.active, .footer-lang a.active {
+      text-decoration: underline !important;
+      text-underline-offset: 4px;
+      color: var(--text) !important;
+    }
+    .footer-lang span:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── SVG FILTER DEFS ─── -->
+  <svg id="filter-svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="barrel-lens" primitiveUnits="userSpaceOnUse" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+        <feImage id="barrel-map-img" result="dmap" x="0" y="0" width="224" height="224" preserveAspectRatio="none" href=""/>
+        <feFlood flood-color="rgb(128,128,128)" flood-opacity="1" result="neutral"/>
+        <feComposite in="dmap" in2="neutral" operator="over" result="combined"/>
+        <feDisplacementMap in="SourceGraphic" in2="combined" scale="110" xChannelSelector="R" yChannelSelector="G" result="distorted"/>
+        <feGaussianBlur in="distorted" stdDeviation="4" result="blurred"/>
+        <feImage id="edge-mask-img" result="edgemask" x="0" y="0" width="224" height="224" preserveAspectRatio="none" href=""/>
+        <feComposite in="blurred" in2="distorted" operator="arithmetic" k1="0" k2="0" k3="1" k4="0" result="blurred-masked"/>
+        <feBlend in="distorted" in2="blurred" mode="normal" result="pre-blend"/>
+        <feComposite in="pre-blend" in2="edgemask" operator="in" result="edge-blur-part"/>
+        <feComposite in="distorted" in2="edgemask" operator="out" result="sharp-part"/>
+        <feComposite in="sharp-part" in2="edge-blur-part" operator="over"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ── MAGNIFYING GLASS CURSOR ── -->
+  <div id="mag-cursor" aria-hidden="true">
+    <svg viewBox="0 0 336 336" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+      <defs>
+        <linearGradient id="lens-rim-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#535E69" stop-opacity="0.4"/>
+          <stop offset="20%"  stop-color="#76818C" stop-opacity="0.15"/>
+          <stop offset="35%"  stop-color="#ACB6BF" stop-opacity="0"/>
+          <stop offset="65%"  stop-color="#ACB6BF" stop-opacity="0"/>
+          <stop offset="80%"  stop-color="#76818C" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#535E69" stop-opacity="0.4"/>
+        </linearGradient>
+        <filter id="glass-noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
+          <feColorMatrix type="matrix" values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1   1 0 0 0 0" in="noise" result="whiteNoise" />
+          <feComponentTransfer in="whiteNoise" result="lightNoise"><feFuncA type="linear" slope="0.18" /></feComponentTransfer>
+          <feComposite operator="in" in="lightNoise" in2="SourceGraphic" result="texture" />
+          <feImage href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='336' height='336'><radialGradient id='g' cx='35%' cy='30%' r='60%'><stop offset='0%' stop-color='white' stop-opacity='0.1'/><stop offset='100%' stop-color='white' stop-opacity='0'/></radialGradient><circle cx='168' cy='168' r='167' fill='url(%23g)'/></svg>" result="glare" width="336" height="336" x="0" y="0"/>
+          <feComposite operator="over" in="glare" in2="texture" result="combined" />
+          <feComposite operator="in" in="combined" in2="SourceGraphic" />
+        </filter>
+      </defs>
+      <circle cx="168" cy="168" r="167" fill="var(--bg)" filter="url(#glass-noise)" />
+      <circle cx="168" cy="168" r="167" fill="none" stroke="url(#lens-rim-grad)" stroke-width="1"/>
+      <circle cx="168" cy="168" r="3" fill="white" />
+    </svg>
+  </div>
+
+  <!-- ── MAGNIFICATION OVERLAY ── -->
+  <div id="mag-zoom" aria-hidden="true">
+    <div id="mag-zoom-inner"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="page-nav">
+    <a href="index.html" data-i18n="nav_back">← Back to Archive</a>
+    <a href="index.html" class="nav-brand script">Babaika</a>
+    <a id="cart-btn-nav" href="#" aria-label="Open cart">CART <span id="cart-count-nav">0</span></a>
+  </nav>
+
+  <!-- ── MAIN CONTENT ────────────────────────────────────────── -->
+  <main style="margin-top: 160px;">
+    <div class="cat-chapter">
+      <p class="cat-chapter-label">Chapter 01</p>
+      <p class="cat-chapter-title">Tuman</p>
+      <div class="cat-row">
+        <a href="tuman-kimono.html" class="cat-item">
+          <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088809/tuman-6_grktcd.mp4" autoplay loop muted playsinline></video></div>
+          <span class="cat-item-name">01.01 Kimono</span>
+          <span class="cat-item-desc">Mulberry Silk / Rayon Pile</span>
+        </a>
+        <a href="tuman-bra.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777228757/babaika_tuman_02_ia8ol9.jpg" alt="Tuman Soft Bra"/></div>
+          <span class="cat-item-name">01.02 Soft Bra</span>
+          <span class="cat-item-desc">Mulberry Silk Chiffon 8 Momme</span>
+        </a>
+        <a href="tuman-earring.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777230414/babaika_delta_45dd_mifayq.png" alt="Tuman Earring"/></div>
+          <span class="cat-item-name">01.03 Earring</span>
+          <span class="cat-item-desc">Silver, River Pearls</span>
+        </a>
+        <a href="tuman-ring.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777230413/babaika_delta_45cd_t6mwbb.png" alt="Tuman Ring"/></div>
+          <span class="cat-item-name">01.04 Ring</span>
+          <span class="cat-item-desc">Silver, River Pearls</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cat-chapter">
+      <p class="cat-chapter-label">Chapter 02</p>
+      <p class="cat-chapter-title">Tamarisk</p>
+      <div class="cat-row">
+        <a href="tamarisk-kimono.html" class="cat-item">
+          <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777144391/tmr-v5_yfohsm.mp4" autoplay loop muted playsinline></video></div>
+          <span class="cat-item-name">02.01 Kimono</span>
+          <span class="cat-item-desc">Mulberry Silk 6 Momme Georgette</span>
+        </a>
+        <a href="tamarisk-bra.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777167754/tmr123_mjl8ib.png" alt="Tamarisk Bra"/></div>
+          <span class="cat-item-name">02.02 Bra</span>
+          <span class="cat-item-desc">Mulberry Silk 6 Momme Georgette</span>
+        </a>
+        <a href="tamarisk-ring.html" class="cat-item">
+          <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777082418/tamarisk_ring_vxj0td.mp4" autoplay loop muted playsinline></video></div>
+          <span class="cat-item-name">02.04 Ring</span>
+          <span class="cat-item-desc">Silver, Lab Grown Rubies</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cat-chapter">
+      <p class="cat-chapter-label">Chapter 03</p>
+      <p class="cat-chapter-title">Polói</p>
+      <div class="cat-row">
+        <a href="poloi-kimono.html" class="cat-item">
+          <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777169031/pc2_fsgmnp.mp4" autoplay loop muted playsinline></video></div>
+          <span class="cat-item-name">03.01 Polói Kimono</span>
+          <span class="cat-item-desc">Mulberry Silk Chiffon</span>
+        </a>
+        <a href="poloi-kimono.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777153181/psc7_kmsqof.png" alt="Polói Cotton Silk Kimono"/></div>
+          <span class="cat-item-name">03.02 Polói Kimono</span>
+          <span class="cat-item-desc">50% Cotton 50% Silk Poplin</span>
+        </a>
+        <a href="poloi-bra.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777152373/babaika_delta_30_rzpquc.jpg" alt="Polói Bra"/></div>
+          <span class="cat-item-name">03.03 Soft Bra</span>
+          <span class="cat-item-desc">Mulberry Silk Chiffon</span>
+        </a>
+        <a href="poloi.html" class="cat-item">
+          <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085497/raskaty-ring_rqvurs.mp4" autoplay loop muted playsinline></video></div>
+          <span class="cat-item-name">03.04 The Flooded Surface</span>
+          <span class="cat-item-desc">Sculpted Silver</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cat-chapter">
+      <p class="cat-chapter-label">Chapter 04</p>
+      <p class="cat-chapter-title">Il</p>
+      <div class="cat-row">
+        <a href="il.html" class="cat-item">
+          <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777172866/il-4_e2xwiw.mp4" autoplay loop muted playsinline></video></div>
+          <span class="cat-item-name">04.01 Heavy Kimono</span>
+          <span class="cat-item-desc">Brown-grey Velvet</span>
+        </a>
+        <a href="il.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777177653/babaika_il_18_dw3xxb.png" alt="Il Ring"/></div>
+          <span class="cat-item-name">04.02 Distorted Ring</span>
+          <span class="cat-item-desc">Melted Silver</span>
+        </a>
+        <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
+        <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
+      </div>
+    </div>
+
+    <div class="cat-chapter">
+      <p class="cat-chapter-label">Chapter 05</p>
+      <p class="cat-chapter-title">Raskaty</p>
+      <div class="cat-row">
+        <a href="raskaty.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777255323/raskaty-kimono2_hzu2xz.png" alt="Raskaty Kimono"/></div>
+          <span class="cat-item-name">05.01 Kimono</span>
+          <span class="cat-item-desc">Engineered Mesh</span>
+        </a>
+        <a href="raskaty.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182275/SHE00304_prorin.png" alt="Raskaty Stockings"/></div>
+          <span class="cat-item-name">05.02 THE NAVIGATIONAL SEAM</span>
+          <span class="cat-item-desc">Nylon Mesh</span>
+        </a>
+        <a href="raskaty.html" class="cat-item">
+          <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085493/raskaty-ring2_qok5zn.mp4" autoplay loop muted playsinline></video></div>
+          <span class="cat-item-name">05.03 THE NAVIGATIONAL ROUTE</span>
+          <span class="cat-item-desc">Wide textured silver band, 1mm moissanite line</span>
+        </a>
+        <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
+      </div>
+    </div>
+
+    <div class="cat-chapter">
+      <p class="cat-chapter-label">Chapter 06</p>
+      <p class="cat-chapter-title">Kamysh</p>
+      <div class="cat-row">
+        <a href="kamysh.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182833/SHE00023_etr9np.png" alt="Kamysh Beige Kimono"/></div>
+          <span class="cat-item-name">06.01 Kimono</span>
+          <span class="cat-item-desc">Sandwashed Mulberry Silk Charmeuse 16mm</span>
+        </a>
+        <a href="kamysh.html" class="cat-item">
+          <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777175218/kamish1_vrnrqx.mp4" autoplay loop muted playsinline></video></div>
+          <span class="cat-item-name">06.02 Kimono</span>
+          <span class="cat-item-desc">Sandwashed Mulberry Silk Charmeuse 16mm</span>
+        </a>
+        <a href="kamysh.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png" alt="Kamysh Bag"/></div>
+          <span class="cat-item-name">06.03 Bag</span>
+          <span class="cat-item-desc">Mulberry Silk Dupioni 18mm</span>
+        </a>
+        <a href="kamysh.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182441/babaika_il_18_eutgbo.png" alt="Kamysh Belt"/></div>
+          <span class="cat-item-name">06.04 Belt</span>
+          <span class="cat-item-desc">Mulberry Silk Dupioni 18mm</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cat-chapter">
+      <p class="cat-chapter-label">Chapter 07</p>
+      <p class="cat-chapter-title">Cheshuya</p>
+      <div class="cat-row">
+        <a href="cheshuya.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256108/babaika_delta_04_drfdvt.jpg" alt="Cheshuya Bra"/></div>
+          <span class="cat-item-name">07.01 Bra</span>
+          <span class="cat-item-desc">50% Cotton 50% Silk Charmeuse</span>
+        </a>
+        <a href="cheshuya.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256120/babaika_delta_39_uob0kk.jpg" alt="Cotton Silk Necklace"/></div>
+          <span class="cat-item-name">07.02 Necklace</span>
+          <span class="cat-item-desc">50% Cotton 50% Silk Charmeuse</span>
+        </a>
+        <a href="cheshuya.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184289/kamchesh_lbxt5y.png" alt="Shell Button Necklace"/></div>
+          <span class="cat-item-name">07.03 Necklace</span>
+          <span class="cat-item-desc">15mm Motherpearl Shells</span>
+        </a>
+        <a href="cheshuya.html" class="cat-item">
+          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184287/kam45_fkonri.png" alt="Cheshuya Belt"/></div>
+          <span class="cat-item-name">07.04 Belt</span>
+          <span class="cat-item-desc">20mm Motherpearl Shells</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────── -->
+      <footer>
+    <div class="footer-brand">
+      <p class="script">Babaika</p>
+      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+    </div>
+    <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="about.html">About</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="index.html">Index (Main Page)</a>
+        <a href="tuman.html">01 // Tuman</a>
+        <a href="tamarisk.html">02 // Tamarisk</a>
+        <a href="poloi.html">03 // Poloi</a>
+        <a href="il.html">04 // Il</a>
+        <a href="raskaty.html">05 // Raskaty</a>
+        <a href="kamysh.html">06 // Kamysh</a>
+        <a href="cheshuya.html">07 // Cheshuya</a>
+      </nav>
+    </div>
+        <div class="footer-lang">
+      <span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span> / <span id="footer-lang-ru" onclick="setLang('ru')">RU</span>
+    </div>
+    <p class="footer-copy">© 2026 Babaika</p>
+  </footer>
+
+  <script>
+    const magCursor    = document.getElementById('mag-cursor');
+    const magZoom      = document.getElementById('mag-zoom');
+    const magZoomInner = document.getElementById('mag-zoom-inner');
+    const barrelImg    = document.getElementById('barrel-map-img');
+    const edgeMaskImg  = document.getElementById('edge-mask-img');
+
+    const LENS_R    = 168;
+    const MAG_SCALE = 1.5;
+
+    (function initBarrelMap() {
+      const size = LENS_R * 2;
+      const c = document.createElement('canvas');
+      c.width = c.height = size;
+      const ctx = c.getContext('2d');
+      const img = ctx.createImageData(size, size);
+      const d = img.data;
+      const h = size / 2;
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+          const nx = (x - h) / h, ny = (y - h) / h;
+          const r2 = nx * nx + ny * ny;
+          const flatR = 52 / h, flatR2 = flatR * flatR;
+          const str = (r2 > flatR2 && r2 < 1) ? r2 * r2 * 130 : 0;
+          const i = (y * size + x) * 4;
+          d[i]   = Math.min(255, Math.max(0, Math.round(128 + nx * str)));
+          d[i+1] = Math.min(255, Math.max(0, Math.round(128 + ny * str)));
+          d[i+2] = 0; d[i+3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      barrelImg.setAttribute('href', c.toDataURL('image/png'));
+      barrelImg.setAttribute('width', size); barrelImg.setAttribute('height', size);
+
+      const ec = document.createElement('canvas');
+      ec.width = ec.height = size;
+      const ectx = ec.getContext('2d');
+      ectx.clearRect(0, 0, size, size);
+      const grd = ectx.createRadialGradient(h, h, h - 20, h, h, h - 5);
+      grd.addColorStop(0, 'rgba(255,255,255,0)');
+      grd.addColorStop(1, 'rgba(255,255,255,1)');
+      ectx.fillStyle = grd;
+      ectx.beginPath(); ectx.arc(h, h, h, 0, Math.PI * 2); ectx.fill();
+      edgeMaskImg.setAttribute('href', ec.toDataURL('image/png'));
+      edgeMaskImg.setAttribute('width', size); edgeMaskImg.setAttribute('height', size);
+      magZoom.style.filter = 'url(#barrel-lens)';
+    })();
+
+    let mouseX = 0, mouseY = 0, curX = 0, curY = 0, magReady = false;
+    let touchTimer = null, isLoupeActive = false, startTouchX = 0, startTouchY = 0, currentOffset = 0;
+
+    function buildClone() {
+      if (magReady) return;
+      magReady = true;
+      Array.from(document.body.children).forEach(child => {
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
+        const clone = child.cloneNode(true);
+        clone.querySelectorAll('script').forEach(s => s.remove());
+        clone.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        clone.querySelectorAll('video').forEach(v => { v.muted = true; v.play().catch(() => {}); });
+        magZoomInner.appendChild(clone);
+      });
+      magZoomInner.style.width = document.body.clientWidth + 'px';
+    }
+
+    document.addEventListener('mousemove', e => {
+      if (isLoupeActive) return;
+      mouseX = e.clientX; mouseY = e.clientY;
+      buildClone();
+      magCursor.classList.add('visible');
+      magZoom.classList.add('visible');
+    });
+    document.addEventListener('mouseleave', () => {
+      magCursor.classList.remove('visible');
+      magZoom.classList.remove('visible');
+    });
+
+    document.addEventListener('touchstart', e => {
+      if (e.touches.length > 1) return;
+      const t = e.touches[0]; startTouchX = t.clientX; startTouchY = t.clientY;
+      clearTimeout(touchTimer); isLoupeActive = false;
+      touchTimer = setTimeout(() => {
+        isLoupeActive = true; mouseX = t.clientX; mouseY = t.clientY;
+        curX = mouseX; curY = mouseY;
+        buildClone(); magCursor.classList.add('visible'); magZoom.classList.add('visible');
+        if (navigator.vibrate) navigator.vibrate(50);
+      }, 400);
+    }, { passive: false });
+
+    document.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      if (!isLoupeActive) {
+        if (Math.abs(t.clientX - startTouchX) > 10 || Math.abs(t.clientY - startTouchY) > 10) clearTimeout(touchTimer);
+        return;
+      }
+      e.preventDefault(); mouseX = t.clientX; mouseY = t.clientY;
+    }, { passive: false });
+
+    const endTouch = () => {
+      clearTimeout(touchTimer);
+      if (isLoupeActive) { isLoupeActive = false; magCursor.classList.remove('visible'); magZoom.classList.remove('visible'); }
+    };
+    document.addEventListener('touchend', endTouch);
+    document.addEventListener('touchcancel', endTouch);
+    window.addEventListener('resize', () => { magReady = false; magZoomInner.innerHTML = ''; });
+
+    function animateCursor() {
+      curX += (mouseX - curX) * 0.12; curY += (mouseY - curY) * 0.12;
+      const targetOffset = isLoupeActive ? 120 : 0;
+      currentOffset += (targetOffset - currentOffset) * 0.15;
+      magCursor.style.transform = `translate(${curX - LENS_R}px, ${curY - LENS_R - currentOffset}px)`;
+      if (magReady) {
+        const scrollY = window.scrollY;
+        magZoomInner.style.top = `${-scrollY - currentOffset}px`;
+        magZoomInner.style.left = '0px';
+        magZoomInner.style.transformOrigin = `${curX}px ${curY + scrollY}px`;
+        magZoomInner.style.transform = `scale(${MAG_SCALE})`;
+        const bx = Math.round(curX - LENS_R), by = Math.round(curY - LENS_R - currentOffset);
+        barrelImg.setAttribute('x', bx); barrelImg.setAttribute('y', by);
+        edgeMaskImg.setAttribute('x', bx); edgeMaskImg.setAttribute('y', by);
+        magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+      }
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+  </script>
+
+  <!-- ── TRANSLATION SYSTEM ── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        nav_back:     '← Back to Archive',
+        footer_brand: 'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+      },
+      es: {
+        nav_back:     '← Volver al Archivo',
+        footer_brand: 'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
+      },
+      ru: {
+        nav_back:     '← Назад к Архиву',
+        footer_brand: 'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+      }
+    };
+
+    var lang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(l) {
+      if (!TRANSLATIONS[l]) l = 'en';
+      lang = l;
+      localStorage.setItem('babaika_lang', l);
+      document.documentElement.lang = l;
+
+      var t = TRANSLATIONS[l];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      ['en','es','ru'].forEach(function(code) {
+        var el = document.getElementById('footer-lang-' + code);
+        if (!el) return;
+        if (code === l) {
+          el.classList.add('active');
+          el.style.textDecoration = 'underline';
+          el.style.textUnderlineOffset = '4px';
+        } else {
+          el.classList.remove('active');
+          el.style.textDecoration = 'none';
+        }
+      });
+    }
+
+    window.setLang = function(l) { applyLang(l); };
+    applyLang(lang);
+  })();
+  </script>
+</body>
+</html>

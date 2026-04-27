@@ -104,7 +104,7 @@
     .hero {
       position: relative;
       width: 100%;
-      height: 1200px;
+      height: 1100px;
       overflow: hidden;
     }
 
@@ -114,7 +114,6 @@
       object-fit: cover;
       object-position: center;
       display: block;
-      filter: brightness(0.88) saturate(0.9);
     }
 
     .hero .hero-overlay {
@@ -244,7 +243,7 @@
       width: 100%;
       overflow: hidden;
       display: flex;
-      gap: 0;
+      gap: 1px;
       height: clamp(220px, 30vw, 380px);
     }
 
@@ -254,7 +253,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: brightness(0.95) saturate(0.85);
       transition: filter 0.5s ease;
     }
 
@@ -468,6 +466,14 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+    .artifact-item:hover {
+      border-left-color: var(--text);
+    }
+    .artifact-item:hover .artifact-title {
+      color: var(--text);
     }
     .artifact-title {
       font-family: var(--font-mono);
@@ -621,14 +627,14 @@
       border-top: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: flex-start;
       flex-wrap: wrap;
       gap: 32px;
     }
 
     footer .footer-brand .script {
       font-size: 42px;
-      color: var(--text-faint);
+      color: var(--text);
       letter-spacing: normal;
     }
 
@@ -738,6 +744,8 @@
 
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 768px) {
+      .hero-video-grid, .hero-video-bottom, .artifact-grid, .kimono-grid { gap: 10px !important; }
+      .image-strip, .image-strip-scroll { gap: 1px !important; }
       .chapter-body {
         grid-template-columns: 1fr;
         padding: 120px 75px 100px;
@@ -1247,6 +1255,44 @@
       .checkout-panel { padding: 36px 24px 32px; }
       .form-row { grid-template-columns: 1fr; }
     }
+  
+    
+    /* ─── GLASS BUTTONS ─────────────────────────────────────────── */
+    .btn-glass {
+      border-radius: 100px !important;
+      background: var(--bg) !important;
+      border: 1px solid rgba(255, 255, 255, 0.8) !important;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+      color: var(--text) !important;
+      font-family: var(--font-mono) !important;
+      font-size: 11px !important;
+      font-weight: 300 !important;
+      letter-spacing: 0.15em !important;
+      text-transform: uppercase !important;
+      padding: 16px 24px !important;
+      cursor: none !important;
+      transition: all 0.3s ease !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-decoration: none !important;
+    }
+    .btn-glass:hover {
+      box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.08),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8) !important;
+      transform: translateY(-1px);
+      background: var(--bg-dark) !important;
+    }
+    .btn-glass:active {
+      transform: translateY(1px);
+      box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+    }
+
   </style>
 </head>
 <body>
@@ -1273,7 +1319,7 @@
         <span class="cart-total-label">[ Total ]</span>
         <span class="cart-total-price" id="cart-total">Price on inquiry</span>
       </div>
-      <button id="checkout-btn" disabled>Proceed to Inquiry</button>
+      <button id="checkout-btn" class="btn-glass" disabled>Proceed to Inquiry</button>
       <p class="cart-note">Each artifact is handcrafted to order.<br>We'll confirm availability and timeline by email.</p>
     </div>
   </aside>
@@ -1320,7 +1366,7 @@
           <textarea id="field-sizes" name="sizes_and_notes" placeholder="Sizes (XS/S/M/L/XL), any special requests, or questions…"></textarea>
         </div>
 
-        <button type="submit" id="checkout-submit">Send Inquiry</button>
+        <button type="submit" id="checkout-submit" class="btn-glass">Send Inquiry</button>
         <p class="checkout-legal">By submitting you agree to be contacted by Babaika regarding your inquiry. No payment is taken at this stage.</p>
       </form>
     </div>
@@ -1333,7 +1379,7 @@
       <span class="script">Babaika</span>
       <p>Your inquiry has been received.</p>
       <p>We'll be in touch within 48 hours to confirm your selection, sizing, and shipping details.</p>
-      <button class="success-close" id="success-close">Continue browsing</button>
+      <button class="success-close btn-glass" id="success-close">Continue Browsing</button>
     </div>
   </div>
 
@@ -1433,15 +1479,15 @@
   <!-- ── HERO ──────────────────────────────────────────────────── -->
   <section id="hero" class="hero">
     <div class="hero-lang">
-      <span class="active">EN</span> / <a href="index_es.html">ES</a> / <a href="index_ru.html">RU</a>
+      <span id="lang-en" class="active" onclick="setLang('en')">EN</span> / <span id="lang-es" onclick="setLang('es')">ES</span> / <span id="lang-ru" onclick="setLang('ru')">RU</span>
     </div>
     <img class="hero-bg" src="images/main map.png" alt="Volga Delta aerial view" />
     <div class="hero-overlay">
       <h1 class="hero-title script">Babaika</h1>
     </div>
     <div class="hero-bottom-text">
-      <p class="hero-sub">A Wearable Landscape Archive.</p>
-      <p class="hero-desc">The Volga Delta, mapped through texture, memory, and myth.</p>
+      <p class="hero-sub" data-i18n="hero_sub">A Wearable Landscape Archive.</p>
+      <p class="hero-desc" data-i18n="hero_desc">The Volga Delta, mapped through texture, memory, and myth.</p>
     </div>
     <div class="scroll-hint">
       <div class="mouse"></div>
@@ -1451,8 +1497,8 @@
   <!-- ── INTRO ─────────────────────────────────────────────────── -->
   <section class="intro-section">
     <div class="intro-text reveal">
-      <p>Someone walks to the river.</p>
-      <p>It is 5 a.m. Cold and wet. The light is thin, pale, not yet formed.</p>
+      <p data-i18n="intro_1">Someone walks to the river.</p>
+      <p data-i18n="intro_2">It is 5 a.m. Cold and wet. The light is thin, pale, not yet formed.</p>
     </div>
   </section>
 
@@ -1469,6 +1515,7 @@
         <p class="definition" style="margin-bottom:20px;">
           Meteorological phenomenon consisting of a dense suspension of microscopic water droplets in the atmospheric boundary layer. Functions as an optical attenuator, scattering visible light and reducing spatial depth.
         </p>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777253569/tuman-drawing_bt5rt0.png" alt="Tuman Drawing" style="width: 100%; margin-top: 24px; opacity: 0.75; display: block; cursor: zoom-in;" onclick="window.open(this.src)" />
       </div>
 
       <div class="chapter-center reveal">
@@ -1486,24 +1533,24 @@
         <div class="artifact-list">
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='tuman-kimono.html'">
             <p class="artifact-title">01.01 KIMONO</p>
             <p class="artifact-desc">Base: Mulberry Silk<br>Pile: Rayon</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='tuman-bra.html'">
             <p class="artifact-title">01.02 BRA</p>
             <p class="artifact-desc">Mulberry Silk Chiffon 8 Momme</p>
           </div>
           
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='tuman-ring.html'">
             <p class="artifact-title">01.03 RING</p>
             <p class="artifact-desc">Silver, River Pearls</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='tuman-earring.html'">
             <p class="artifact-title">01.04 EARRING</p>
             <p class="artifact-desc">Silver, River Pearls</p>
           </div>
@@ -1520,16 +1567,16 @@
       <button class="slider-arrow slider-prev" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
       <button class="slider-arrow slider-next" aria-label="Next"><i data-lucide="arrow-right"></i></button>
       <div id="tuman-slider" class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081961/tuman-fabric_fc1jts.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
-        <img src="images/tuman/babaika_tuman_02.JPG" alt="Tuman look" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085507/tuman-ring_cgwnu3.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
-        <img src="images/tuman/babaika_tuman_05.JPG" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088807/tuman-2_hrfdxd.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
-        <img src="images/tuman/babaika_tuman_10.JPG" alt="Tuman look" style="object-position:center 20%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088809/tuman-3_yrdu03.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
-        <img src="images/tuman/babaika_tuman_25.JPG" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
-        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777096239/tuman_video_earring_fkqiwa.mp4" autoplay loop muted playsinline style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"></video>
-        <img src="images/tuman/babaika_tuman_44.JPG" alt="Tuman look" style="object-position:center 20%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081961/tuman-fabric_fc1jts.mp4"     style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777229454/babaika_tuman_25_jnkmry.jpg" alt="Tuman look" style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085507/tuman-ring_cgwnu3.mp4"     style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777228769/babaika_tuman_44_pugv7t.jpg" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088807/tuman-2_hrfdxd.mp4"     style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777228757/babaika_tuman_02_ia8ol9.jpg" alt="Tuman look" style="object-position:center 20%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088809/tuman-3_yrdu03.mp4"     style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777229016/babaika_delta_45_tznxgx.png" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777096239/tuman_video_earring_fkqiwa.mp4"     style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto; cursor:pointer;" onclick="window.location='tuman-earring.html'" title="View Tuman Earring Details" autoplay loop muted playsinline></video>
+
       </div>
     </div>
 
@@ -1549,6 +1596,7 @@
         <p class="definition" style="margin-bottom:20px;">
           halophytic woody shrub adapted to saline and alkaline soils. Uses salt-excreeting leaf glands to regulate ionic balance. Deep root systems allow survival in eroded ground. Phytosociologically dominant along the lower Volga banks.
         </p>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777141533/tamarisk_drawing_pfoo89.png" alt="Tamarisk Drawing" style="width: 100%; margin-top: 24px; opacity: 0.75; display: block; cursor: zoom-in;" onclick="window.open(this.src)" />
       </div>
 
       <div class="chapter-center reveal">
@@ -1564,25 +1612,21 @@
         <div class="artifact-list">
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='tamarisk-kimono.html'">
             <p class="artifact-title">02.01 KIMONO</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='tamarisk-bra.html'">
             <p class="artifact-title">02.02 BRA</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
-          
-          <div class="artifact-item">
-            <p class="artifact-title">02.03 SCARF</p>
-            <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
-          </div>
+
 
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item">
-            <p class="artifact-title">02.04 RING</p>
+            <p class="artifact-title">02.03 RING</p>
             <p class="artifact-desc">Silver, Lab grown rubies</p>
           </div>
         </div>
@@ -1597,18 +1641,17 @@
     <div class="slider-wrapper reveal">
       <button class="slider-arrow slider-prev" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
       <button class="slider-arrow slider-next" aria-label="Next"><i data-lucide="arrow-right"></i></button>
-      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(150px,22vw,300px);">
-        <img src="images/kimono-cream.png" alt="Kimono front" />
-        <img src="images/kimono-cream.png" alt="Kimono detail" style="object-position:center top;" />
-        <img src="images/foggy.png" alt="Botanical illustration placeholder" style="filter:brightness(1.05) saturate(0.4) contrast(0.9);" />
-        <img src="images/kimono-cream.png" alt="Fabric texture" style="object-position:right center;" />
-        <img src="images/kimono-cream.png" alt="Full look" style="object-position:left center;" />
-        
-        <img src="images/kimono-cream.png" alt="Kimono front" />
-        <img src="images/kimono-cream.png" alt="Kimono detail" style="object-position:center top;" />
-        <img src="images/foggy.png" alt="Botanical illustration placeholder" style="filter:brightness(1.05) saturate(0.4) contrast(0.9);" />
-        <img src="images/kimono-cream.png" alt="Fabric texture" style="object-position:right center;" />
-        <img src="images/kimono-cream.png" alt="Full look" style="object-position:left center;" />
+      <div id="tamarisk-slider" class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777144550/tmr-v67_uqesir.mp4"     onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777224852/tmr12_jkch4z.png" alt="Tamarisk look" onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777144391/tmr-v3_sdm17t.mp4"     onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777167754/tmr123_mjl8ib.png" alt="Tamarisk look" onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085761/Tamarisk-video-1_qfx1ck.mp4"     onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777224897/tmr11_ezkrv7.png" alt="Tamarisk look" onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777083701/tamrisk-fabric_imxohi.mp4"     onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777225056/TMR1_otignz.png" alt="Tamarisk look" onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777082418/tamarisk_ring_vxj0td.mp4"     onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777224902/tmr9_p6u9ku.png" alt="Tamarisk look" onclick="window.location='tamarisk-kimono.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" />
       </div>
     </div>
   </section>
@@ -1638,48 +1681,49 @@
         <div class="artifact-list">
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='poloi-kimono.html'">
             <p class="artifact-title">03.01 KIMONO</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='poloi-kimono.html'">
             <p class="artifact-title">03.02 KIMONO</p>
             <p class="artifact-desc">40% Silk, 60% Cotton</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='poloi-bra.html'">
             <p class="artifact-title">03.03 BRA</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
+
           
-          <div class="artifact-item">
-            <p class="artifact-title">03.04 SCARF</p>
-            <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
+          <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
+          
+          <div class="artifact-item" onclick="window.location='poloi-ring.html'">
+            <p class="artifact-title">03.05 RING</p>
+            <p class="artifact-desc">Silver</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="landscape-full reveal">
-      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1776969569/poloi_id3nuc.mp4" autoplay loop muted playsinline></video>
+      <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777173004/pli-5_untttg.mp4" autoplay loop muted playsinline></video>
     </div>
 
     <div class="slider-wrapper reveal">
       <button class="slider-arrow slider-prev" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
       <button class="slider-arrow slider-next" aria-label="Next"><i data-lucide="arrow-right"></i></button>
-      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(150px,22vw,300px);">
-        <img src="images/kimono-blue.png" alt="Poloi kimono 1" />
-        <img src="images/kimono-blue.png" alt="Poloi look" style="object-position:top;" />
-        <img src="images/water.png" alt="Water reflection" style="filter:saturate(0.6) brightness(0.9);" />
-        <img src="images/kimono-blue.png" alt="Detail" style="object-position:right;" />
-        <img src="images/kimono-blue.png" alt="Full look" style="object-position:left;" />
-        
-        <img src="images/kimono-blue.png" alt="Poloi kimono 1" />
-        <img src="images/kimono-blue.png" alt="Poloi look" style="object-position:top;" />
-        <img src="images/water.png" alt="Water reflection" style="filter:saturate(0.6) brightness(0.9);" />
-        <img src="images/kimono-blue.png" alt="Detail" style="object-position:right;" />
-        <img src="images/kimono-blue.png" alt="Full look" style="object-position:left;" />
+      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081971/poloi-chiffon-fabric_pcsqfm.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='poloi.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777152391/babaika_delta_26_pxts3a.jpg" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777169031/pc2_fsgmnp.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='poloi.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777153181/psc7_kmsqof.png" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081967/poloi-fabric-cotton_lom1g0.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='poloi.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777152373/babaika_delta_30_rzpquc.jpg" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085497/raskaty-ring_rqvurs.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='poloi.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777152390/babaika_delta_19_bfd8m6.jpg" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'" />
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173966/babaika_delta_38_mktiwe.jpg" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'" />
       </div>
     </div>
   </section>
@@ -1711,19 +1755,19 @@
         <div class="artifact-list">
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='il-kimono.html'">
             <p class="artifact-title">04.01 KIMONO</p>
             <p class="artifact-desc">Base: Mulberry Silk<br>Pile: Rayon</p>
           </div>
           
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='il-ring.html'">
             <p class="artifact-title">04.02 RING</p>
             <p class="artifact-desc">Silver</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='il-ring.html'">
             <p class="artifact-title">04.03 RING</p>
             <p class="artifact-desc">Silver</p>
           </div>
@@ -1738,14 +1782,15 @@
     <div class="slider-wrapper reveal">
       <button class="slider-arrow slider-prev" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
       <button class="slider-arrow slider-next" aria-label="Next"><i data-lucide="arrow-right"></i></button>
-      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(150px,22vw,300px);">
-        <img src="images/kimono-blue.png" alt="Il kimono" style="filter:brightness(0.9) saturate(0.6);" />
-        <img src="images/water.png" alt="Silt texture" style="filter:saturate(0.3) brightness(0.8);" />
-        <img src="images/kimono-blue.png" alt="Il ring" style="object-position:top;" />
-        
-        <img src="images/kimono-blue.png" alt="Il kimono" style="filter:brightness(0.9) saturate(0.6);" />
-        <img src="images/water.png" alt="Silt texture" style="filter:saturate(0.3) brightness(0.8);" />
-        <img src="images/kimono-blue.png" alt="Il ring" style="object-position:top;" />
+      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081964/il-fabric_meixsr.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='il.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173455/babaika_il_53_zjtl1v.jpg" alt="Il look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='il.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777172866/il-4_e2xwiw.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='il.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173453/babaika_il_46_p2fpoh.jpg" alt="Il look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='il.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777172869/il-5_lxfhva.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='il.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173414/babaika_il_05_rsiwpg.jpg" alt="Il look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='il.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085494/il-ring_lpipgo.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='il.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777177651/de22_tvc9oz.png" alt="Il look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='il.html'" />
       </div>
     </div>
   </section>
@@ -1763,6 +1808,7 @@
         <p class="definition" style="margin-bottom:20px;">
           Terminal shallow-water expanses of the Volga delta, formed where narrow, highly sinuous distributary channels (<em>eriki</em>) lose their structural banks. The <em>eriki</em> function as a dynamic hydrological labyrinth, transporting water and sediment before ultimately dissolving into the boundaryless aquatic gradient of the raskaty.
         </p>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777264681/Group_14_yvv1cv.png" alt="Raskaty Drawing" style="width: 100%; margin-top: 24px; opacity: 0.75; display: block; cursor: zoom-in;" onclick="window.open(this.src)" />
       </div>
 
       <div class="chapter-center reveal">
@@ -1776,27 +1822,23 @@
         <div class="artifact-list">
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='raskaty-kimono.html'">
             <p class="artifact-title">05.01 KIMONO</p>
             <p class="artifact-desc">Polyester Chiffon</p>
           </div>
           
-          <div class="artifact-item">
-            <p class="artifact-title">05.02 STOCKINGS</p>
+          <div class="artifact-item" onclick="window.location='raskaty-stockings.html'">
+            <p class="artifact-title">05.02 THE NAVIGATIONAL SEAM</p>
             <p class="artifact-desc">Nylon Mesh</p>
           </div>
 
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
-            <p class="artifact-title">05.03 RING</p>
+          <div class="artifact-item" onclick="window.location='raskaty-ring.html'">
+            <p class="artifact-title">05.03 THE NAVIGATIONAL ROUTE</p>
             <p class="artifact-desc">Silver</p>
           </div>
-          
-          <div class="artifact-item">
-            <p class="artifact-title">05.04 CHARM</p>
-            <p class="artifact-desc">Silver</p>
-          </div>
+
         </div>
       </div>
     </div>
@@ -1808,13 +1850,16 @@
     <div class="slider-wrapper reveal">
       <button class="slider-arrow slider-prev" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
       <button class="slider-arrow slider-next" aria-label="Next"><i data-lucide="arrow-right"></i></button>
-      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(150px,22vw,300px);">
-        <img src="images/water.png" alt="Raskaty detail 1" />
-        <img src="images/foggy.png" alt="Raskaty detail 2" />
-        <img src="images/kimono-cream.png" alt="Raskaty detail 3" style="object-position:top;" />
-        <img src="images/water.png" alt="Raskaty detail 1" />
-        <img src="images/foggy.png" alt="Raskaty detail 2" />
-        <img src="images/kimono-cream.png" alt="Raskaty detail 3" style="object-position:top;" />
+      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081963/raskaty-fabric_obq0ns.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='raskaty.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777222355/raskaty_11_oqvgmy.png" alt="Raskaty look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='raskaty.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777176860/raskaty12_ghjazw.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='raskaty.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777222359/raskaty_c2kunc.png" alt="Raskaty look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='raskaty.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777176870/raskaty5_rtsage.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='raskaty.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777222370/raskaty_mztszb.png" alt="Raskaty look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='raskaty.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777085493/raskaty-ring2_qok5zn.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='raskaty.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777255323/raskaty-kimono2_hzu2xz.png" alt="Raskaty look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='raskaty.html'" />
+
       </div>
     </div>
   </section>
@@ -1831,6 +1876,7 @@
         <p class="definition" style="margin-bottom:20px;">
           Phragmites australis. Common reed. Rhizomatous perennial grass of wetland margins. Grows in dense monotypic stands 2–4m high. Stem structure creates vertical, rhythmic pattern. Seed heads persist through winter as dry feathery plumes.
         </p>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777253588/kamish_drawing_gaukfy.png" alt="Kamysh Drawing" style="width: 100%; margin-top: 24px; opacity: 0.75; display: block; cursor: zoom-in;" onclick="window.open(this.src)" />
       </div>
 
       <div class="chapter-center reveal">
@@ -1844,28 +1890,25 @@
         <div class="artifact-list">
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='kamysh-kimono.html'">
             <p class="artifact-title">06.01 KIMONO</p>
             <p class="artifact-desc">Light Green Sandwashed Mulberry Silk Charmeuse 16momme</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='kamysh-kimono.html'">
             <p class="artifact-title">06.02 KIMONO</p>
             <p class="artifact-desc">Beige Sandwashed Mulberry Silk Charmeuse 16momme</p>
           </div>
           
-          <div class="artifact-item">
-            <p class="artifact-title">06.03 KIMONO</p>
-            <p class="artifact-desc">Dark Green Sandwashed Mulberry Silk Charmeuse 18 momme</p>
-          </div>
+
           
-          <div class="artifact-item">
-            <p class="artifact-title">06.04 BAG</p>
+          <div class="artifact-item" onclick="window.location='kamysh-bag.html'">
+            <p class="artifact-title">06.03 BAG</p>
             <p class="artifact-desc">Mulberry Silk Dupioni 18 momme</p>
           </div>
           
-          <div class="artifact-item">
-            <p class="artifact-title">06.05 BELT</p>
+          <div class="artifact-item" onclick="window.location='kamysh-belt.html'">
+            <p class="artifact-title">06.04 BELT</p>
             <p class="artifact-desc">Mulberry Silk Dupioni 18 momme</p>
           </div>
         </div>
@@ -1879,18 +1922,14 @@
     <div class="slider-wrapper reveal">
       <button class="slider-arrow slider-prev" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
       <button class="slider-arrow slider-next" aria-label="Next"><i data-lucide="arrow-right"></i></button>
-      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(150px,22vw,300px);">
-        <img src="images/kimono-cream.png" alt="Kamysh dark kimono" style="filter:brightness(0.75) saturate(0.7);" />
-        <img src="images/reeds.png" alt="Reed detail" />
-        <img src="images/kimono-cream.png" alt="Kamysh medium kimono" style="filter:brightness(0.88) saturate(0.8);" />
-        <img src="images/reeds.png" alt="Reed texture" style="object-position:left;" />
-        <img src="images/kimono-cream.png" alt="Kamysh light kimono" />
-        
-        <img src="images/kimono-cream.png" alt="Kamysh dark kimono" style="filter:brightness(0.75) saturate(0.7);" />
-        <img src="images/reeds.png" alt="Reed detail" />
-        <img src="images/kimono-cream.png" alt="Kamysh medium kimono" style="filter:brightness(0.88) saturate(0.8);" />
-        <img src="images/reeds.png" alt="Reed texture" style="object-position:left;" />
-        <img src="images/kimono-cream.png" alt="Kamysh light kimono" />
+      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081968/kamish-grey-fabric_ct687v.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='kamysh.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184253/kam45_hjbub2.png" alt="Kamysh look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='kamysh.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777081968/kamish-grey-fabric_ct687v.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='kamysh.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png" alt="Kamysh look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='kamysh.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777175218/kamish1_vrnrqx.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='kamysh.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182441/babaika_il_18_eutgbo.png" alt="Kamysh look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='kamysh.html'" />
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184260/kam131_hwtlfo.png" alt="Kamysh look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='kamysh.html'" />
       </div>
     </div>
   </section>
@@ -1903,7 +1942,7 @@
       <div class="chapter-left reveal">
         <p class="chapter-label" style="margin-bottom:20px;">[ CLASSIFICATION ]</p>
         <p class="chapter-label" style="font-style:normal; letter-spacing:0.12em; margin-bottom:12px; text-transform:none;">ЧЕШУЯ • Cheshuya</p>
-        <p class="definition" style="margin-bottom:20px;"></p>
+        <p class="definition" style="margin-bottom:20px;">Overlapping dermal plates providing a flexible exoskeleton for aquatic life. Composed of mineralized tissue and characterized by photonic nanostructures that cause acute light refraction and optical disruption.</p>
       </div>
       <div class="chapter-center reveal">
         <div class="chapter-num">07</div>
@@ -1911,7 +1950,7 @@
           Someone slows.<br>
           “Finally,” someone says.<br>
           The surface breaks. A splash.<br>
-          A brief, shiny flash of Cheshuya catches the light.<br>
+          A brief, shiny flash of <span class="inline-script">Cheshuya</span> catches the light.<br>
           The fish turns and slips under.<br>
           Ripples spread in slow rings, thinning until the surface is still.
         </p>
@@ -1920,24 +1959,24 @@
         <div class="artifact-list">
           <p class="artifact-section-title">[ TEXTILE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='cheshuya-bra.html'">
             <p class="artifact-title">07.01 BRA</p>
             <p class="artifact-desc">40% Silk 60% Cotton Base<br>15mm Motherpearl Shells</p>
           </div>
 
           <p class="artifact-section-title" style="margin-top: 16px;">[ HARDWARE ARTIFACTS ]</p>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='cheshuya-necklace.html'">
             <p class="artifact-title">07.02 NECKLACE</p>
             <p class="artifact-desc">40% Silk 60% Cotton Base<br>10mm Motherpearl Shells</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='cheshuya-necklace.html'">
             <p class="artifact-title">07.03 NECKLACE</p>
             <p class="artifact-desc">10mm Motherpearl Shells</p>
           </div>
           
-          <div class="artifact-item">
+          <div class="artifact-item" onclick="window.location='cheshuya-belt.html'">
             <p class="artifact-title">07.04 BELT</p>
             <p class="artifact-desc">20mm Motherpearl Shells</p>
           </div>
@@ -1947,21 +1986,47 @@
     <div class="landscape-full reveal">
       <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777053278/cheshuya_xrwr2l.mp4" autoplay loop muted playsinline></video>
     </div>
+
+    <div class="slider-wrapper reveal">
+      <button class="slider-arrow slider-prev" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
+      <button class="slider-arrow slider-next" aria-label="Next"><i data-lucide="arrow-right"></i></button>
+      <div class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777083709/cheshuya-material_d7rghf.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='cheshuya.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184289/kamchesh_lbxt5y.png" alt="Cheshuya look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='cheshuya.html'" />
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184287/kam45_fkonri.png" alt="Cheshuya look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='cheshuya.html'" />
+        <video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777088809/tuman-6_grktcd.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='cheshuya.html'"></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777222355/raskaty_12_gm0uqe.png" alt="Cheshuya look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='cheshuya.html'" />
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256108/babaika_delta_04_drfdvt.jpg" alt="Cheshuya look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='cheshuya.html'" />
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256120/babaika_delta_39_uob0kk.jpg" alt="Cheshuya look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='cheshuya.html'" />
+      </div>
+    </div>
   </section>
 
   <!-- ── FOOTER ──────────────────────────────────────────────── -->
   <footer>
     <div class="footer-brand">
       <p class="script">Babaika</p>
-      <p>A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
     </div>
-    <nav class="footer-nav">
-      <a href="about.html">About</a>
-      <a href="#">Chapters</a>
-      <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </nav>
+    <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="about.html">About</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="index.html">Index (Main Page)</a>
+        <a href="tuman.html">01 // Tuman</a>
+        <a href="tamarisk.html">02 // Tamarisk</a>
+        <a href="poloi.html">03 // Poloi</a>
+        <a href="il.html">04 // Il</a>
+        <a href="raskaty.html">05 // Raskaty</a>
+        <a href="kamysh.html">06 // Kamysh</a>
+        <a href="cheshuya.html">07 // Cheshuya</a>
+      </nav>
+    </div>
     <div class="footer-lang">
-      <span class="active">EN</span> / <a href="index_es.html">ES</a> / <a href="index_ru.html">RU</a>
+      <span id="footer-lang-en" class="active" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span> / <span id="footer-lang-ru" onclick="setLang('ru')">RU</span>
     </div>
     <p class="footer-copy">© 2026 Babaika</p>
   </footer>
@@ -2100,7 +2165,7 @@
       if (magReady) return;
       magReady = true;
       Array.from(document.body.children).forEach(child => {
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true') return;
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
         const clone = child.cloneNode(true);
         clone.querySelectorAll('script').forEach(s => s.remove());
         clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
@@ -2120,7 +2185,7 @@
       let diffLogs = [];
       Array.from(document.body.children).forEach((child, i) => {
         if (!child.id && !child.className) return;
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true') return;
+        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
         const cloneMatches = Array.from(magZoomInner.children).filter(c => c.tagName === child.tagName && c.className === child.className);
         if (cloneMatches.length > 0) {
            const clone = cloneMatches[0];
@@ -2129,7 +2194,7 @@
            }
         }
       });
-      console.log('DIFFS:', diffLogs.join('\n'));
+      console.log('DIFFS:', diffLogs.join(''));
     }
 
     document.addEventListener('mousemove', (e) => {
@@ -2234,6 +2299,7 @@
 
         // Clip the entire overlay to the offset lens circle
         magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
+        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
       }
 
       requestAnimationFrame(animateCursor);
@@ -2611,6 +2677,93 @@
         'stroke-width': 1
       }
     });
+  </script>
+  <!-- ── TRANSLATION SYSTEM ─────────────────────────────────── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        hero_sub:      'A Wearable Landscape Archive.',
+        hero_desc:     'The Volga Delta, mapped through texture, memory, and myth.',
+        intro_1:       'Someone walks to the river.',
+        intro_2:       'It is 5 a.m. Cold and wet. The light is thin, pale, not yet formed.',
+        footer_brand:  'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.',
+        explore:       'EXPLORE CHAPTER',
+        next_chapter:  'NEXT CHAPTER //'
+      },
+      es: {
+        hero_sub:      'Un Archivo de Paisajes Vestibles.',
+        hero_desc:     'El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.',
+        intro_1:       'Alguien camina hacia el río.',
+        intro_2:       'Son las 5 a.m. Frío y húmedo. La luz es tenue, pálida, aún sin forma.',
+        footer_brand:  'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.',
+        explore:       'EXPLORAR CAPÍTULO',
+        next_chapter:  'SIGUIENTE CAPÍTULO //'
+      },
+      ru: {
+        hero_sub:      'Архив носимых ландшафтов.',
+        hero_desc:     'Волжская дельта — в ткани, памяти и мифе.',
+        intro_1:       'Кто-то идёт к реке.',
+        intro_2:       'Пять утра. Холодно и сыро. Свет тонкий, бледный, ещё не сформировавшийся.',
+        footer_brand:  'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.',
+        explore:       'ОТКРЫТЬ ГЛАВУ',
+        next_chapter:  'СЛЕДУЮЩАЯ ГЛАВА //'
+      }
+    };
+
+    // Read stored lang or default to 'en'
+    let currentLang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(lang) {
+      if (!TRANSLATIONS[lang]) lang = 'en';
+      currentLang = lang;
+      localStorage.setItem('babaika_lang', lang);
+
+      const t = TRANSLATIONS[lang];
+
+      // Swap data-i18n elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      // Swap [ EXPLORE CHAPTER XX ] buttons
+      document.querySelectorAll('.explore-btn').forEach(btn => {
+        const num = btn.getAttribute('data-chapter') || '';
+        btn.textContent = '[ ' + t.explore + ' ' + num + ' ]';
+      });
+
+      // Swap NEXT CHAPTER buttons
+      document.querySelectorAll('.next-chapter-btn').forEach(btn => {
+        const name = btn.getAttribute('data-name') || '';
+        btn.textContent = t.next_chapter + ' ' + name;
+      });
+
+      // Update active state on all lang switchers
+      ['en','es','ru'].forEach(l => {
+        ['lang','footer-lang'].forEach(prefix => {
+          const el = document.getElementById(prefix + '-' + l);
+          if (el) {
+            el.classList.toggle('active', l === lang);
+            el.style.textDecoration = (l === lang) ? 'underline' : 'none';
+            el.style.textUnderlineOffset = '4px';
+            el.style.color = '';
+          }
+        });
+      });
+
+      // Update html lang attr
+      document.documentElement.lang = lang;
+    }
+
+    // Expose globally so onclick handlers work
+    window.setLang = function(lang) {
+      applyLang(lang);
+    };
+
+    // Apply on load
+    applyLang(currentLang);
+  })();
   </script>
 </body>
 </html>
