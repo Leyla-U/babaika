@@ -181,7 +181,7 @@
     }
 
     @media (max-width: 768px) {
-      .artifact-grid, .kimono-grid { gap: 10px !important; }.hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll { gap: 1px !important; }
+      .artifact-grid, .kimono-grid { gap: 1px !important; }.hero-video-grid, .hero-video-bottom, .image-strip, .image-strip-scroll { gap: 1px !important; }
       .page-nav {
         width: 100vw;
         padding: 20px 80px;
@@ -214,9 +214,7 @@
     .info-band {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
+      }
     .info-col {
       padding: 60px 48px;
       border-right: 1px solid var(--line);
@@ -498,7 +496,6 @@
 
     .cart-footer {
       padding: 20px 32px 32px;
-      border-top: 1px solid var(--line);
       flex-shrink: 0;
     }
     .cart-total-row {
@@ -844,7 +841,6 @@
     /* ─── FOOTER ────────────────────────────────────────────── */
     footer {
       padding: 80px 48px 60px;
-      border-top: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -910,48 +906,52 @@
     .product-page-grid .artifact-left {
       position: sticky;
       top: 80px;
-    }
+     order: 1 !important;
+        width: 100% !important;
+      }
     /* Gallery always auto-placed in col 2 */
     .product-page-grid .artifact-center {
       grid-column: auto !important;
+          order: 2 !important;
     }
 
     /* ─── PRODUCT PAGE GRID: mobile — image first, info after ─────── */
     @media (max-width: 768px) {
-      /* Switch the entire grid to a single-column block layout */
       .product-page-grid {
-        display: block !important;
-      }
-      /* Info block: move below the first image via negative-order trick.
-         We use flex on the container wrapping gallery + info. */
-      .product-page-grid .artifact-left {
-        position: static !important;
-        width: 90vw !important;
-        margin: 32px auto 0 !important;
-        padding: 0 !important;
-      }
-      /* Gallery block fills full width */
-      .product-page-grid .artifact-center {
-        display: block !important;
-        width: 90vw !important;
-        margin: 0 auto !important;
-      }
-      /* Vertical gallery stacks images */
-      .product-page-grid .vertical-gallery {
         display: flex !important;
         flex-direction: column !important;
-        gap: 1px !important;
+      }
+      .product-page-grid .artifact-left {
+        order: 2 !important;
+        position: static !important;
         width: 100% !important;
+        margin: 32px auto 64px !important;
+        padding: 0 !important;
+      }
+      .product-page-grid .artifact-center,
+      .product-page-grid .gallery-block,
+      .product-page-grid .vertical-gallery {
+        display: contents !important;
+      }
+      .product-page-grid .vertical-gallery > *:first-child {
+        order: 1 !important;
+        width: 100% !important;
+        margin-bottom: 1px !important;
+      }
+      .product-page-grid .vertical-gallery > *:not(:first-child) {
+        order: 3 !important;
+        width: 100% !important;
+        margin-bottom: 1px !important;
+      }
+      .product-page-grid .btn-full-album {
+        order: 4 !important;
+        width: 100% !important;
+        margin-top: 24px !important;
       }
       .product-page-grid .vertical-gallery img,
       .product-page-grid .vertical-gallery video {
         width: 100% !important;
         height: auto !important;
-      }
-      /* View Full Album button */
-      .product-page-grid .btn-full-album {
-        width: 100% !important;
-        margin-top: 24px !important;
       }
     }
 
@@ -965,6 +965,7 @@
       .artifact-right { order: 3 !important; width: 100% !important; text-align: left !important; padding: 0 !important; }
       .info-band { grid-template-columns: 1fr !important; }
       .info-col { border-right: none !important; border-bottom: 1px solid var(--line) !important; padding: 40px 24px !important; }
+      .info-col:last-child { border-bottom: none !important; }
     }
 
 </style>
@@ -1031,7 +1032,7 @@
       </defs>
       <circle cx="168" cy="168" r="167" fill="var(--bg)" filter="url(#glass-noise)" />
       <circle cx="168" cy="168" r="167" fill="none" stroke="url(#lens-rim-grad)" stroke-width="1"/>
-      <circle cx="168" cy="168" r="3" fill="white" style="" />
+      <circle cx="168" cy="168" r="3" fill="white"  />
     </svg>
   </div>
 
@@ -1059,15 +1060,15 @@
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777053278/cheshuya_xrwr2l.mp4" autoplay loop muted playsinline></video>
       </div>
       <div class="hero-video-bottom">
-        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777053278/cheshuya_xrwr2l.mp4" autoplay loop muted playsinline></video>
-        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777053278/cheshuya_xrwr2l.mp4" autoplay loop muted playsinline></video>
-        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777053278/cheshuya_xrwr2l.mp4" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256321/hesh-tits_gnsgol.png" alt="Cheshuya detail" />
+        <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777083709/cheshuya-material_d7rghf.mp4" autoplay loop muted playsinline></video>
+        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777256346/a5d46c29a1180e7f9855aa76d1e125ff_vvnezs.jpg" alt="Cheshuya detail" />
       </div>
     </div>
   </section>
 
   <!-- THREE-COLUMN INFO BAND -->
-  <div class="info-band reveal">
+  <div class="info-band reveal" style="border-bottom: 1px solid var(--line);">
 
     <!-- LEFT: Archive text -->
     <div class="info-col">
@@ -1091,14 +1092,7 @@
       <p class="col-body">
         Hydrodynamic Slip: Smooth, overlapping structure allowing frictionless movement through dense water.<br><br>Photonic Flash: Acute light refraction creating sudden, blinding optical disruptions at the water's surface.
       </p>
-      <div style="margin-top: 40px; width: 100%;">
-        <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777264681/Group_14_yvv1cv.png" 
-             alt="Cheshuya Classification Drawing" 
-             style="width: 100%; cursor: zoom-in; opacity: 0.75; transition: opacity 0.3s;"
-             onmouseover="this.style.opacity='1'"
-             onmouseout="this.style.opacity='0.75'"
-             onclick="openLightboxDirect('https://res.cloudinary.com/dejpm4v8y/image/upload/v1777264681/Group_14_yvv1cv.png')" />
-      </div>
+      
     </div>
 
     <!-- RIGHT: Field Notes -->
@@ -1112,7 +1106,7 @@
   </div>
 
   <!-- TRANSLATION NOTE -->
-  <div class="info-band reveal" style="border-top: none; padding-bottom: 40px;">
+  <div class="info-band reveal" style=" padding-bottom: 40px;">
     <div class="info-col" style="grid-column: span 3; display: flex; justify-content: center; text-align: center; border-right: none;">
       <p class="artifact-note" style="max-width: 800px; font-size: 13px; line-height: 2;">
         <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;">[ TRANSLATION NOTE ]</strong><br><br>
@@ -1129,7 +1123,7 @@
     </div>
     <div class="artifact-grid">
       <div class="artifact-left" onclick="window.location='cheshuya-bra.html'">
-        <p class="artifact-name">BRA</p>
+        <p class="artifact-name">SHELL BRA</p>
          <p class="artifact-detail-row">Material: Mother-of-pearl shells, internal silicone grip</p>
         <p class="artifact-detail-row">Base: 50% Cotton 50% Silk Charmeuse</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
@@ -1152,7 +1146,7 @@
     </div>
     <div class="artifact-grid">
       <div class="artifact-left" onclick="window.location='cheshuya-necklace.html'">
-        <p class="artifact-name">NECKLACE</p>
+        <p class="artifact-name">SHELL NECKLACE</p>
         <p class="artifact-detail-row">Material: Mother-of-pearl shells, internal silicone grip</p>
         <p class="artifact-detail-row">Base: 50% Cotton 50% Silk Charmeuse</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
@@ -1176,7 +1170,7 @@
     </div>
     <div class="artifact-grid">
       <div class="artifact-left" onclick="window.location='cheshuya-necklace-2.html'">
-        <p class="artifact-name">NECKLACE</p>
+        <p class="artifact-name">SHELL NECKLACE</p>
         <p class="artifact-detail-row">Material: Mother-of-pearl shells</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
@@ -1199,7 +1193,7 @@
     </div>
     <div class="artifact-grid">
       <div class="artifact-left" onclick="window.location='cheshuya-belt.html'">
-        <p class="artifact-name">BELT</p>
+        <p class="artifact-name">SHELL BELT</p>
         <p class="artifact-detail-row">Material: Mother-of-pearl shells</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
@@ -1239,7 +1233,7 @@
         <a href="poloi.html">03 // Poloi</a>
         <a href="il.html">04 // Il</a>
         <a href="raskaty.html">05 // Raskaty</a>
-        <a href="kamysh.html">06 // Kamysh</a>
+        <a href="kamish.html">06 // Kamish</a>
         <a href="cheshuya.html">07 // Cheshuya</a>
       </nav>
     </div>

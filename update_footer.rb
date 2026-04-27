@@ -5,8 +5,8 @@ chapters = {
   'tamarisk.html' => ['poloi.html', 'Poloi'],
   'poloi.html' => ['il.html', 'Il'],
   'il.html' => ['raskaty.html', 'Raskaty'],
-  'raskaty.html' => ['kamysh.html', 'Kamysh'],
-  'kamysh.html' => ['cheshuya.html', 'Cheshuya']
+  'raskaty.html' => ['kamish.html', 'Kamish'],
+  'kamish.html' => ['cheshuya.html', 'Cheshuya']
 }
 
 footer_nav_new = <<-HTML
@@ -23,7 +23,7 @@ footer_nav_new = <<-HTML
         <a href="poloi.html">03 // Poloi</a>
         <a href="il.html">04 // Il</a>
         <a href="raskaty.html">05 // Raskaty</a>
-        <a href="kamysh.html">06 // Kamysh</a>
+        <a href="kamish.html">06 // Kamish</a>
         <a href="cheshuya.html">07 // Cheshuya</a>
       </nav>
     </div>

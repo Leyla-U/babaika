@@ -1,7 +1,7 @@
 import os
 import re
 
-files = ["tuman.html", "tamarisk.html", "poloi.html", "il.html", "raskaty.html", "kamysh.html", "cheshuya.html"]
+files = ["tuman.html", "tamarisk.html", "poloi.html", "il.html", "raskaty.html", "kamish.html", "cheshuya.html"]
 base_path = "/Users/leylaudimamedova/babaika"
 
 for filename in files:

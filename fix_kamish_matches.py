@@ -32,10 +32,10 @@ def fix_matches(filepath, matches):
         f.write(new_content)
     print(f"Fixed matches in {filepath}")
 
-beige = {'link': 'kamysh-kimono-beige.html', 'img': 'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png', 'name': 'Kamýsh Kimono (Beige)', 'desc': 'Sand-washed satin silk'}
-green = {'link': 'kamysh-kimono-green.html', 'img': 'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182354/kam11111111_x4jeyl.png', 'name': 'Kamýsh Kimono (Grey-Green)', 'desc': 'Sand-washed satin silk'}
-bag = {'link': 'kamysh-bag.html', 'img': 'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png', 'name': 'Kamýsh Bag', 'desc': 'Silk dupioni'}
+beige = {'link': 'kamish-kimono-beige.html', 'img': 'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png', 'name': 'Kamish Kimono (Beige)', 'desc': 'Sand-washed satin silk'}
+green = {'link': 'kamish-kimono-green.html', 'img': 'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182354/kam11111111_x4jeyl.png', 'name': 'Kamish Kimono (Grey-Green)', 'desc': 'Sand-washed satin silk'}
+bag = {'link': 'kamish-bag.html', 'img': 'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png', 'name': 'Kamish Bag', 'desc': 'Silk dupioni'}
 
-fix_matches('kamysh-kimono-beige.html', [green, bag])
-fix_matches('kamysh-kimono-green.html', [beige, bag])
-fix_matches('kamysh-bag.html', [beige, green])
+fix_matches('kamish-kimono-beige.html', [green, bag])
+fix_matches('kamish-kimono-green.html', [beige, bag])
+fix_matches('kamish-bag.html', [beige, green])

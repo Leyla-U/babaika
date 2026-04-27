@@ -109,17 +109,17 @@ CATALOGUE_OVERLAY_HTML = """<div id="catalogue-overlay" data-no-clone="true">
   </div>
 
   <div class="cat-chapter">
-    <p class="cat-chapter-title">Chapter 06 — Kamýsh</p>
+    <p class="cat-chapter-title">Chapter 06 — Kamish</p>
     <div class="cat-row">
-      <a href="kamysh-kimono-beige.html" class="cat-item">
+      <a href="kamish-kimono-beige.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png" alt=""></div>
         <span class="cat-item-name">06.01 Kimono (Beige)</span>
       </a>
-      <a href="kamysh-kimono-green.html" class="cat-item">
+      <a href="kamish-kimono-green.html" class="cat-item">
         <div class="cat-item-thumb"><video src="https://res.cloudinary.com/dejpm4v8y/video/upload/v1777175218/kamish1_vrnrqx.mp4" autoplay loop muted playsinline></video></div>
         <span class="cat-item-name">06.02 Kimono (Green)</span>
       </a>
-      <a href="kamysh-bag.html" class="cat-item">
+      <a href="kamish-bag.html" class="cat-item">
         <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png" alt=""></div>
         <span class="cat-item-name">06.03 Bag</span>
       </a>

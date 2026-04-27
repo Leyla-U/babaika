@@ -39,8 +39,8 @@ def create_page(filename, artifact_id, price_id, name, material, description, no
     
     # Explore Chapter title
     content = content.replace('Chapter 03', 'Chapter 06')
-    content = content.replace('Polói', 'Kamýsh')
-    content = content.replace('poloi.html', 'kamysh.html')
+    content = content.replace('Polói', 'Kamish')
+    content = content.replace('poloi.html', 'kamish.html')
     
     with open(filename, 'w') as f:
         f.write(content)
@@ -48,14 +48,14 @@ def create_page(filename, artifact_id, price_id, name, material, description, no
 
 # 06.01 Beige Kimono
 create_page(
-    'kamysh-kimono-beige.html',
+    'kamish-kimono-beige.html',
     '06.01',
     'price_1TQbiFJPn6LmQgwJmgpuP2KF',
-    'Kamýsh Kimono (Beige)',
+    'Kamish Kimono (Beige)',
     'Sand-washed satin silk',
     'The Reed Beds.',
     'The sand-washed finish provides a matte, organic texture similar to the reed stem. The beige represents the sun-dried fiber of the delta.',
-    'kamysh_kimono_beige',
+    'kamish_kimono_beige',
     [
         'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182352/kam11111_dfsfti.png',
         'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182833/SHE00023_etr9np.png',
@@ -71,14 +71,14 @@ create_page(
 
 # 06.02 Green Kimono
 create_page(
-    'kamysh-kimono-green.html',
+    'kamish-kimono-green.html',
     '06.02',
     'price_1TQbjaJPn6LmQgwJ2OB1nFZK',
-    'Kamýsh Kimono (Grey-Green)',
+    'Kamish Kimono (Grey-Green)',
     'Sand-washed satin silk',
     'The Passage Tightens.',
     'The sand-washed finish provides a matte, organic texture similar to the reed stem. The muted grey-green represents the dense layers of new growth.',
-    'kamysh_kimono_green',
+    'kamish_kimono_green',
     [
         'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777182354/kam11111111_x4jeyl.png',
         'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777257807/kam33_d0afjo.png',
@@ -96,14 +96,14 @@ create_page(
 
 # 06.03 Bag
 create_page(
-    'kamysh-bag.html',
+    'kamish-bag.html',
     '06.03',
     'price_1TQblYJPn6LmQgwJNk7Hoful',
-    'Kamýsh Bag',
+    'Kamish Bag',
     'Silk dupioni',
     'Structured Fibers.',
     'While visually mimicking dry grass, the primary purpose of the dupioni is its sound. The heavy, irregular weave creates a rustling effect reminiscent of wind moving through the reed beds.',
-    'kamysh_bag',
+    'kamish_bag',
     [
         'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184256/kambag_vyraac.png',
         'https://res.cloudinary.com/dejpm4v8y/image/upload/v1777276561/kam_ff0zqj.png',
