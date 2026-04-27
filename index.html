@@ -1319,7 +1319,7 @@
         <span class="cart-total-label">[ Total ]</span>
         <span class="cart-total-price" id="cart-total">Price on inquiry</span>
       </div>
-      <button id="checkout-btn" class="btn-glass" disabled>Proceed to Inquiry</button>
+      <button id="checkout-btn" class="btn-glass" disabled>Checkout</button>
       <p class="cart-note">Each artifact is handcrafted to order.<br>We'll confirm availability and timeline by email.</p>
     </div>
   </aside>
@@ -2449,30 +2449,10 @@
   <script>
   (function() {
     // ── State ──────────────────────────────────────────────────
-    
-    // -- Cart Button Dynamic Color --
-    window.addEventListener("scroll", () => {
-      const btn = document.getElementById("cart-btn");
-      if (btn) {
-        const rect = btn.getBoundingClientRect();
-        const x = rect.left + rect.width / 2;
-        const y = rect.top + rect.height / 2;
-        const old = btn.style.pointerEvents;
-        btn.style.pointerEvents = "none";
-        const el = document.elementFromPoint(x, y);
-        btn.style.pointerEvents = old;
-        if (el && el.closest(".hero, .landscape-full")) {
-          btn.style.color = "#fff";
-        } else {
-          btn.style.color = "var(--text)";
-        }
-      }
-    }, { passive: true });
-
     let cart = JSON.parse(localStorage.getItem('babaika_cart') || '[]');
 
-    const cartBtn      = document.getElementById('cart-btn');
-    const cartCount    = document.getElementById('cart-count');
+    const cartBtn      = document.getElementById('cart-btn-nav');
+    const cartCount    = document.getElementById('cart-count-nav');
     const cartSidebar  = document.getElementById('cart-sidebar');
     const cartOverlay  = document.getElementById('cart-overlay');
     const cartClose    = document.getElementById('cart-close');
@@ -2480,24 +2460,13 @@
     const cartTotal    = document.getElementById('cart-total');
     const checkoutBtn  = document.getElementById('checkout-btn');
 
-    const checkoutModal      = document.getElementById('checkout-modal');
-    const checkoutModalBg    = document.getElementById('checkout-modal-bg');
-    const checkoutModalClose = document.getElementById('checkout-modal-close');
-    const checkoutForm       = document.getElementById('checkout-form');
-    const checkoutSummary    = document.getElementById('checkout-order-summary');
-    const hiddenOrder        = document.getElementById('hidden-order-details');
-    const checkoutSubmit     = document.getElementById('checkout-submit');
-
-    const successModal = document.getElementById('success-modal');
-    const successClose = document.getElementById('success-close');
-    const successBg    = document.getElementById('success-modal-bg');
-
     // ── Save + Render ─────────────────────────────────────────
     function save() { localStorage.setItem('babaika_cart', JSON.stringify(cart)); }
 
     function renderCart() {
       const total = cart.reduce((s, i) => s + i.qty, 0);
       cartCount.textContent = total;
+      
       checkoutBtn.disabled = cart.length === 0;
 
       if (cart.length === 0) {
@@ -2567,10 +2536,10 @@
     document.querySelectorAll('.btn-add-cart').forEach(btn => {
       btn.addEventListener('click', e => {
         e.stopPropagation();
-        const { id, name, desc } = btn.dataset;
+        const { id, priceId, name, desc } = btn.dataset;
         const existing = cart.find(i => i.id === id);
         if (existing) { existing.qty++; }
-        else { cart.push({ id, name, desc, qty: 1 }); }
+        else { cart.push({ id, priceId, name, desc, qty: 1 }); }
         save(); renderCart(); bumpCount();
         btn.textContent = '✓ Added';
         btn.classList.add('added');
@@ -2581,85 +2550,74 @@
 
     // ── Buy Now buttons ───────────────────────────────────────
     document.querySelectorAll('.btn-buy-now').forEach(btn => {
-      btn.addEventListener('click', e => {
+      btn.addEventListener('click', async e => {
         e.stopPropagation();
-        const { id, name, desc } = btn.dataset;
-        // Add to cart if not there, then go straight to checkout
+        const { id, priceId, name, desc } = btn.dataset;
         if (!cart.find(i => i.id === id)) {
-          cart.push({ id, name, desc, qty: 1 });
+          cart.push({ id, priceId, name, desc, qty: 1 });
           save(); renderCart(); bumpCount();
         }
-        openCheckout();
+        await redirectToStripe();
       });
     });
 
-    // ── Checkout Modal ────────────────────────────────────────
-    checkoutBtn.addEventListener('click', () => { closeCart(); openCheckout(); });
-
-    function openCheckout() {
-      // Build order summary
-      const lines = cart.map(i => `<p>${i.name} × ${i.qty}<br><em>${i.desc}</em></p>`).join('');
-      const totalItems = cart.reduce((s, i) => s + i.qty, 0);
-      checkoutSummary.innerHTML = lines + `<div class="checkout-order-total"><span>[ Total items ]</span><span>${totalItems}</span></div>`;
-      hiddenOrder.value = cart.map(i => `${i.name} ×${i.qty} (${i.desc})`).join('; ');
-      checkoutModal.classList.add('open');
-    }
-
-    function closeCheckout() { checkoutModal.classList.remove('open'); }
-
-    checkoutModalClose.addEventListener('click', closeCheckout);
-    checkoutModalBg.addEventListener('click', closeCheckout);
-
-    // ── Form Submit ───────────────────────────────────────────
-    checkoutForm.addEventListener('submit', async e => {
-      e.preventDefault();
-      checkoutSubmit.textContent = 'Sending…';
-      checkoutSubmit.disabled = true;
-
-      const data = new FormData(checkoutForm);
-
-      try {
-        const res = await fetch(checkoutForm.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          closeCheckout();
-          successModal.classList.add('open');
-          cart = []; save(); renderCart();
-          checkoutForm.reset();
-        } else {
-          checkoutSubmit.textContent = 'Send Inquiry';
-          checkoutSubmit.disabled = false;
-          alert('Something went wrong. Please try again or email us directly.');
-        }
-      } catch(err) {
-        checkoutSubmit.textContent = 'Send Inquiry';
-        checkoutSubmit.disabled = false;
-        alert('Network error. Please check your connection and try again.');
-      }
+    // ── Stripe Checkout ───────────────────────────────────────
+    checkoutBtn.addEventListener('click', async () => {
+      closeCart();
+      await redirectToStripe();
     });
 
-    // ── Success Modal ─────────────────────────────────────────
-    successClose.addEventListener('click', () => successModal.classList.remove('open'));
-    successBg.addEventListener('click', () => successModal.classList.remove('open'));
+    async function redirectToStripe() {
+      checkoutBtn.textContent = 'Loading…';
+      checkoutBtn.disabled = true;
+
+      // Build line items — items without priceId will be skipped
+      const items = cart
+        .filter(i => i.priceId)
+        .map(i => ({ priceId: i.priceId, quantity: i.qty }));
+
+      if (items.length === 0) {
+        alert('Unable to proceed: no items with a price ID found.');
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.disabled = false;
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items }),
+        });
+
+        const data = await res.json();
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Checkout error: ' + (data.error || 'Unknown error'));
+          checkoutBtn.textContent = 'Checkout';
+          checkoutBtn.disabled = false;
+        }
+      } catch (err) {
+        alert('Network error. Please try again.');
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.disabled = false;
+      }
+    }
+
+    // ── Prevent cart from triggering magnifier clone issues ───
+    const uiIds = ['cart-btn-nav','cart-sidebar','cart-overlay'];
+    uiIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('data-no-clone', 'true');
+    });
 
     // ── Keyboard close ────────────────────────────────────────
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         closeCart();
-        closeCheckout();
-        successModal.classList.remove('open');
       }
-    });
-
-    // ── Prevent cart/modal from triggering magnifier clone issues ─
-    const uiIds = ['cart-btn','cart-sidebar','cart-overlay','checkout-modal','success-modal'];
-    uiIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.setAttribute('data-no-clone', 'true');
     });
 
     // ── Init ──────────────────────────────────────────────────

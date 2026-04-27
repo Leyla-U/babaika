@@ -557,7 +557,11 @@
     .cart-qty-btn:hover { border-color: var(--text); }
     .cart-qty-num { font-size: 12px; color: var(--text); min-width: 16px; text-align: center; }
 
-    .cart-
+    .cart-footer {
+      padding: 20px 32px 32px;
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+    }
     .cart-total-row {
       display: flex;
       justify-content: space-between;
@@ -1077,7 +1081,61 @@
     @media (max-width: 768px) {
       footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
     }
-  </style>
+  
+    /* ─── PRODUCT PAGE GRID: info LEFT | gallery RIGHT (desktop) ─── */
+    .product-page-grid {
+      grid-template-columns: 1fr 2fr !important;
+      gap: 80px !important;
+      align-items: start !important;
+    }
+    .product-page-grid .artifact-left {
+      position: sticky;
+      top: 80px;
+    }
+    /* Gallery always auto-placed in col 2 */
+    .product-page-grid .artifact-center {
+      grid-column: auto !important;
+    }
+
+    /* ─── PRODUCT PAGE GRID: mobile — image first, info after ─────── */
+    @media (max-width: 768px) {
+      /* Switch the entire grid to a single-column block layout */
+      .product-page-grid {
+        display: block !important;
+      }
+      /* Info block: move below the first image via negative-order trick.
+         We use flex on the container wrapping gallery + info. */
+      .product-page-grid .artifact-left {
+        position: static !important;
+        width: 90vw !important;
+        margin: 32px auto 0 !important;
+        padding: 0 !important;
+      }
+      /* Gallery block fills full width */
+      .product-page-grid .artifact-center {
+        display: block !important;
+        width: 90vw !important;
+        margin: 0 auto !important;
+      }
+      /* Vertical gallery stacks images */
+      .product-page-grid .vertical-gallery {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+      }
+      .product-page-grid .vertical-gallery img,
+      .product-page-grid .vertical-gallery video {
+        width: 100% !important;
+        height: auto !important;
+      }
+      /* View Full Album button */
+      .product-page-grid .btn-full-album {
+        width: 100% !important;
+        margin-top: 24px !important;
+      }
+    }
+</style>
 </head>
 <body>
 
@@ -1888,7 +1946,7 @@
         <span class="cart-total-label">[ Total ]</span>
         <span class="cart-total-price" id="cart-total">Price on inquiry</span>
       </div>
-      <button id="checkout-btn" class="btn-glass" style="width: 100%;" disabled>Proceed to Inquiry</button>
+      <button id="checkout-btn" class="btn-glass" style="width: 100%;" disabled>Checkout</button>
       <p class="cart-note">Each artifact is handcrafted to order.<br>We'll confirm availability and timeline by email.</p>
     </div>
   </aside>
@@ -1957,9 +2015,6 @@
   <script>
   (function() {
     // ── State ──────────────────────────────────────────────────
-    
-    
-
     let cart = JSON.parse(localStorage.getItem('babaika_cart') || '[]');
 
     const cartBtn      = document.getElementById('cart-btn-nav');
@@ -1970,18 +2025,6 @@
     const cartItemsEl  = document.getElementById('cart-items');
     const cartTotal    = document.getElementById('cart-total');
     const checkoutBtn  = document.getElementById('checkout-btn');
-
-    const checkoutModal      = document.getElementById('checkout-modal');
-    const checkoutModalBg    = document.getElementById('checkout-modal-bg');
-    const checkoutModalClose = document.getElementById('checkout-modal-close');
-    const checkoutForm       = document.getElementById('checkout-form');
-    const checkoutSummary    = document.getElementById('checkout-order-summary');
-    const hiddenOrder        = document.getElementById('hidden-order-details');
-    const checkoutSubmit     = document.getElementById('checkout-submit');
-
-    const successModal = document.getElementById('success-modal');
-    const successClose = document.getElementById('success-close');
-    const successBg    = document.getElementById('success-modal-bg');
 
     // ── Save + Render ─────────────────────────────────────────
     function save() { localStorage.setItem('babaika_cart', JSON.stringify(cart)); }
@@ -2059,10 +2102,10 @@
     document.querySelectorAll('.btn-add-cart').forEach(btn => {
       btn.addEventListener('click', e => {
         e.stopPropagation();
-        const { id, name, desc } = btn.dataset;
+        const { id, priceId, name, desc } = btn.dataset;
         const existing = cart.find(i => i.id === id);
         if (existing) { existing.qty++; }
-        else { cart.push({ id, name, desc, qty: 1 }); }
+        else { cart.push({ id, priceId, name, desc, qty: 1 }); }
         save(); renderCart(); bumpCount();
         btn.textContent = '✓ Added';
         btn.classList.add('added');
@@ -2073,85 +2116,74 @@
 
     // ── Buy Now buttons ───────────────────────────────────────
     document.querySelectorAll('.btn-buy-now').forEach(btn => {
-      btn.addEventListener('click', e => {
+      btn.addEventListener('click', async e => {
         e.stopPropagation();
-        const { id, name, desc } = btn.dataset;
-        // Add to cart if not there, then go straight to checkout
+        const { id, priceId, name, desc } = btn.dataset;
         if (!cart.find(i => i.id === id)) {
-          cart.push({ id, name, desc, qty: 1 });
+          cart.push({ id, priceId, name, desc, qty: 1 });
           save(); renderCart(); bumpCount();
         }
-        openCheckout();
+        await redirectToStripe();
       });
     });
 
-    // ── Checkout Modal ────────────────────────────────────────
-    checkoutBtn.addEventListener('click', () => { closeCart(); openCheckout(); });
-
-    function openCheckout() {
-      // Build order summary
-      const lines = cart.map(i => `<p>${i.name} × ${i.qty}<br><em>${i.desc}</em></p>`).join('');
-      const totalItems = cart.reduce((s, i) => s + i.qty, 0);
-      checkoutSummary.innerHTML = lines + `<div class="checkout-order-total"><span>[ Total items ]</span><span>${totalItems}</span></div>`;
-      hiddenOrder.value = cart.map(i => `${i.name} ×${i.qty} (${i.desc})`).join('; ');
-      checkoutModal.classList.add('open');
-    }
-
-    function closeCheckout() { checkoutModal.classList.remove('open'); }
-
-    checkoutModalClose.addEventListener('click', closeCheckout);
-    checkoutModalBg.addEventListener('click', closeCheckout);
-
-    // ── Form Submit ───────────────────────────────────────────
-    checkoutForm.addEventListener('submit', async e => {
-      e.preventDefault();
-      checkoutSubmit.textContent = 'Sending…';
-      checkoutSubmit.disabled = true;
-
-      const data = new FormData(checkoutForm);
-
-      try {
-        const res = await fetch(checkoutForm.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          closeCheckout();
-          successModal.classList.add('open');
-          cart = []; save(); renderCart();
-          checkoutForm.reset();
-        } else {
-          checkoutSubmit.textContent = 'Send Inquiry';
-          checkoutSubmit.disabled = false;
-          alert('Something went wrong. Please try again or email us directly.');
-        }
-      } catch(err) {
-        checkoutSubmit.textContent = 'Send Inquiry';
-        checkoutSubmit.disabled = false;
-        alert('Network error. Please check your connection and try again.');
-      }
+    // ── Stripe Checkout ───────────────────────────────────────
+    checkoutBtn.addEventListener('click', async () => {
+      closeCart();
+      await redirectToStripe();
     });
 
-    // ── Success Modal ─────────────────────────────────────────
-    successClose.addEventListener('click', () => successModal.classList.remove('open'));
-    successBg.addEventListener('click', () => successModal.classList.remove('open'));
+    async function redirectToStripe() {
+      checkoutBtn.textContent = 'Loading…';
+      checkoutBtn.disabled = true;
+
+      // Build line items — items without priceId will be skipped
+      const items = cart
+        .filter(i => i.priceId)
+        .map(i => ({ priceId: i.priceId, quantity: i.qty }));
+
+      if (items.length === 0) {
+        alert('Unable to proceed: no items with a price ID found.');
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.disabled = false;
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items }),
+        });
+
+        const data = await res.json();
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Checkout error: ' + (data.error || 'Unknown error'));
+          checkoutBtn.textContent = 'Checkout';
+          checkoutBtn.disabled = false;
+        }
+      } catch (err) {
+        alert('Network error. Please try again.');
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.disabled = false;
+      }
+    }
+
+    // ── Prevent cart from triggering magnifier clone issues ───
+    const uiIds = ['cart-btn-nav','cart-sidebar','cart-overlay'];
+    uiIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('data-no-clone', 'true');
+    });
 
     // ── Keyboard close ────────────────────────────────────────
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         closeCart();
-        closeCheckout();
-        successModal.classList.remove('open');
       }
-    });
-
-    // ── Prevent cart/modal from triggering magnifier clone issues ─
-    const uiIds = ['cart-btn','cart-sidebar','cart-overlay','checkout-modal','success-modal'];
-    uiIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.setAttribute('data-no-clone', 'true');
     });
 
     // ── Init ──────────────────────────────────────────────────
