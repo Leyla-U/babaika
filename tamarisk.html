@@ -272,7 +272,14 @@
     .photo-viewer img.main-photo:hover { filter: brightness(1) saturate(1); }
     .photo-viewer.fading img.main-photo { opacity: 0; }
 
-    /* IN-PAGE ARROW NAV */
+    
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+/* IN-PAGE ARROW NAV */
     .photo-nav {
       position: absolute; top: 50%; transform: translateY(-50%);
       z-index: 10; background: rgba(238,237,235,0.7);
@@ -536,7 +543,11 @@
     .cart-qty-btn:hover { border-color: var(--text); }
     .cart-qty-num { font-size: 12px; color: var(--text); min-width: 16px; text-align: center; }
 
-    .cart-
+    .cart-footer {
+      padding: 20px 32px 32px;
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+    }
     .cart-total-row {
       display: flex;
       justify-content: space-between;
@@ -937,7 +948,68 @@
     @media (max-width: 768px) {
       footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
     }
-  </style>
+  
+    /* ─── PRODUCT PAGE GRID: info LEFT | gallery RIGHT (desktop) ─── */
+    .product-page-grid {
+      grid-template-columns: 1fr 2fr !important;
+      gap: 80px !important;
+      align-items: start !important;
+    }
+    .product-page-grid .artifact-left {
+      position: sticky;
+      top: 80px;
+    }
+    /* Gallery always auto-placed in col 2 */
+    .product-page-grid .artifact-center {
+      grid-column: auto !important;
+    }
+
+    /* ─── PRODUCT PAGE GRID: mobile — image first, info after ─────── */
+    @media (max-width: 768px) {
+      /* Switch the entire grid to a single-column block layout */
+      .product-page-grid {
+        display: block !important;
+      }
+      /* Info block: move below the first image via negative-order trick.
+         We use flex on the container wrapping gallery + info. */
+      .product-page-grid .artifact-left {
+        position: static !important;
+        width: 90vw !important;
+        margin: 32px auto 0 !important;
+        padding: 0 !important;
+      }
+      /* Gallery block fills full width */
+      .product-page-grid .artifact-center {
+        display: block !important;
+        width: 90vw !important;
+        margin: 0 auto !important;
+      }
+      /* Vertical gallery stacks images */
+      .product-page-grid .vertical-gallery {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+      }
+      .product-page-grid .vertical-gallery img,
+      .product-page-grid .vertical-gallery video {
+        width: 100% !important;
+        height: auto !important;
+      }
+      /* View Full Album button */
+      .product-page-grid .btn-full-album {
+        width: 100% !important;
+        margin-top: 24px !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .artifact-grid { display: flex !important; flex-direction: column !important; gap: 40px !important; align-items: flex-start !important; width: 100% !important; }
+      .artifact-center { order: 1 !important; width: 100% !important; }
+      .artifact-left { cursor: pointer !important; order: 2 !important; width: 100% !important; text-align: left !important; margin-bottom: 30px !important; }
+      .artifact-right { order: 3 !important; width: 100% !important; text-align: left !important; }
+    }
+</style>
 </head>
 <body>
 
@@ -1647,7 +1719,7 @@
         <span class="cart-total-label">[ Total ]</span>
         <span class="cart-total-price" id="cart-total">Price on inquiry</span>
       </div>
-      <button id="checkout-btn" class="btn-glass" disabled>Proceed to Inquiry</button>
+      <button id="checkout-btn" class="btn-glass" disabled>Checkout</button>
       <p class="cart-note">Each artifact is handcrafted to order.<br>We'll confirm availability and timeline by email.</p>
     </div>
   </aside>
@@ -1714,925 +1786,181 @@
 
   <!-- ── CART + CHECKOUT LOGIC ────────────────────────────── -->
   <script>
-        // ── Magnifying glass cursor + magnification ────────────────
-    const magCursor    = document.getElementById('mag-cursor');
-    const magZoom      = document.getElementById('mag-zoom');
-    const magZoomInner = document.getElementById('mag-zoom-inner');
-    const barrelImg    = document.getElementById('barrel-map-img');
-
-    const LENS_R    = 168;  // px — lens radius
-    const MAG_SCALE = 1.5;  // zoom factor inside the lens
-    const EDGE_BLUR_W = 10; // px — width of blur zone at border
-
-    const edgeMaskImg = document.getElementById('edge-mask-img');
-
-    // ── Generate barrel distortion map (once) ────────────────────
-    (function initBarrelMap() {
-      const size = LENS_R * 2; // 224px
-
-      // --- barrel displacement map ---
-      const c = document.createElement('canvas');
-      c.width = c.height = size;
-      const ctx = c.getContext('2d');
-      const img = ctx.createImageData(size, size);
-      const d = img.data;
-      const h = size / 2;
-      for (let y = 0; y < size; y++) {
-        for (let x = 0; x < size; x++) {
-          const nx = (x - h) / h;
-          const ny = (y - h) / h;
-          const r2 = nx * nx + ny * ny;
-          // Flat zone: central ~105px diameter (52px radius in a 168px-radius lens)
-          const flatR = 52 / h;
-          const flatR2 = flatR * flatR;
-          const str = (r2 > flatR2 && r2 < 1) ? r2 * r2 * 130 : 0;
-          const i = (y * size + x) * 4;
-          d[i]   = Math.min(255, Math.max(0, Math.round(128 + nx * str)));
-          d[i+1] = Math.min(255, Math.max(0, Math.round(128 + ny * str)));
-          d[i+2] = 0;
-          d[i+3] = 255;
-        }
-      }
-      ctx.putImageData(img, 0, 0);
-      barrelImg.setAttribute('href', c.toDataURL('image/png'));
-      barrelImg.setAttribute('width', size);
-      barrelImg.setAttribute('height', size);
-
-      // --- edge blur mask: 0% at 20px from border, 100% at 5px from border, 100% at edge ---
-      const ec = document.createElement('canvas');
-      ec.width = ec.height = size;
-      const ectx = ec.getContext('2d');
-      ectx.clearRect(0, 0, size, size);
-      // Inner radius = R-20 (0% blur), stops at R-5 (100% blur), stays opaque to R
-      const grd = ectx.createRadialGradient(h, h, h - 20, h, h, h - 5);
-      grd.addColorStop(0, 'rgba(255,255,255,0)');
-      grd.addColorStop(1, 'rgba(255,255,255,1)');
-      ectx.fillStyle = grd;
-      ectx.beginPath();
-      ectx.arc(h, h, h, 0, Math.PI * 2);
-      ectx.fill();
-      edgeMaskImg.setAttribute('href', ec.toDataURL('image/png'));
-      edgeMaskImg.setAttribute('width', size);
-      edgeMaskImg.setAttribute('height', size);
-
-      magZoom.style.filter = 'url(#barrel-lens)';
-    })();
-
-    let mouseX = 0, mouseY = 0;
-    let curX = 0, curY = 0;
-    let magReady = false;
-
-    // ── Touch / Mobile State ─────────────────────────────────────
-    let touchTimer = null;
-    let isLoupeActive = false;
-    let startTouchX = 0;
-    let startTouchY = 0;
-    let currentOffset = 0; // smoothly animates to 120 on touch
-
-
-    // Build DOM clone once on first mouse entry
-    function buildClone() {
-      if (magReady) return;
-      magReady = true;
-      Array.from(document.body.children).forEach(child => {
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
-        const clone = child.cloneNode(true);
-        clone.querySelectorAll('script').forEach(s => s.remove());
-        clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
-        clone.querySelectorAll('.reveal-stagger > *').forEach(el => {
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        });
-        // Ensure videos in the clone also play
-        clone.querySelectorAll('video').forEach(v => {
-          v.muted = true;
-          v.play().catch(() => {});
-        });
-        magZoomInner.appendChild(clone);
-      });
-      // Force clone to exactly match body width, accounting for scrollbars
-      magZoomInner.style.width = document.body.clientWidth + 'px';
-    }
-
-    document.addEventListener('mousemove', (e) => {
-      // Ignore mousemove if touch loupe is active (prevents conflicts on certain touch devices)
-      if (isLoupeActive) return;
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      buildClone();
-      magCursor.classList.add('visible');
-      magZoom.classList.add('visible');
-    });
-
-    document.addEventListener('mouseleave', () => {
-      magCursor.classList.remove('visible');
-      magZoom.classList.remove('visible');
-    });
-
-    // ── Touch Events for Long-Press ("Hold & Pan") ───────────────
-    document.addEventListener('touchstart', (e) => {
-      if (e.touches.length > 1) return; // ignore multi-touch
-      const t = e.touches[0];
-      startTouchX = t.clientX;
-      startTouchY = t.clientY;
-      
-      clearTimeout(touchTimer);
-      isLoupeActive = false;
-      
-      touchTimer = setTimeout(() => {
-        isLoupeActive = true;
-        mouseX = t.clientX;
-        mouseY = t.clientY;
-        curX = mouseX; // snap to touch instantly to avoid sliding from old mouse position
-        curY = mouseY;
-        buildClone();
-        magCursor.classList.add('visible');
-        magZoom.classList.add('visible');
-        if (navigator.vibrate) navigator.vibrate(50);
-      }, 400); // 400ms hold required
-    }, { passive: false });
-
-    document.addEventListener('touchmove', (e) => {
-      const t = e.touches[0];
-      if (!isLoupeActive) {
-        // Cancel long-press if user moves finger significantly
-        if (Math.abs(t.clientX - startTouchX) > 10 || Math.abs(t.clientY - startTouchY) > 10) {
-          clearTimeout(touchTimer);
-        }
-        return;
-      }
-      e.preventDefault(); // prevent page scroll while panning loupe
-      mouseX = t.clientX;
-      mouseY = t.clientY;
-    }, { passive: false });
-
-    const endTouch = () => {
-      clearTimeout(touchTimer);
-      if (isLoupeActive) {
-        isLoupeActive = false;
-        magCursor.classList.remove('visible');
-        magZoom.classList.remove('visible');
-      }
-    };
-    document.addEventListener('touchend', endTouch);
-    document.addEventListener('touchcancel', endTouch);
-
-    window.addEventListener('resize', () => {
-      magReady = false;
-      magZoomInner.innerHTML = '';
-    });
-
-    function animateCursor() {
-      curX += (mouseX - curX) * 0.12;
-      curY += (mouseY - curY) * 0.12;
-
-      // Smoothly jump the offset to -120px when long-pressing
-      const targetOffset = isLoupeActive ? 120 : 0;
-      currentOffset += (targetOffset - currentOffset) * 0.15;
-
-      // Position the visual ring so its centre aligns with cursor (minus offset)
-      magCursor.style.transform = `translate(${curX - LENS_R}px, ${curY - LENS_R - currentOffset}px)`;
-
-      if (magReady) {
-        const scrollY = window.scrollY;
-
-        // Translate layer to match scroll position AND the offset.
-        // The transformOrigin acts around curY. The -currentOffset shift perfectly places 
-        // the magnified spot of `curY` precisely into the center of our offset visual lens!
-        const f = MAG_SCALE;
-        magZoomInner.style.top = `${-scrollY - currentOffset}px`;
-        magZoomInner.style.left = '0px';
-        magZoomInner.style.transformOrigin = `${curX}px ${curY + scrollY}px`;
-        magZoomInner.style.transform = `scale(${f})`;
-
-        // Barrel / edge-mask maps follow offset cursor in viewport space
-        const bx = Math.round(curX - LENS_R);
-        const by = Math.round(curY - LENS_R - currentOffset);
-        barrelImg.setAttribute('x', bx);
-        barrelImg.setAttribute('y', by);
-        edgeMaskImg.setAttribute('x', bx);
-        edgeMaskImg.setAttribute('y', by);
-
-        // Clip the entire overlay to the offset lens circle
-        magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
-        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
-      }
-
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-
-    const revealObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
-      });
-    }, { threshold: 0.06 });
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-    // ── Gallery system ──
-    // Each gallery: { mainImg, dots, thumbImgs, currentIndex }
-    const galleries = {};
-    let activeGalleryId = null;
-
-    function buildDots(dotsEl, count) {
-      dotsEl.innerHTML = '';
-      for (let i = 0; i < count; i++) {
-        const d = document.createElement('div');
-        d.className = 'photo-dot';
-        dotsEl.appendChild(d);
-      }
-    }
-
-    function setGalleryIndex(id, idx, animate = true) {
-      const g = galleries[id];
-      const items = g.thumbImgs;
-      idx = (idx + items.length) % items.length;
-      g.currentIndex = idx;
-
-      const item = items[idx];
-      const isVideo = item.tagName.toLowerCase() === 'video';
-      const mainImg = g.mainImg;
-      const mainVid = g.mainVid;
-
-      if (animate) {
-        g.viewer.classList.add('fading');
-        setTimeout(() => {
-          if (isVideo && mainVid) {
-            mainImg.style.display = 'none';
-            mainVid.style.display = 'block';
-            mainVid.src = item.src;
-            mainVid.play();
-          } else {
-            if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
-            mainImg.style.display = 'block';
-            mainImg.src = item.src;
-          }
-          g.viewer.classList.remove('fading');
-        }, 180);
-      } else {
-        if (isVideo && mainVid) {
-          mainImg.style.display = 'none';
-          mainVid.style.display = 'block';
-          mainVid.src = item.src;
-          mainVid.play();
-        } else {
-          if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
-          mainImg.style.display = 'block';
-          mainImg.src = item.src;
-        }
-      }
-
-      // update thumb active state
-      items.forEach((t, i) => t.classList.toggle('active', i === idx));
-
-      // update dots
-      g.dots.querySelectorAll('.photo-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-    }
-
-    document.querySelectorAll('[data-gallery]').forEach(wrapper => {
-      const id = wrapper.dataset.gallery;
-      const viewer = wrapper.querySelector('.photo-viewer');
-      const mainImg = viewer.querySelector('.main-photo');
-      const dotsEl = viewer.querySelector('.photo-dots');
-      const thumbStrip = wrapper.querySelector('[data-thumbs]');
-      const allThumbImgs = Array.from(thumbStrip.querySelectorAll('img, video'));
-      const mainVid = viewer.querySelector('.main-video');
-
-      function getVisibleThumbs() {
-        return allThumbImgs.filter(el => !el.classList.contains('hidden'));
-      }
-
-      function initGallery(startIdx = 0) {
-        const visibleThumbs = getVisibleThumbs();
-        dotsEl.innerHTML = '';
-        buildDots(dotsEl, visibleThumbs.length);
-        galleries[id] = { viewer, mainImg, mainVid, dots: dotsEl, thumbImgs: visibleThumbs, currentIndex: 0 };
-        setGalleryIndex(id, startIdx, false);
-
-        dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
-          dot.addEventListener('click', () => setGalleryIndex(id, i));
-        });
-      }
-
-      // thumbnail clicks
-      allThumbImgs.forEach((thumb, i) => {
-        thumb.addEventListener('click', () => {
-          const visible = getVisibleThumbs();
-          const visIdx = visible.indexOf(thumb);
-          if (visIdx >= 0) setGalleryIndex(id, visIdx);
-        });
-      });
-
-
-      initGallery(0);
-
-      // in-page arrow buttons
-      viewer.querySelector('.prev').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex - 1));
-      viewer.querySelector('.next').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex + 1));
-
-      // click main image → open lightbox
-      mainImg.addEventListener('click', () => openLightbox(id, galleries[id].currentIndex));
-
-      // touch swipe on viewer
-      let touchStartX = 0;
-      viewer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-      viewer.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(dx) > 40) setGalleryIndex(id, galleries[id].currentIndex + (dx < 0 ? 1 : -1));
-      });
-    });
-
-    // ── Lightbox ──
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lb-img');
-    const lbCounter = document.getElementById('lb-counter');
-    let lbGalleryId = null;
-    let lbIndex = 0;
-
-    function openLightbox(galleryId, idx) {
-      lbGalleryId = galleryId;
-      lbIndex = idx;
-      if (lbCounter) lbCounter.style.display = 'block';
-      const lbPrev = document.getElementById('lb-prev');
-      const lbNext = document.getElementById('lb-next');
-      if (lbPrev) lbPrev.style.display = 'block';
-      if (lbNext) lbNext.style.display = 'block';
-      updateLightbox(false);
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      activeGalleryId = galleryId;
-      
-      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-      if (cloneLb) {
-        cloneLb.classList.add('open');
-        cloneLb.style.position = 'absolute';
-        cloneLb.style.top = window.scrollY + 'px';
-        cloneLb.style.bottom = 'auto';
-        cloneLb.style.height = window.innerHeight + 'px';
-      }
-    }
-
-    function closeLightbox() {
-      lb.classList.remove('open');
-      document.body.style.overflow = '';
-      activeGalleryId = null;
-      
-      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-      if (cloneLb) cloneLb.classList.remove('open');
-    }
-
-    function updateLightbox(animate = true) {
-      const imgs = galleries[lbGalleryId].thumbImgs;
-      lbIndex = (lbIndex + imgs.length) % imgs.length;
-      const src = imgs[lbIndex].src;
-      const syncClone = () => {
-        const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-        if (cloneLb) {
-          const cloneImg = cloneLb.querySelector('#lb-img');
-          if (cloneImg) {
-            cloneImg.src = src;
-            cloneImg.classList.remove('fading');
-          }
-        }
-      };
-
-      if (animate) {
-        lbImg.classList.add('fading');
-        setTimeout(() => {
-          lbImg.src = src;
-          lbImg.classList.remove('fading');
-          syncClone();
-        }, 180);
-      } else {
-        lbImg.src = src;
-        syncClone();
-      }
-      lbCounter.textContent = `${lbIndex + 1} / ${imgs.length}`;
-      // sync gallery
-      setGalleryIndex(lbGalleryId, lbIndex, false);
-    }
-
-    document.getElementById('lb-close').addEventListener('click', closeLightbox);
-    document.getElementById('lb-prev').addEventListener('click', () => { lbIndex--; updateLightbox(); });
-    document.getElementById('lb-next').addEventListener('click', () => { lbIndex++; updateLightbox(); });
-    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-
-    // keyboard
-    document.addEventListener('keydown', e => {
-      if (lb.classList.contains('open')) {
-        if (e.key === 'ArrowLeft') { lbIndex--; updateLightbox(); }
-        else if (e.key === 'ArrowRight') { lbIndex++; updateLightbox(); }
-        else if (e.key === 'Escape') closeLightbox();
-      }
-    });
-
-    // lightbox touch swipe
-    let lbTouchX = 0;
-    lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
-    lb.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - lbTouchX;
-      if (Math.abs(dx) > 40) { lbIndex += (dx < 0 ? 1 : -1); updateLightbox(); }
-    });
-  </script>
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-        // ── Magnifying glass cursor + magnification ────────────────
-    const magCursor    = document.getElementById('mag-cursor');
-    const magZoom      = document.getElementById('mag-zoom');
-    const magZoomInner = document.getElementById('mag-zoom-inner');
-    const barrelImg    = document.getElementById('barrel-map-img');
-
-    const LENS_R    = 168;  // px — lens radius
-    const MAG_SCALE = 1.5;  // zoom factor inside the lens
-    const EDGE_BLUR_W = 10; // px — width of blur zone at border
-
-    const edgeMaskImg = document.getElementById('edge-mask-img');
-
-    // ── Generate barrel distortion map (once) ────────────────────
-    (function initBarrelMap() {
-      const size = LENS_R * 2; // 224px
-
-      // --- barrel displacement map ---
-      const c = document.createElement('canvas');
-      c.width = c.height = size;
-      const ctx = c.getContext('2d');
-      const img = ctx.createImageData(size, size);
-      const d = img.data;
-      const h = size / 2;
-      for (let y = 0; y < size; y++) {
-        for (let x = 0; x < size; x++) {
-          const nx = (x - h) / h;
-          const ny = (y - h) / h;
-          const r2 = nx * nx + ny * ny;
-          // Flat zone: central ~105px diameter (52px radius in a 168px-radius lens)
-          const flatR = 52 / h;
-          const flatR2 = flatR * flatR;
-          const str = (r2 > flatR2 && r2 < 1) ? r2 * r2 * 130 : 0;
-          const i = (y * size + x) * 4;
-          d[i]   = Math.min(255, Math.max(0, Math.round(128 + nx * str)));
-          d[i+1] = Math.min(255, Math.max(0, Math.round(128 + ny * str)));
-          d[i+2] = 0;
-          d[i+3] = 255;
-        }
-      }
-      ctx.putImageData(img, 0, 0);
-      barrelImg.setAttribute('href', c.toDataURL('image/png'));
-      barrelImg.setAttribute('width', size);
-      barrelImg.setAttribute('height', size);
-
-      // --- edge blur mask: 0% at 20px from border, 100% at 5px from border, 100% at edge ---
-      const ec = document.createElement('canvas');
-      ec.width = ec.height = size;
-      const ectx = ec.getContext('2d');
-      ectx.clearRect(0, 0, size, size);
-      // Inner radius = R-20 (0% blur), stops at R-5 (100% blur), stays opaque to R
-      const grd = ectx.createRadialGradient(h, h, h - 20, h, h, h - 5);
-      grd.addColorStop(0, 'rgba(255,255,255,0)');
-      grd.addColorStop(1, 'rgba(255,255,255,1)');
-      ectx.fillStyle = grd;
-      ectx.beginPath();
-      ectx.arc(h, h, h, 0, Math.PI * 2);
-      ectx.fill();
-      edgeMaskImg.setAttribute('href', ec.toDataURL('image/png'));
-      edgeMaskImg.setAttribute('width', size);
-      edgeMaskImg.setAttribute('height', size);
-
-      magZoom.style.filter = 'url(#barrel-lens)';
-    })();
-
-    let mouseX = 0, mouseY = 0;
-    let curX = 0, curY = 0;
-    let magReady = false;
-
-    // ── Touch / Mobile State ─────────────────────────────────────
-    let touchTimer = null;
-    let isLoupeActive = false;
-    let startTouchX = 0;
-    let startTouchY = 0;
-    let currentOffset = 0; // smoothly animates to 120 on touch
-
-
-    // Build DOM clone once on first mouse entry
-    function buildClone() {
-      if (magReady) return;
-      magReady = true;
-      Array.from(document.body.children).forEach(child => {
-        if (child.id === 'mag-cursor' || child.id === 'mag-zoom' || child.getAttribute('data-no-clone') === 'true' || child.tagName === 'NAV' || child.classList.contains('page-nav')) return;
-        const clone = child.cloneNode(true);
-        clone.querySelectorAll('script').forEach(s => s.remove());
-        clone.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('visible'));
-        clone.querySelectorAll('.reveal-stagger > *').forEach(el => {
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        });
-        // Ensure videos in the clone also play
-        clone.querySelectorAll('video').forEach(v => {
-          v.muted = true;
-          v.play().catch(() => {});
-        });
-        magZoomInner.appendChild(clone);
-      });
-      // Force clone to exactly match body width, accounting for scrollbars
-      magZoomInner.style.width = document.body.clientWidth + 'px';
-    }
-
-    document.addEventListener('mousemove', (e) => {
-      // Ignore mousemove if touch loupe is active (prevents conflicts on certain touch devices)
-      if (isLoupeActive) return;
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      buildClone();
-      magCursor.classList.add('visible');
-      magZoom.classList.add('visible');
-    });
-
-    document.addEventListener('mouseleave', () => {
-      magCursor.classList.remove('visible');
-      magZoom.classList.remove('visible');
-    });
-
-    // ── Touch Events for Long-Press ("Hold & Pan") ───────────────
-    document.addEventListener('touchstart', (e) => {
-      if (e.touches.length > 1) return; // ignore multi-touch
-      const t = e.touches[0];
-      startTouchX = t.clientX;
-      startTouchY = t.clientY;
-      
-      clearTimeout(touchTimer);
-      isLoupeActive = false;
-      
-      touchTimer = setTimeout(() => {
-        isLoupeActive = true;
-        mouseX = t.clientX;
-        mouseY = t.clientY;
-        curX = mouseX; // snap to touch instantly to avoid sliding from old mouse position
-        curY = mouseY;
-        buildClone();
-        magCursor.classList.add('visible');
-        magZoom.classList.add('visible');
-        if (navigator.vibrate) navigator.vibrate(50);
-      }, 400); // 400ms hold required
-    }, { passive: false });
-
-    document.addEventListener('touchmove', (e) => {
-      const t = e.touches[0];
-      if (!isLoupeActive) {
-        // Cancel long-press if user moves finger significantly
-        if (Math.abs(t.clientX - startTouchX) > 10 || Math.abs(t.clientY - startTouchY) > 10) {
-          clearTimeout(touchTimer);
-        }
-        return;
-      }
-      e.preventDefault(); // prevent page scroll while panning loupe
-      mouseX = t.clientX;
-      mouseY = t.clientY;
-    }, { passive: false });
-
-    const endTouch = () => {
-      clearTimeout(touchTimer);
-      if (isLoupeActive) {
-        isLoupeActive = false;
-        magCursor.classList.remove('visible');
-        magZoom.classList.remove('visible');
-      }
-    };
-    document.addEventListener('touchend', endTouch);
-    document.addEventListener('touchcancel', endTouch);
-
-    window.addEventListener('resize', () => {
-      magReady = false;
-      magZoomInner.innerHTML = '';
-    });
-
-    function animateCursor() {
-      curX += (mouseX - curX) * 0.12;
-      curY += (mouseY - curY) * 0.12;
-
-      // Smoothly jump the offset to -120px when long-pressing
-      const targetOffset = isLoupeActive ? 120 : 0;
-      currentOffset += (targetOffset - currentOffset) * 0.15;
-
-      // Position the visual ring so its centre aligns with cursor (minus offset)
-      magCursor.style.transform = `translate(${curX - LENS_R}px, ${curY - LENS_R - currentOffset}px)`;
-
-      if (magReady) {
-        const scrollY = window.scrollY;
-
-        // Translate layer to match scroll position AND the offset.
-        // The transformOrigin acts around curY. The -currentOffset shift perfectly places 
-        // the magnified spot of `curY` precisely into the center of our offset visual lens!
-        const f = MAG_SCALE;
-        magZoomInner.style.top = `${-scrollY - currentOffset}px`;
-        magZoomInner.style.left = '0px';
-        magZoomInner.style.transformOrigin = `${curX}px ${curY + scrollY}px`;
-        magZoomInner.style.transform = `scale(${f})`;
-
-        // Barrel / edge-mask maps follow offset cursor in viewport space
-        const bx = Math.round(curX - LENS_R);
-        const by = Math.round(curY - LENS_R - currentOffset);
-        barrelImg.setAttribute('x', bx);
-        barrelImg.setAttribute('y', by);
-        edgeMaskImg.setAttribute('x', bx);
-        edgeMaskImg.setAttribute('y', by);
-
-        // Clip the entire overlay to the offset lens circle
-        magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
-        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
-      }
-
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-
-    const revealObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
-      });
-    }, { threshold: 0.06 });
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-    // ── Gallery system ──
-    // Each gallery: { mainImg, dots, thumbImgs, currentIndex }
-    const galleries = {};
-    let activeGalleryId = null;
-
-    function buildDots(dotsEl, count) {
-      dotsEl.innerHTML = '';
-      for (let i = 0; i < count; i++) {
-        const d = document.createElement('div');
-        d.className = 'photo-dot';
-        dotsEl.appendChild(d);
-      }
-    }
-
-    function setGalleryIndex(id, idx, animate = true) {
-      const g = galleries[id];
-      const items = g.thumbImgs;
-      idx = (idx + items.length) % items.length;
-      g.currentIndex = idx;
-
-      const item = items[idx];
-      const isVideo = item.tagName.toLowerCase() === 'video';
-      const mainImg = g.mainImg;
-      const mainVid = g.mainVid;
-
-      if (animate) {
-        g.viewer.classList.add('fading');
-        setTimeout(() => {
-          if (isVideo && mainVid) {
-            mainImg.style.display = 'none';
-            mainVid.style.display = 'block';
-            mainVid.src = item.src;
-            mainVid.play();
-          } else {
-            if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
-            mainImg.style.display = 'block';
-            mainImg.src = item.src;
-          }
-          g.viewer.classList.remove('fading');
-        }, 180);
-      } else {
-        if (isVideo && mainVid) {
-          mainImg.style.display = 'none';
-          mainVid.style.display = 'block';
-          mainVid.src = item.src;
-          mainVid.play();
-        } else {
-          if (mainVid) { mainVid.style.display = 'none'; mainVid.pause(); }
-          mainImg.style.display = 'block';
-          mainImg.src = item.src;
-        }
-      }
-
-      // update thumb active state
-      items.forEach((t, i) => t.classList.toggle('active', i === idx));
-
-      // update dots
-      g.dots.querySelectorAll('.photo-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-    }
-
-    document.querySelectorAll('[data-gallery]').forEach(wrapper => {
-      const id = wrapper.dataset.gallery;
-      const viewer = wrapper.querySelector('.photo-viewer');
-      const mainImg = viewer.querySelector('.main-photo');
-      const dotsEl = viewer.querySelector('.photo-dots');
-      const thumbStrip = wrapper.querySelector('[data-thumbs]');
-      const allThumbImgs = Array.from(thumbStrip.querySelectorAll('img, video'));
-      const mainVid = viewer.querySelector('.main-video');
-
-      function getVisibleThumbs() {
-        return allThumbImgs.filter(el => !el.classList.contains('hidden'));
-      }
-
-      function initGallery(startIdx = 0) {
-        const visibleThumbs = getVisibleThumbs();
-        dotsEl.innerHTML = '';
-        buildDots(dotsEl, visibleThumbs.length);
-        galleries[id] = { viewer, mainImg, mainVid, dots: dotsEl, thumbImgs: visibleThumbs, currentIndex: 0 };
-        setGalleryIndex(id, startIdx, false);
-
-        dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
-          dot.addEventListener('click', () => setGalleryIndex(id, i));
-        });
-      }
-
-      // thumbnail clicks
-      allThumbImgs.forEach((thumb, i) => {
-        thumb.addEventListener('click', () => {
-          const visible = getVisibleThumbs();
-          const visIdx = visible.indexOf(thumb);
-          if (visIdx >= 0) setGalleryIndex(id, visIdx);
-        });
-      });
-
-
-      initGallery(0);
-
-      // in-page arrow buttons
-      viewer.querySelector('.prev').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex - 1));
-      viewer.querySelector('.next').addEventListener('click', () => setGalleryIndex(id, galleries[id].currentIndex + 1));
-
-      // click main image → open lightbox
-      mainImg.addEventListener('click', () => openLightbox(id, galleries[id].currentIndex));
-
-      // touch swipe on viewer
-      let touchStartX = 0;
-      viewer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-      viewer.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(dx) > 40) setGalleryIndex(id, galleries[id].currentIndex + (dx < 0 ? 1 : -1));
-      });
-    });
-
-    // ── Lightbox ──
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lb-img');
-    const lbCounter = document.getElementById('lb-counter');
-    let lbGalleryId = null;
-    let lbIndex = 0;
-
-    function openLightbox(galleryId, idx) {
-      lbGalleryId = galleryId;
-      lbIndex = idx;
-      if (lbCounter) lbCounter.style.display = 'block';
-      const lbPrev = document.getElementById('lb-prev');
-      const lbNext = document.getElementById('lb-next');
-      if (lbPrev) lbPrev.style.display = 'block';
-      if (lbNext) lbNext.style.display = 'block';
-      updateLightbox(false);
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      activeGalleryId = galleryId;
-      
-      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-      if (cloneLb) {
-        cloneLb.classList.add('open');
-        cloneLb.style.position = 'absolute';
-        cloneLb.style.top = window.scrollY + 'px';
-        cloneLb.style.bottom = 'auto';
-        cloneLb.style.height = window.innerHeight + 'px';
-      }
-    }
-
-    function closeLightbox() {
-      lb.classList.remove('open');
-      document.body.style.overflow = '';
-      activeGalleryId = null;
-      
-      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-      if (cloneLb) cloneLb.classList.remove('open');
-    }
-
-    function updateLightbox(animate = true) {
-      const imgs = galleries[lbGalleryId].thumbImgs;
-      lbIndex = (lbIndex + imgs.length) % imgs.length;
-      const src = imgs[lbIndex].src;
-      const syncClone = () => {
-        const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-        if (cloneLb) {
-          const cloneImg = cloneLb.querySelector('#lb-img');
-          if (cloneImg) {
-            cloneImg.src = src;
-            cloneImg.classList.remove('fading');
-          }
-        }
-      };
-
-      if (animate) {
-        lbImg.classList.add('fading');
-        setTimeout(() => {
-          lbImg.src = src;
-          lbImg.classList.remove('fading');
-          syncClone();
-        }, 180);
-      } else {
-        lbImg.src = src;
-        syncClone();
-      }
-      lbCounter.textContent = `${lbIndex + 1} / ${imgs.length}`;
-      // sync gallery
-      setGalleryIndex(lbGalleryId, lbIndex, false);
-    }
-
-    document.getElementById('lb-close').addEventListener('click', closeLightbox);
-    document.getElementById('lb-prev').addEventListener('click', () => { lbIndex--; updateLightbox(); });
-    document.getElementById('lb-next').addEventListener('click', () => { lbIndex++; updateLightbox(); });
-    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-
-    // keyboard
-    document.addEventListener('keydown', e => {
-      if (lb.classList.contains('open')) {
-        if (e.key === 'ArrowLeft') { lbIndex--; updateLightbox(); }
-        else if (e.key === 'ArrowRight') { lbIndex++; updateLightbox(); }
-        else if (e.key === 'Escape') closeLightbox();
-      }
-    });
-
-    // lightbox touch swipe
-    let lbTouchX = 0;
-    lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
-    lb.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - lbTouchX;
-      if (Math.abs(dx) > 40) { lbIndex += (dx < 0 ? 1 : -1); updateLightbox(); }
-    });
-        function openLightboxDirect(url) {
-      const lbImg = document.getElementById('lb-img');
-      const lbCounter = document.getElementById('lb-counter');
-      const lbPrev = document.getElementById('lb-prev');
-      const lbNext = document.getElementById('lb-next');
-      const lb = document.getElementById('lightbox');
-      
-      lbImg.src = url;
-      lbImg.style.display = 'block';
-      if (lbCounter) lbCounter.textContent = '';
-      if (lbPrev) lbPrev.style.display = 'none';
-      if (lbNext) lbNext.style.display = 'none';
-      
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
-
-      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-      if (cloneLb) {
-        cloneLb.classList.add('open');
-        const cloneImg = cloneLb.querySelector('#lb-img');
-        if (cloneImg) cloneImg.src = url;
-      }
-    }
-  </script>
-  <!-- ── TRANSLATION SYSTEM ── -->
-  <script>
   (function() {
-    const TRANSLATIONS = {
-      en: {
-        nav_back:     '← Back to Archive',
-        footer_brand: 'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
-      },
-      es: {
-        nav_back:     '← Volver al Archivo',
-        footer_brand: 'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
-      },
-      ru: {
-        nav_back:     '← Назад к Архиву',
-        footer_brand: 'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+    // ── State ──────────────────────────────────────────────────
+    let cart = JSON.parse(localStorage.getItem('babaika_cart') || '[]');
+
+    const cartBtn      = document.getElementById('cart-btn-nav');
+    const cartCount    = document.getElementById('cart-count-nav');
+    const cartSidebar  = document.getElementById('cart-sidebar');
+    const cartOverlay  = document.getElementById('cart-overlay');
+    const cartClose    = document.getElementById('cart-close');
+    const cartItemsEl  = document.getElementById('cart-items');
+    const cartTotal    = document.getElementById('cart-total');
+    const checkoutBtn  = document.getElementById('checkout-btn');
+
+    // ── Save + Render ─────────────────────────────────────────
+    function save() { localStorage.setItem('babaika_cart', JSON.stringify(cart)); }
+
+    function renderCart() {
+      const total = cart.reduce((s, i) => s + i.qty, 0);
+      cartCount.textContent = total;
+      
+      checkoutBtn.disabled = cart.length === 0;
+
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<p class="cart-empty">No artifacts selected.<br>Each piece is made to order.</p>';
+        cartTotal.textContent = 'Price on inquiry';
+        return;
       }
-    };
 
-    var lang = localStorage.getItem('babaika_lang') || 'en';
-
-    function applyLang(l) {
-      if (!TRANSLATIONS[l]) l = 'en';
-      lang = l;
-      localStorage.setItem('babaika_lang', l);
-      document.documentElement.lang = l;
-
-      var t = TRANSLATIONS[l];
-      document.querySelectorAll('[data-i18n]').forEach(function(el) {
-        var key = el.getAttribute('data-i18n');
-        if (t[key] !== undefined) el.innerHTML = t[key];
+      cartItemsEl.innerHTML = '';
+      cart.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div class="cart-item-header">
+            <span class="cart-item-title">${item.name}</span>
+            <button class="cart-item-remove" data-idx="${idx}" aria-label="Remove">×</button>
+          </div>
+          <span class="cart-item-meta">${item.desc}</span>
+          <div class="cart-qty-row">
+            <button class="cart-qty-btn" data-action="dec" data-idx="${idx}">−</button>
+            <span class="cart-qty-num">${item.qty}</span>
+            <button class="cart-qty-btn" data-action="inc" data-idx="${idx}">+</button>
+            <span class="cart-item-price">Price on inquiry</span>
+          </div>`;
+        cartItemsEl.appendChild(div);
       });
 
-      ['en','es','ru'].forEach(function(code) {
-        ['footer-lang-', 'lang-'].forEach(function(prefix) {
-          var el = document.getElementById(prefix + code);
-          if (!el) return;
-          if (code === l) {
-            el.classList.add('active');
-            el.style.textDecoration = 'underline';
-            el.style.textUnderlineOffset = '4px';
-          } else {
-            el.classList.remove('active');
-            el.style.textDecoration = 'none';
-          }
+      const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+      cartTotal.textContent = `${totalItems} piece${totalItems > 1 ? 's' : ''} — price on inquiry`;
+
+      // qty / remove handlers
+      cartItemsEl.querySelectorAll('.cart-item-remove').forEach(btn => {
+        btn.addEventListener('click', () => { cart.splice(+btn.dataset.idx, 1); save(); renderCart(); bumpCount(); });
+      });
+      cartItemsEl.querySelectorAll('.cart-qty-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const i = +btn.dataset.idx;
+          if (btn.dataset.action === 'inc') { cart[i].qty++; }
+          else { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); }
+          save(); renderCart(); bumpCount();
         });
       });
     }
 
-    window.setLang = function(l) { applyLang(l); };
-    applyLang(lang);
+    function bumpCount() {
+      cartCount.classList.remove('bump');
+      void cartCount.offsetWidth; // reflow
+      cartCount.classList.add('bump');
+      setTimeout(() => cartCount.classList.remove('bump'), 300);
+    }
+
+    // ── Open / Close Cart ─────────────────────────────────────
+    function openCart() {
+      cartSidebar.classList.add('open');
+      cartOverlay.classList.add('visible');
+    }
+    function closeCart() {
+      cartSidebar.classList.remove('open');
+      cartOverlay.classList.remove('visible');
+    }
+
+    cartBtn.addEventListener('click', openCart);
+    cartClose.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    // ── Add to Cart buttons ───────────────────────────────────
+    document.querySelectorAll('.btn-add-cart').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const { id, priceId, name, desc } = btn.dataset;
+        const existing = cart.find(i => i.id === id);
+        if (existing) { existing.qty++; }
+        else { cart.push({ id, priceId, name, desc, qty: 1 }); }
+        save(); renderCart(); bumpCount();
+        btn.textContent = '✓ Added';
+        btn.classList.add('added');
+        setTimeout(() => { btn.textContent = '+ Add'; btn.classList.remove('added'); }, 1800);
+        openCart();
+      });
+    });
+
+    // ── Buy Now buttons ───────────────────────────────────────
+    document.querySelectorAll('.btn-buy-now').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        const { id, priceId, name, desc } = btn.dataset;
+        if (!cart.find(i => i.id === id)) {
+          cart.push({ id, priceId, name, desc, qty: 1 });
+          save(); renderCart(); bumpCount();
+        }
+        await redirectToStripe();
+      });
+    });
+
+    // ── Stripe Checkout ───────────────────────────────────────
+    checkoutBtn.addEventListener('click', async () => {
+      closeCart();
+      await redirectToStripe();
+    });
+
+    async function redirectToStripe() {
+      checkoutBtn.textContent = 'Loading…';
+      checkoutBtn.disabled = true;
+
+      // Build line items — items without priceId will be skipped
+      const items = cart
+        .filter(i => i.priceId)
+        .map(i => ({ priceId: i.priceId, quantity: i.qty }));
+
+      if (items.length === 0) {
+        alert('Unable to proceed: no items with a price ID found.');
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.disabled = false;
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items }),
+        });
+
+        const data = await res.json();
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Checkout error: ' + (data.error || 'Unknown error'));
+          checkoutBtn.textContent = 'Checkout';
+          checkoutBtn.disabled = false;
+        }
+      } catch (err) {
+        alert('Network error. Please try again.');
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.disabled = false;
+      }
+    }
+
+    // ── Prevent cart from triggering magnifier clone issues ───
+    const uiIds = ['cart-btn-nav','cart-sidebar','cart-overlay'];
+    uiIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('data-no-clone', 'true');
+    });
+
+    // ── Keyboard close ────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeCart();
+      }
+    });
+
+    // ── Init ──────────────────────────────────────────────────
+    renderCart();
   })();
   </script>
 </body>
