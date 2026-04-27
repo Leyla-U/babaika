@@ -89,6 +89,55 @@
     .page-nav a:hover { opacity: 0.6; }
     .page-nav.nav--light a { color: #fff; }
 
+    /* ─── PRODUCT PAGE GRID: info LEFT | gallery RIGHT (desktop) ─── */
+    .product-page-grid {
+      grid-template-columns: 1fr 2fr !important;
+      gap: 80px !important;
+      align-items: start !important;
+    }
+    .product-page-grid .artifact-left {
+      position: sticky;
+      top: 80px;
+    }
+    .product-page-grid .artifact-center {
+      grid-column: auto !important;
+    }
+    .vertical-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .vertical-gallery img, .vertical-gallery video {
+      width: 100%;
+      height: auto;
+      cursor: none;
+    }
+
+    @media (max-width: 768px) {
+      .product-page-grid {
+        display: block !important;
+      }
+      .product-page-grid .artifact-left {
+        position: static !important;
+        width: 100% !important;
+        margin: 32px auto 0 !important;
+        padding: 0 !important;
+        order: 2;
+      }
+      .product-page-grid .artifact-center {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        order: 1;
+      }
+      .artifact-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .artifact-container .artifact-center { order: 1; }
+      .artifact-container .artifact-left { order: 2; }
+    }
+
     /* NEW HERO LAYOUT */
     .chapter-hero-new {
       padding-top: 140px;
@@ -263,6 +312,7 @@
 
   <!-- NAV -->
   <nav class="page-nav">
+    <a href="cheshuya.html" style="font-size: 11px; color: var(--text); text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase;">← Back to Archive</a>
     <a class="nav-brand" href="index.html">Babaika</a>
     <div style="display: flex; gap: 32px; align-items: center;">
       <a href="catalogue.html">Catalogue</a>
@@ -294,31 +344,31 @@
   <!-- ARTIFACT SECTION -->
   <div class="artifact-container reveal">
 
-    <div class="artifact-grid">
+    <div class="artifact-grid product-page-grid">
       <div class="artifact-left">
-        <p class="artifact-name">NECKLACE II</p>
+        <h1 class="artifact-name" style="margin-bottom: 8px;">NECKLACE II</h1>
+        <p class="artifact-tag" style="margin-bottom: 24px;">[ HARDWARE ARTIFACT 07.03 ]</p>
         <p class="artifact-detail-row">Material: Mother-of-pearl shells</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
-        <div class="artifact-actions" style="margin-top: 48px; display: flex; flex-direction: column; gap: 12px;">
+        <div class="artifact-actions" style="margin-top: 32px; display: flex; gap: 8px;">
           <button class="btn-add-cart btn-glass" 
                   data-id="cheshuya_necklace_2" 
                   data-name="Cheshuya Necklace II" 
-                  data-desc="Mother-of-pearl hardware artifact">+ Add to Inquiry</button>
+                  data-desc="Mother-of-pearl hardware artifact" style="flex:1;">+ Add</button>
+        </div>
+        <div style="margin-top: 48px;">
+          <p class="artifact-tag" style="font-size: 10px; margin-bottom: 12px;">[ TRANSLATION NOTE ]</p>
+          <p class="artifact-note">
+            When struck by light, it creates a short, blinding flash. A moment of optical disruption signaling a return to the deep.
+          </p>
         </div>
       </div>
 
-      <div class="artifact-center" style="grid-column: span 2;">
+      <div class="artifact-center">
         <div class="gallery-block" data-gallery="cheshuya_necklace_2">
-          <div class="photo-viewer">
-            <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184289/kamchesh_lbxt5y.png" class="main-photo" alt="Cheshuya Necklace II">
-            <video src="" class="main-video" autoplay loop muted playsinline style="display:none;"></video>
-            <button class="photo-nav prev">←</button>
-            <button class="photo-nav next">→</button>
-            <div class="photo-dots"></div>
-          </div>
-          <div class="thumb-strip" data-thumbs="cheshuya_necklace_2">
-            <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184289/kamchesh_lbxt5y.png">
-            <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173966/babaika_delta_38_mktiwe.jpg">
+          <div class="thumb-strip vertical-gallery" data-thumbs="cheshuya_necklace_2" style="display: flex;">
+            <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777184289/kamchesh_lbxt5y.png" alt="Cheshuya Necklace II">
+            <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/v1777173966/babaika_delta_38_mktiwe.jpg" alt="Detail">
           </div>
           <button class="btn-full-album btn-glass" onclick="openGrid('cheshuya_necklace_2')" style="margin-top: 32px; width: 100%;">View Full Album</button>
         </div>
@@ -397,65 +447,18 @@
     const galleries = {};
     let activeGalleryId = null;
 
-    function buildDots(container, count) {
-      for (let i = 0; i < count; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'photo-dot' + (i === 0 ? ' active' : '');
-        container.appendChild(dot);
-      }
-    }
 
-    function setGalleryIndex(id, index, animate = true) {
-      const g = galleries[id];
-      const count = g.thumbImgs.length;
-      if (index < 0) index = count - 1;
-      if (index >= count) index = 0;
-      g.currentIndex = index;
-
-      const currentThumb = g.thumbImgs[index];
-      const isVideo = currentThumb.tagName === 'VIDEO';
-
-      if (animate) g.viewer.classList.add('fading');
-      
-      setTimeout(() => {
-        if (isVideo) {
-          g.mainImg.style.display = 'none';
-          g.mainVid.style.display = 'block';
-          g.mainVid.src = currentThumb.src;
-        } else {
-          g.mainVid.style.display = 'none';
-          g.mainImg.style.display = 'block';
-          g.mainImg.src = currentThumb.src;
-        }
-        
-        g.dots.querySelectorAll('.photo-dot').forEach((dot, i) => {
-          dot.classList.toggle('active', i === index);
-        });
-        if (animate) g.viewer.classList.remove('fading');
-      }, animate ? 250 : 0);
-    }
 
     document.querySelectorAll('[data-gallery]').forEach(wrapper => {
       const id = wrapper.dataset.gallery;
-      const viewer = wrapper.querySelector('.photo-viewer');
-      const mainImg = viewer.querySelector('.main-photo');
-      const mainVid = viewer.querySelector('.main-video');
-      const dotsEl = viewer.querySelector('.photo-dots');
       const thumbStrip = wrapper.querySelector('[data-thumbs]');
       const thumbImgs = Array.from(thumbStrip.querySelectorAll('img, video'));
 
-      buildDots(dotsEl, thumbImgs.length);
-      galleries[id] = { viewer, mainImg, mainVid, dots: dotsEl, thumbImgs, currentIndex: 0 };
+      galleries[id] = { thumbImgs, currentIndex: 0 };
 
-      viewer.querySelector('.prev').addEventListener('click', (e) => { e.stopPropagation(); setGalleryIndex(id, galleries[id].currentIndex - 1); });
-      viewer.querySelector('.next').addEventListener('click', (e) => { e.stopPropagation(); setGalleryIndex(id, galleries[id].currentIndex + 1); });
-      viewer.addEventListener('click', () => openLightbox(id, galleries[id].currentIndex));
-
-      dotsEl.querySelectorAll('.photo-dot').forEach((dot, i) => {
-        dot.addEventListener('click', (e) => { e.stopPropagation(); setGalleryIndex(id, i); });
+      thumbImgs.forEach((thumb, i) => {
+        thumb.addEventListener('click', () => openLightbox(id, i));
       });
-      
-      setGalleryIndex(id, 0, false);
     });
 
     // ── LIGHTBOX ────────────────────────────────────────────────
@@ -533,7 +536,7 @@
         mag.style.transform = `translate(${curX - 168}px, ${curY - 168}px)`;
 
         const hovered = document.elementFromPoint(targetX, targetY);
-        const mainMedia = hovered?.closest('.photo-viewer img, .photo-viewer video, #lb-img, #lb-video');
+        const mainMedia = hovered?.closest('.vertical-gallery img, .vertical-gallery video, #lb-img, #lb-video');
         
         if (mainMedia && !hovered.closest('[data-no-clone]')) {
           zoom.classList.add('visible');
