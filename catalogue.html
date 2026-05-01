@@ -177,11 +177,31 @@
     .cat-item-price {
       font-family: var(--font-mono);
       font-size: 10px;
-      color: var(--text);
+      color: var(--text-faint);
       display: block;
-      margin-top: 8px;
-      letter-spacing: 0.05em;
+      margin-top: 4px;
     }
+
+    .cat-chapter-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .cat-chapter-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-faint);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .cat-chapter-link:hover { color: var(--text); }
+    .cat-chapter-link .arrow { font-size: 10px; }
 
     
     
@@ -362,7 +382,10 @@
   <!-- ── MAIN CONTENT ────────────────────────────────────────── -->
   <main style="margin-top: 160px;">
     <div class="cat-chapter">
-      <p class="cat-chapter-label">Chapter 01</p>
+      <div class="cat-chapter-header">
+        <p class="cat-chapter-label" style="margin-bottom:0;">Chapter 01</p>
+        <a href="tuman.html" class="cat-chapter-link">↗</a>
+      </div>
       <p class="cat-chapter-title">Tuman</p>
       <div class="cat-row">
         <a href="tuman-kimono.html" class="cat-item">
@@ -393,7 +416,10 @@
     </div>
 
     <div class="cat-chapter">
-      <p class="cat-chapter-label">Chapter 02</p>
+      <div class="cat-chapter-header">
+        <p class="cat-chapter-label" style="margin-bottom:0;">Chapter 02</p>
+        <a href="tamarisk.html" class="cat-chapter-link">↗</a>
+      </div>
       <p class="cat-chapter-title">Tamarisk</p>
       <div class="cat-row">
         <a href="tamarisk-kimono.html" class="cat-item">
@@ -418,7 +444,10 @@
     </div>
 
     <div class="cat-chapter">
-      <p class="cat-chapter-label">Chapter 03</p>
+      <div class="cat-chapter-header">
+        <p class="cat-chapter-label" style="margin-bottom:0;">Chapter 03</p>
+        <a href="poloi.html" class="cat-chapter-link">↗</a>
+      </div>
       <p class="cat-chapter-title">Polói</p>
       <div class="cat-row">
         <a href="poloi-kimono.html" class="cat-item">
@@ -449,7 +478,10 @@
     </div>
 
     <div class="cat-chapter">
-      <p class="cat-chapter-label">Chapter 04</p>
+      <div class="cat-chapter-header">
+        <p class="cat-chapter-label" style="margin-bottom:0;">Chapter 04</p>
+        <a href="il.html" class="cat-chapter-link">↗</a>
+      </div>
       <p class="cat-chapter-title">Il</p>
       <div class="cat-row">
         <a href="il-kimono.html" class="cat-item">
@@ -470,7 +502,10 @@
     </div>
 
     <div class="cat-chapter">
-      <p class="cat-chapter-label">Chapter 05</p>
+      <div class="cat-chapter-header">
+        <p class="cat-chapter-label" style="margin-bottom:0;">Chapter 05</p>
+        <a href="raskaty.html" class="cat-chapter-link">↗</a>
+      </div>
       <p class="cat-chapter-title">Raskaty</p>
       <div class="cat-row">
         <a href="raskaty-kimono.html" class="cat-item">
@@ -496,7 +531,10 @@
     </div>
 
     <div class="cat-chapter">
-      <p class="cat-chapter-label">Chapter 06</p>
+      <div class="cat-chapter-header">
+        <p class="cat-chapter-label" style="margin-bottom:0;">Chapter 06</p>
+        <a href="kamish.html" class="cat-chapter-link">↗</a>
+      </div>
       <p class="cat-chapter-title">Kamish</p>
       <div class="cat-row">
         <a href="kamish-kimono-beige.html" class="cat-item">
@@ -527,7 +565,10 @@
     </div>
 
     <div class="cat-chapter">
-      <p class="cat-chapter-label">Chapter 07</p>
+      <div class="cat-chapter-header">
+        <p class="cat-chapter-label" style="margin-bottom:0;">Chapter 07</p>
+        <a href="cheshuya.html" class="cat-chapter-link">↗</a>
+      </div>
       <p class="cat-chapter-title">Cheshuya</p>
       <div class="cat-row">
         <a href="cheshuya-bra.html" class="cat-item">
