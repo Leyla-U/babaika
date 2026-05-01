@@ -237,6 +237,11 @@
       -webkit-clip-path: circle(0px at -9999px -9999px);
     }
     #mag-zoom.visible { opacity: 1; }
+    #mag-zoom-filter {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
     #mag-zoom-inner {
       position: absolute;
       top: 0; left: 0;
@@ -371,7 +376,9 @@
 
   <!-- ── MAGNIFICATION OVERLAY ── -->
   <div id="mag-zoom" aria-hidden="true">
-    <div id="mag-zoom-inner"></div>
+    <div id="mag-zoom-filter">
+      <div id="mag-zoom-inner"></div>
+    </div>
   </div>
 
   <!-- NAV -->
@@ -633,6 +640,7 @@
   <script>
     const magCursor    = document.getElementById('mag-cursor');
     const magZoom      = document.getElementById('mag-zoom');
+    const magZoomFilter = document.getElementById('mag-zoom-filter');
     const magZoomInner = document.getElementById('mag-zoom-inner');
     const barrelImg    = document.getElementById('barrel-map-img');
     const edgeMaskImg  = document.getElementById('edge-mask-img');
@@ -675,7 +683,7 @@
       ectx.beginPath(); ectx.arc(h, h, h, 0, Math.PI * 2); ectx.fill();
       edgeMaskImg.setAttribute('href', ec.toDataURL('image/png'));
       edgeMaskImg.setAttribute('width', size); edgeMaskImg.setAttribute('height', size);
-      magZoom.style.filter = 'url(#barrel-lens)';
+      magZoomFilter.style.filter = 'url(#barrel-lens)';
     })();
 
     let mouseX = 0, mouseY = 0, curX = 0, curY = 0, magReady = false;
