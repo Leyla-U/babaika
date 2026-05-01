@@ -233,6 +233,8 @@
       opacity: 0;
       transition: opacity 0.3s;
       overflow: hidden;
+      clip-path: circle(0px at -9999px -9999px);
+      -webkit-clip-path: circle(0px at -9999px -9999px);
     }
     #mag-zoom.visible { opacity: 1; }
     #mag-zoom-inner {
@@ -738,6 +740,9 @@
       curX += (mouseX - curX) * 0.12; curY += (mouseY - curY) * 0.12;
       const targetOffset = isLoupeActive ? 120 : 0;
       currentOffset += (targetOffset - currentOffset) * 0.15;
+      const clipX = curX, clipY = curY - currentOffset;
+      magZoom.style.clipPath = `circle(${LENS_R}px at ${clipX}px ${clipY}px)`;
+      magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${clipX}px ${clipY}px)`;
       magCursor.style.transform = `translate(${curX - LENS_R}px, ${curY - LENS_R - currentOffset}px)`;
       if (magReady) {
         const scrollY = window.scrollY;
@@ -748,8 +753,6 @@
         const bx = Math.round(curX - LENS_R), by = Math.round(curY - LENS_R - currentOffset);
         barrelImg.setAttribute('x', bx); barrelImg.setAttribute('y', by);
         edgeMaskImg.setAttribute('x', bx); edgeMaskImg.setAttribute('y', by);
-        magZoom.style.clipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
-        magZoom.style.webkitClipPath = `circle(${LENS_R}px at ${curX}px ${curY - currentOffset}px)`;
       }
       requestAnimationFrame(animateCursor);
     }
