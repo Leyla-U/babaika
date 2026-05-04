@@ -1520,7 +1520,7 @@
 </nav>
 </div>
 <div class="footer-lang">
-<span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span> / <span id="footer-lang-ru" onclick="setLang('ru')">RU</span>
+<span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span>
 </div>
 <p class="footer-copy">© 2026 Babaika</p>
 </footer>
@@ -2322,12 +2322,6 @@
         btn_view:               'Ver',
         next_chapter:           'Siguiente Capítulo //',
         footer_brand:           'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
-      },
-      ru: {
-        nav_back:               '← Назад к Архиву',
-        btn_view:               'Посмотреть',
-        next_chapter:           'Следующая Глава //',
-        footer_brand:           'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
       }
     };
 
@@ -2350,7 +2344,7 @@
         btn.innerHTML = t.next_chapter + ' ' + name;
       });
 
-      ['en','es','ru'].forEach(function(code) {
+      ['en','es'].forEach(function(code) {
         ['footer-lang-', 'lang-'].forEach(function(prefix) {
           var el = document.getElementById(prefix + code);
           if (!el) return;
