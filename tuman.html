@@ -178,7 +178,9 @@
       gap: 1px;
     }
     
-    .hero-video-bottom video {
+    .hero-video-bottom video,
+    .hero-video-bottom img {
+      height: 100%;
       width: 100%;
       aspect-ratio: 1 / 1.1;
       object-fit: cover;
@@ -1183,7 +1185,7 @@
   </section>
 
   <!-- THREE-COLUMN INFO BAND -->
-  <div class="info-band reveal" style="border-bottom: 1px solid var(--line);">
+  <div class="info-band reveal" style="border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
 
     <!-- LEFT: Archive text -->
     <div class="info-col">
@@ -1330,7 +1332,7 @@
         <p class="artifact-name">RING</p>
         <p class="artifact-detail-row">Material: Silver</p>
         <p class="artifact-detail-row">River Pearls</p>
-        <p class="artifact-detail-row" style="margin-top:8px;">Price: $1,600.00 MXN</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Price: $2,400.00 MXN</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
           <button onclick="window.location='tuman-ring.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
@@ -2124,19 +2126,19 @@
       en: {
         nav_back:               '← Back to Archive',
         btn_view:               'View',
-        next_chapter_tamarisk:  'Next Chapter // Tamarisk',
+        next_chapter:           'Next Chapter //',
         footer_brand:           'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
       },
       es: {
         nav_back:               '← Volver al Archivo',
         btn_view:               'Ver',
-        next_chapter_tamarisk:  'Siguiente Capítulo // Tamarisk',
+        next_chapter:           'Siguiente Capítulo //',
         footer_brand:           'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
       },
       ru: {
         nav_back:               '← Назад к Архиву',
         btn_view:               'Посмотреть',
-        next_chapter_tamarisk:  'Следующая Глава // Tamarisk',
+        next_chapter:           'Следующая Глава //',
         footer_brand:           'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
       }
     };
@@ -2155,17 +2157,24 @@
         if (t[key] !== undefined) el.innerHTML = t[key];
       });
 
+      document.querySelectorAll('.next-chapter-btn').forEach(function(btn) {
+        var name = btn.getAttribute('data-name') || '';
+        btn.innerHTML = t.next_chapter + ' ' + name;
+      });
+
       ['en','es','ru'].forEach(function(code) {
-        var el = document.getElementById('footer-lang-' + code);
-        if (!el) return;
-        if (code === l) {
-          el.classList.add('active');
-          el.style.textDecoration = 'underline';
-          el.style.textUnderlineOffset = '4px';
-        } else {
-          el.classList.remove('active');
-          el.style.textDecoration = 'none';
-        }
+        ['footer-lang-', 'lang-'].forEach(function(prefix) {
+          var el = document.getElementById(prefix + code);
+          if (!el) return;
+          if (code === l) {
+            el.classList.add('active');
+            el.style.textDecoration = 'underline';
+            el.style.textUnderlineOffset = '4px';
+          } else {
+            el.classList.remove('active');
+            el.style.textDecoration = 'none';
+          }
+        });
       });
     }
 

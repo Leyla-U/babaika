@@ -172,7 +172,9 @@
       gap: 1px;
     }
     
-    .hero-video-bottom video {
+    .hero-video-bottom video,
+    .hero-video-bottom img {
+      height: 100%;
       width: 100%;
       aspect-ratio: 1 / 1.1;
       object-fit: cover;
@@ -1141,7 +1143,7 @@
   </section>
 
   <!-- THREE-COLUMN INFO BAND -->
-  <div class="info-band reveal" style="border-bottom: 1px solid var(--line);">
+  <div class="info-band reveal" style="border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
 
     <!-- LEFT: Archive text -->
     <div class="info-col">
@@ -1199,7 +1201,7 @@
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size (length can be customized)</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Price: $4,000.00 MXN</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
-          <button onclick="window.location='tamarisk-kimono.html'" class="btn-glass" style="width:100%;">View</button>
+          <button onclick="window.location='tamarisk-kimono.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
       </div>
       <div class="artifact-center" onclick="window.location='tamarisk-kimono.html'">
@@ -1228,7 +1230,7 @@
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Price: $2,000.00 MXN</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
-          <button onclick="window.location='tamarisk-bra.html'" class="btn-glass" style="width:100%;">View</button>
+          <button onclick="window.location='tamarisk-bra.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
       </div>
       <div class="artifact-center" onclick="window.location='tamarisk-bra.html'">
@@ -1256,9 +1258,9 @@
       <div class="artifact-left" onclick="window.location='tamarisk-ring.html'">
         <p class="artifact-name">RING</p>
         <p class="artifact-detail-row">Material: Silver</p>
-        <p class="artifact-detail-row" style="margin-top:8px;">Price: $2,600.00 MXN</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Price: $3,000.00 MXN</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
-          <button onclick="window.location='tamarisk-ring.html'" class="btn-glass" style="width:100%;">View</button>
+          <button onclick="window.location='tamarisk-ring.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
       </div>
       <div class="artifact-center" onclick="window.location='tamarisk-ring.html'">
@@ -1277,7 +1279,7 @@
 
 
     <div style="display: flex; justify-content: center; padding: 120px 24px 60px;">
-    <button onclick="window.location='poloi.html'" class="btn-glass">Next Chapter // Poloi</button>
+    <button onclick="window.location='poloi.html'"  class="btn-glass next-chapter-btn" data-name="Poloi">Next Chapter // Poloi</button>
   </div>
 
   <!-- FOOTER -->
@@ -1996,6 +1998,71 @@
 
     // ── Init ──────────────────────────────────────────────────
     renderCart();
+  })();
+  </script>
+
+  
+  <!-- ── TRANSLATION SYSTEM ── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        nav_back:               '← Back to Archive',
+        btn_view:               'View',
+        next_chapter:           'Next Chapter //',
+        footer_brand:           'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+      },
+      es: {
+        nav_back:               '← Volver al Archivo',
+        btn_view:               'Ver',
+        next_chapter:           'Siguiente Capítulo //',
+        footer_brand:           'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
+      },
+      ru: {
+        nav_back:               '← Назад к Архиву',
+        btn_view:               'Посмотреть',
+        next_chapter:           'Следующая Глава //',
+        footer_brand:           'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+      }
+    };
+
+    var lang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(l) {
+      if (!TRANSLATIONS[l]) l = 'en';
+      lang = l;
+      localStorage.setItem('babaika_lang', l);
+      document.documentElement.lang = l;
+
+      var t = TRANSLATIONS[l];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      document.querySelectorAll('.next-chapter-btn').forEach(function(btn) {
+        var name = btn.getAttribute('data-name') || '';
+        btn.innerHTML = t.next_chapter + ' ' + name;
+      });
+
+      ['en','es','ru'].forEach(function(code) {
+        ['footer-lang-', 'lang-'].forEach(function(prefix) {
+          var el = document.getElementById(prefix + code);
+          if (!el) return;
+          if (code === l) {
+            el.classList.add('active');
+            el.style.textDecoration = 'underline';
+            el.style.textUnderlineOffset = '4px';
+          } else {
+            el.classList.remove('active');
+            el.style.textDecoration = 'none';
+          }
+        });
+      });
+    }
+
+    window.setLang = function(l) { applyLang(l); };
+    applyLang(lang);
   })();
   </script>
 

@@ -195,7 +195,7 @@
 </div>
 <div aria-hidden="true" id="mag-zoom"><div id="mag-zoom-inner"></div></div>
 <nav class="page-nav">
-<a href="index.html">← Back to Archive</a>
+<a href="index.html" data-i18n="nav_back">← Back to Archive</a>
 <a class="nav-brand script" href="index.html">Babaika</a>
 <a href="#">CART <span id="cart-count-nav">0</span></a>
 </nav>
@@ -208,7 +208,7 @@
 </div>
 <p class="artifact-detail-row" style="margin-top:24px;">Material: Silver</p>
 <p class="artifact-detail-row">Finish: High Polish</p>
-<p class="artifact-detail-row" style="margin-top:8px;">Price: $1,600.00 MXN</p>
+<p class="artifact-detail-row" style="margin-top:8px;">Price: $2,400.00 MXN</p>
 <div style="margin-top: 48px;">
 <p class="artifact-tag" style="font-size: 10px; margin-bottom: 12px;">[ TRANSLATION NOTE ]</p>
 <p class="artifact-note">
@@ -223,10 +223,29 @@
           </div>
 </div>
 <footer>
-<div class="footer-brand"><p class="script">Babaika</p></div>
-<div class="footer-nav">
-<a href="about.html">About</a>
-<a href="catalogue.html">Catalogue</a>
+<div class="footer-brand">
+  <p class="script">Babaika</p>
+  <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+</div>
+<div style="display: flex; gap: 80px; flex-wrap: wrap;">
+  <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+    <a href="about.html">About</a>
+    <a href="catalogue.html">Catalogue</a>
+    <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </nav>
+  <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+    <a href="index.html">Index (Main Page)</a>
+    <a href="tuman.html">01 // Tuman</a>
+    <a href="tamarisk.html">02 // Tamarisk</a>
+    <a href="poloi.html">03 // Poloi</a>
+    <a href="il.html">04 // Il</a>
+    <a href="raskaty.html">05 // Raskaty</a>
+    <a href="kamish.html">06 // Kamish</a>
+    <a href="cheshuya.html">07 // Cheshuya</a>
+  </nav>
+</div>
+<div class="footer-lang">
+  <span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es" onclick="setLang('es')">ES</span> / <span id="footer-lang-ru" onclick="setLang('ru')">RU</span>
 </div>
 <p class="footer-copy">© 2026 Babaika</p>
 </footer>
@@ -301,6 +320,71 @@
       requestAnimationFrame(animate);
     }
     animate();
+  </script>
+
+  
+  <!-- ── TRANSLATION SYSTEM ── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        nav_back:               '← Back to Archive',
+        btn_view:               'View',
+        next_chapter:           'Next Chapter //',
+        footer_brand:           'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+      },
+      es: {
+        nav_back:               '← Volver al Archivo',
+        btn_view:               'Ver',
+        next_chapter:           'Siguiente Capítulo //',
+        footer_brand:           'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
+      },
+      ru: {
+        nav_back:               '← Назад к Архиву',
+        btn_view:               'Посмотреть',
+        next_chapter:           'Следующая Глава //',
+        footer_brand:           'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+      }
+    };
+
+    var lang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(l) {
+      if (!TRANSLATIONS[l]) l = 'en';
+      lang = l;
+      localStorage.setItem('babaika_lang', l);
+      document.documentElement.lang = l;
+
+      var t = TRANSLATIONS[l];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      document.querySelectorAll('.next-chapter-btn').forEach(function(btn) {
+        var name = btn.getAttribute('data-name') || '';
+        btn.innerHTML = t.next_chapter + ' ' + name;
+      });
+
+      ['en','es','ru'].forEach(function(code) {
+        ['footer-lang-', 'lang-'].forEach(function(prefix) {
+          var el = document.getElementById(prefix + code);
+          if (!el) return;
+          if (code === l) {
+            el.classList.add('active');
+            el.style.textDecoration = 'underline';
+            el.style.textUnderlineOffset = '4px';
+          } else {
+            el.classList.remove('active');
+            el.style.textDecoration = 'none';
+          }
+        });
+      });
+    }
+
+    window.setLang = function(l) { applyLang(l); };
+    applyLang(lang);
+  })();
   </script>
 
   <!-- ── Global Video Lazy-Loader ──────────────────────────── -->

@@ -260,16 +260,22 @@
   (function() {
     const TRANSLATIONS = {
       en: {
-        nav_back:     '← Back to Archive',
-        footer_brand: 'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+        nav_back:               '← Back to Archive',
+        btn_view:               'View',
+        next_chapter:           'Next Chapter //',
+        footer_brand:           'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
       },
       es: {
-        nav_back:     '← Volver al Archivo',
-        footer_brand: 'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
+        nav_back:               '← Volver al Archivo',
+        btn_view:               'Ver',
+        next_chapter:           'Siguiente Capítulo //',
+        footer_brand:           'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.'
       },
       ru: {
-        nav_back:     '← Назад к Архиву',
-        footer_brand: 'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
+        nav_back:               '← Назад к Архиву',
+        btn_view:               'Посмотреть',
+        next_chapter:           'Следующая Глава //',
+        footer_brand:           'Архив носимых ландшафтов.<br><br>Волжская дельта — в ткани, памяти и мифе.'
       }
     };
 
@@ -285,6 +291,11 @@
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
         if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      document.querySelectorAll('.next-chapter-btn').forEach(function(btn) {
+        var name = btn.getAttribute('data-name') || '';
+        btn.innerHTML = t.next_chapter + ' ' + name;
       });
 
       ['en','es','ru'].forEach(function(code) {
