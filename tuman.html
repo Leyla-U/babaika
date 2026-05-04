@@ -2083,41 +2083,6 @@
   })();
   </script>
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    lucide.createIcons({
-      attrs: {
-        width: 16,
-        height: 16,
-        'stroke-width': 1
-      }
-    });
-        function openLightboxDirect(url) {
-      const lbImg = document.getElementById('lb-img');
-      const lbCounter = document.getElementById('lb-counter');
-      const lbPrev = document.getElementById('lb-prev');
-      const lbNext = document.getElementById('lb-next');
-      const lb = document.getElementById('lightbox');
-      
-      lbImg.src = url;
-      lbImg.style.display = 'block';
-      if (lbCounter) lbCounter.textContent = '';
-      if (lbPrev) lbPrev.style.display = 'none';
-      if (lbNext) lbNext.style.display = 'none';
-      
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
-
-      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
-      if (cloneLb) {
-        cloneLb.classList.add('open');
-        const cloneImg = cloneLb.querySelector('#lb-img');
-        if (cloneImg) cloneImg.src = url;
-      }
-    }
-  </script>
-
 
   <!-- ── TRANSLATION SYSTEM ── -->
   <script>
@@ -2187,6 +2152,41 @@
     window.setLang = function(l) { applyLang(l); };
     applyLang(lang);
   })();
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons({
+      attrs: {
+        width: 16,
+        height: 16,
+        'stroke-width': 1
+      }
+    });
+        function openLightboxDirect(url) {
+      const lbImg = document.getElementById('lb-img');
+      const lbCounter = document.getElementById('lb-counter');
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+      const lb = document.getElementById('lightbox');
+      
+      lbImg.src = url;
+      lbImg.style.display = 'block';
+      if (lbCounter) lbCounter.textContent = '';
+      if (lbPrev) lbPrev.style.display = 'none';
+      if (lbNext) lbNext.style.display = 'none';
+      
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const cloneLb = document.getElementById('mag-zoom-inner')?.querySelector('#lightbox');
+      if (cloneLb) {
+        cloneLb.classList.add('open');
+        const cloneImg = cloneLb.querySelector('#lb-img');
+        if (cloneImg) cloneImg.src = url;
+      }
+    }
   </script>
 
   <!-- ── Global Video Lazy-Loader ──────────────────────────── -->
