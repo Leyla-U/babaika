@@ -1201,7 +1201,7 @@
       <span class="col-tag" data-i18n="lbl_identity">[ IDENTITY ]</span>
       <p class="identity-name">ТУМАН • Tuman [tu-ˈman]</p>
 
-      <span class="col-sub-tag" data-i18n="lbl_classification">[ CLASSIFICATION ]</</span data-i18n="lbl_classification">[ CLASSIFICATION ]</
+      <span class="col-sub-tag" data-i18n="lbl_classification">[ CLASSIFICATION ]</span>
       <p class="col-body">Atmospheric suspension &nbsp;/ &nbsp;Optical equalizer.</p>
 
       <span class="col-sub-tag">[ TECHNICAL PROFILE ]</span>
@@ -2041,7 +2041,7 @@
         return;
       }
 
-      try {
+            try {
         const res = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -2053,15 +2053,66 @@
         if (data.url) {
           window.location.href = data.url;
         } else {
-          alert('Checkout error: ' + (data.error || 'Unknown error'));
-          checkoutBtn.textContent = 'Checkout';
-          checkoutBtn.disabled = false;
+          console.error('Checkout error:', data.error);
+          fallbackToModal();
         }
       } catch (err) {
-        alert('Network error. Please try again.');
+        console.error('Network error:', err);
+        fallbackToModal();
+      }
+      
+      function fallbackToModal() {
         checkoutBtn.textContent = 'Checkout';
         checkoutBtn.disabled = false;
+        const modal = document.getElementById('checkout-modal');
+        if (modal) {
+           modal.classList.add('open');
+           // populate order summary for formspree
+           const sumEl = document.getElementById('checkout-order-summary');
+           const hiddenInput = document.getElementById('hidden-order-details');
+           if (sumEl) {
+               sumEl.innerHTML = '';
+               let textDetails = '';
+               cart.forEach(item => {
+                   const p = document.createElement('p');
+                   p.textContent = item.qty + 'x ' + item.name;
+                   sumEl.appendChild(p);
+                   textDetails += item.qty + 'x ' + item.name + ' | ' + item.desc + '
+';
+               });
+               if (hiddenInput) hiddenInput.value = textDetails;
+           }
+        } else {
+           alert('Checkout error. Please contact us directly.');
+        }
       }
+    }
+
+    
+    // ── Checkout Modal Logic ──────────────────────────────────
+    const checkoutModal = document.getElementById('checkout-modal');
+    const checkoutModalClose = document.getElementById('checkout-modal-close');
+    const checkoutModalBg = document.getElementById('checkout-modal-bg');
+    if (checkoutModal) {
+        if (checkoutModalClose) checkoutModalClose.addEventListener('click', () => checkoutModal.classList.remove('open'));
+        if (checkoutModalBg) checkoutModalBg.addEventListener('click', () => checkoutModal.classList.remove('open'));
+        
+        const form = document.getElementById('checkout-form');
+        if (form) {
+            form.addEventListener('submit', () => {
+                checkoutModal.classList.remove('open');
+                const succ = document.getElementById('success-modal');
+                if (succ) succ.classList.add('open');
+            });
+        }
+    }
+    const successClose = document.getElementById('success-close');
+    if (successClose) {
+        successClose.addEventListener('click', () => {
+            const succ = document.getElementById('success-modal');
+            if (succ) succ.classList.remove('open');
+            cart = []; save(); renderCart(); bumpCount();
+        });
     }
 
     // ── Prevent cart from triggering magnifier clone issues ───
