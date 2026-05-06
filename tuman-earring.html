@@ -1257,7 +1257,7 @@
 <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
 <p class="artifact-detail-row" style="margin-top:8px;">Price: $800.00 MXN</p>
 <div class="artifact-actions" style="margin-top: 32px; display: flex; gap: 8px; max-width: 320px;">
-<button class="btn-add-cart btn-glass" data-desc="Silver, River Pearls" data-id="01.03" data-name="Tuman — Earring" data-price-id="price_1TQat4JPn6LmQgwJ9aw8fNsg" style="flex:1;">+ Add</button>
+<button class="btn-add-cart btn-glass" data-desc="Silver, River Pearls" data-id="01.03" data-name="Tuman — Earring" data-price-id="price_1TQat4JPn6LmQgwJ9aw8fNsg" style="flex:1;">+ Add to Cart</button>
 </div>
 <div style="margin-top: 48px;">
 <p class="artifact-tag" style="font-size: 10px; margin-bottom: 12px;">[ CARE INFORMATION ]</p>
@@ -2212,7 +2212,7 @@
         save(); renderCart(); bumpCount();
         btn.textContent = '✓ Added';
         btn.classList.add('added');
-        setTimeout(() => { btn.textContent = '+ Add'; btn.classList.remove('added'); }, 1800);
+        setTimeout(() => { btn.textContent = '+ Add to Cart'; btn.classList.remove('added'); }, 1800);
         openCart();
       });
     });
@@ -2242,8 +2242,8 @@
 
       // Build line items — items without priceId will be skipped
       const items = cart
-        .filter(i => i.priceId)
-        .map(i => ({ priceId: i.priceId, quantity: i.qty }));
+        .map(i => ({ priceId: i.priceId || (typeof PRICE_ID_MAP !== "undefined" ? PRICE_ID_MAP[i.id] : undefined), quantity: i.qty }))
+        .filter(i => i.priceId);
 
       if (items.length === 0) {
         alert('Unable to proceed: no items with a price ID found.');
@@ -2288,8 +2288,7 @@
                    const p = document.createElement('p');
                    p.textContent = item.qty + 'x ' + item.name;
                    sumEl.appendChild(p);
-                   textDetails += item.qty + 'x ' + item.name + ' | ' + item.desc + '
-';
+                   textDetails += item.qty + 'x ' + item.name + ' | ' + item.desc + '\n';
                });
                if (hiddenInput) hiddenInput.value = textDetails;
            }
