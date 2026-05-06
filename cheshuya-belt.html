@@ -2192,10 +2192,12 @@ When struck by light, it creates a short, blinding flash. A moment of optical di
     function openCart() {
       cartSidebar.classList.add('open');
       cartOverlay.classList.add('visible');
+      document.body.classList.add('cart-open');
     }
     function closeCart() {
       cartSidebar.classList.remove('open');
       cartOverlay.classList.remove('visible');
+      document.body.classList.remove('cart-open');
     }
 
     cartBtn.addEventListener('click', openCart);

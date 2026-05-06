@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Babaika — Tamarisk Ring</title>
-<meta content="Tamarisk Ring — cast silver with rubies. Babaika, a wearable landscape archive." name="description"/>
+<meta content="Tamarisk Ring — cast silver with lab grown rubies. Babaika, a wearable landscape archive." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300&amp;display=swap" rel="stylesheet"/>
@@ -2264,10 +2264,12 @@
     function openCart() {
       cartSidebar.classList.add('open');
       cartOverlay.classList.add('visible');
+      document.body.classList.add('cart-open');
     }
     function closeCart() {
       cartSidebar.classList.remove('open');
       cartOverlay.classList.remove('visible');
+      document.body.classList.remove('cart-open');
     }
 
     cartBtn.addEventListener('click', openCart);

@@ -1325,7 +1325,7 @@
 <h1 class="artifact-name" style="margin-top: 0; margin-bottom: 16px;">The Navigational Route</h1>
 <p class="artifact-tag" style="margin-top: 8px; margin-bottom: 24px;">[ HARDWARE ARTIFACT 05.03 ]</p>
 </div>
-<p class="artifact-detail-row">Material: Silver, Moissanite</p>
+<p class="artifact-detail-row">Material: Silver, Lab Grown Moissanite</p>
 <div class="size-selector-row">
   <span class="size-label">Size:</span>
   <div class="size-seg" id="ring-size-seg">
@@ -1362,7 +1362,7 @@
 </script>
 <p class="artifact-detail-row" style="margin-top:8px;">Price: $3,000.00 MXN</p>
 <div class="artifact-actions" style="margin-top: 32px; display: flex; gap: 8px; max-width: 320px;">
-<button class="btn-add-cart btn-glass" data-desc="Silver, Moissanite" data-id="05.03" data-name="Raskaty — Ring" data-price-id="price_1TQbcaJPn6LmQgwJ8KmQBiAk" style="flex:1;">+ Add to Cart</button>
+<button class="btn-add-cart btn-glass" data-desc="Silver, Lab Grown Moissanite" data-id="05.03" data-name="Raskaty — Ring" data-price-id="price_1TQbcaJPn6LmQgwJ8KmQBiAk" style="flex:1;">+ Add to Cart</button>
 </div>
 <div style="margin-top: 48px;">
 <p class="artifact-tag" style="font-size: 10px; margin-bottom: 12px;">[ CARE INFORMATION ]</p>
@@ -1373,7 +1373,7 @@
 <div style="margin-top: 48px; margin-bottom: 80px;">
 <p class="artifact-tag" style="font-size: 10px; margin-bottom: 12px;">[ TRANSLATION NOTE ]</p>
 <p class="artifact-note" style="margin-top: 0; padding-top: 0;">
-              A structural record of moving through the eriki. The heavy, distressed silver edges mimic the dense walls of the reeds, while the continuous 1mm line of moissanites cuts directly through the center - mapping the exact path of a boat slicing through the water labyrinth.
+              A structural record of moving through the eriki. The heavy, distressed silver edges mimic the dense walls of the reeds, while the continuous 1mm line of lab grown moissanites cuts directly through the center - mapping the exact path of a boat slicing through the water labyrinth.
             </p>
 </div>
 <div style="margin-top: 64px;">
@@ -2306,10 +2306,12 @@
     function openCart() {
       cartSidebar.classList.add('open');
       cartOverlay.classList.add('visible');
+      document.body.classList.add('cart-open');
     }
     function closeCart() {
       cartSidebar.classList.remove('open');
       cartOverlay.classList.remove('visible');
+      document.body.classList.remove('cart-open');
     }
 
     cartBtn.addEventListener('click', openCart);

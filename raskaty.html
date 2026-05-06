@@ -1201,7 +1201,7 @@
     <div class="artifact-grid">
       <div class="artifact-left" onclick="window.location='raskaty-ring.html'">
         <p class="artifact-name">THE NAVIGATIONAL ROUTE</p>
-        <p class="artifact-detail-row">Material: Silver, 1mm Moissanite Line</p>
+        <p class="artifact-detail-row">Material: Silver, 1mm Lab Grown Moissanite Line</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Price: $3,000.00 MXN</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
@@ -1216,7 +1216,7 @@
       <div class="artifact-right">
         <p class="artifact-note">
           <strong style="font-style:normal; font-weight:200; letter-spacing:0.08em;" data-i18n="lbl_translation">[ TRANSLATION NOTE ]</strong><br><br>
-          A structural record of moving through the eriki. The heavy, distressed silver edges mimic the dense walls of the reeds, while the continuous 1mm line of moissanites cuts directly through the center - mapping the exact path of a boat slicing through the water labyrinth.
+          A structural record of moving through the eriki. The heavy, distressed silver edges mimic the dense walls of the reeds, while the continuous 1mm line of lab grown moissanites cuts directly through the center - mapping the exact path of a boat slicing through the water labyrinth.
         </p>
       </div>
     </div>
@@ -1836,10 +1836,12 @@
     function openCart() {
       cartSidebar.classList.add('open');
       cartOverlay.classList.add('visible');
+      document.body.classList.add('cart-open');
     }
     function closeCart() {
       cartSidebar.classList.remove('open');
       cartOverlay.classList.remove('visible');
+      document.body.classList.remove('cart-open');
     }
 
     cartBtn.addEventListener('click', openCart);

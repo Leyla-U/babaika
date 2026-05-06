@@ -1284,7 +1284,7 @@
 <div onclick="window.location='tamarisk-ring.html'" style="cursor: pointer;">
 <video preload="none" autoplay="" loop="" muted="" onmouseout="this.style.filter='brightness(0.96) saturate(0.9)'" onmouseover="this.style.filter='brightness(1) saturate(1)'" playsinline="" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777082418/tamarisk_ring_vxj0td.mp4" style="width: 100%; aspect-ratio: 1; object-fit: cover; filter: brightness(0.96) saturate(0.9); transition: filter 0.3s;"></video>
 <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); margin-top: 16px;">Tamarisk Ring</p>
-<p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint);">Silver / Rubies</p>
+<p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint);">Silver / Lab Grown Rubies</p>
 </div>
 </div>
 </div>
@@ -2167,10 +2167,12 @@
     function openCart() {
       cartSidebar.classList.add('open');
       cartOverlay.classList.add('visible');
+      document.body.classList.add('cart-open');
     }
     function closeCart() {
       cartSidebar.classList.remove('open');
       cartOverlay.classList.remove('visible');
+      document.body.classList.remove('cart-open');
     }
 
     cartBtn.addEventListener('click', openCart);
