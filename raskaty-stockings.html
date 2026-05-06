@@ -2112,6 +2112,8 @@
   (function() {
     // ── State ──────────────────────────────────────────────────
     let cart = JSON.parse(localStorage.getItem('babaika_cart') || '[]');
+    const PRICE_ID_MAP = {'04.01': 'price_1TQbXMJPn6LmQgwJn3zZwNpx', '01.01': 'price_1TQafZJPn6LmQgwJSTbUQcgy', '02.04': 'price_1TQbHgJPn6LmQgwJaPMB2nHF', '01.02': 'price_1TQb10JPn6LmQgwJFMS0HaD1', '04.02': 'price_1TQbZ1JPn6LmQgwJE9rPJZwV', '07.01': 'price_1TQbruJPn6LmQgwJ6preZbIS', '05.01': 'price_1TQbbKJPn6LmQgwJfRKnPQqs', '02.01': 'price_1TQawkJPn6LmQgwJxf39q6Tp', '05.03': 'price_1TQbcaJPn6LmQgwJ8KmQBiAk', '02.02': 'price_1TQaznJPn6LmQgwJ32TalPuF', '07.02': 'price_1TQbuvJPn6LmQgwJOlissPz3', '06.01': 'price_1TQbiFJPn6LmQgwJmgpuP2KF', '05.02': 'price_1TQbt5JPn6LmQgwJ6kY8NMp7', '03.03': 'price_1TQbOCJPn6LmQgwJZOP555Oj', '01.03': 'price_1TQat4JPn6LmQgwJ9aw8fNsg', '06.02': 'price_1TQbjaJPn6LmQgwJ2OB1nFZK', '07.04': 'price_1TQbuGJPn6LmQgwJSJrzJk7Q', '07.03': 'price_1TQbtkJPn6LmQgwJSCBixnQx', '03.02': 'price_1TQbMZJPn6LmQgwJsozGfeXn', '03.01': 'price_1TQbKfJPn6LmQgwJbKLAxkSv', '06.03': 'price_1TQblYJPn6LmQgwJNk7Hoful'};
+
 
     const cartBtn      = document.getElementById('cart-btn-nav');
     const cartCount    = document.getElementById('cart-count-nav');
