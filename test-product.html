@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Babaika — Test Product</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #EEEDEB;
+    --text: #535E69;
+    --text-muted: #888880;
+    --text-faint: #b0aea8;
+    --line: rgba(60,60,55,0.18);
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 100;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+  @font-face {
+    font-family: 'Figuea Granatae';
+    src: url('fonts/Figuea_Granatae.otf') format('opentype');
+    font-weight: normal; font-style: normal;
+  }
+  .script { font-family: 'Figuea Granatae', cursive; font-weight: 400; }
+
+  /* TEST BANNER */
+  .test-banner {
+    background: #c8593a;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 99999;
+  }
+
+  /* NAV */
+  .page-nav {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 90vw;
+    padding: 28px 0;
+  }
+  .page-nav a {
+    font-size: 11px; color: var(--text); text-decoration: none;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+  .page-nav .nav-brand { font-family: 'Figuea Granatae', cursive; font-size: 28px; letter-spacing: normal; text-transform: none; }
+  .page-nav a:hover { opacity: 0.6; }
+
+  /* PRODUCT GRID */
+  .product-wrap {
+    max-width: 1200px;
+    width: 90vw;
+    margin: 0 auto;
+    padding: 60px 0 120px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .product-wrap { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* IMAGE */
+  .product-image-col img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.96) saturate(0.9);
+  }
+
+  /* INFO */
+  .product-info-col {
+    position: sticky;
+    top: 60px;
+  }
+  .test-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #c8593a;
+    border: 1px solid #c8593a;
+    padding: 3px 10px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
+  .artifact-tag {
+    font-size: 11px; letter-spacing: 0.2em; color: var(--text-faint);
+    text-transform: uppercase; margin-bottom: 12px; display: block;
+  }
+  .artifact-name {
+    font-size: 28px; letter-spacing: 0.1em; color: var(--text);
+    font-weight: 100; margin-bottom: 24px;
+  }
+  .artifact-detail-row {
+    font-size: 13px; color: var(--text); font-style: italic;
+    line-height: 2; margin-bottom: 4px;
+  }
+  .price-row {
+    font-size: 18px;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-top: 24px;
+    margin-bottom: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* SIZE SELECTOR */
+  .size-selector-row {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 16px; margin-bottom: 20px;
+  }
+  .size-label {
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-faint); white-space: nowrap;
+  }
+  .size-seg { display: flex; flex-wrap: wrap; gap: 4px; }
+  .size-seg button {
+    background: transparent; border: 1px solid var(--line);
+    color: var(--text-faint); font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 10px; cursor: pointer; transition: all 0.18s; border-radius: 2px;
+  }
+  .size-seg button:hover { border-color: var(--text); color: var(--text); }
+  .size-seg button.active { border-color: var(--text); color: var(--bg); background: var(--text); }
+
+  /* BUTTONS */
+  .btn-glass {
+    border-radius: 100px;
+    background: var(--bg);
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05), inset 0 2px 4px rgba(255,255,255,0.5);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 16px 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+  }
+  .btn-glass:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08), inset 0 2px 4px rgba(255,255,255,0.8);
+    transform: translateY(-1px);
+  }
+  .btn-glass:active { transform: translateY(1px); }
+  .btn-glass.added { color: var(--text-muted); }
+
+  .artifact-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+
+  /* TEST INFO BOX */
+  .test-info {
+    margin-top: 40px;
+    padding: 20px 24px;
+    border: 1px solid rgba(200,89,58,0.3);
+    background: rgba(200,89,58,0.04);
+    border-radius: 4px;
+  }
+  .test-info h3 {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #c8593a; margin-bottom: 12px;
+  }
+  .test-info p {
+    font-size: 11px; color: var(--text-muted); line-height: 1.9; font-style: italic;
+  }
+  .test-info code {
+    font-family: var(--font-mono); font-size: 10px;
+    background: rgba(83,94,105,0.08); padding: 2px 6px; border-radius: 2px;
+  }
+
+  /* CART SIDEBAR */
+  #cart-sidebar {
+    position: fixed; top: 0; right: 0;
+    width: 420px; max-width: 100vw; height: 100vh;
+    background: var(--bg); border-left: 1px solid var(--line);
+    z-index: 19000; display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.45s cubic-bezier(0.77,0,0.175,1);
+  }
+  #cart-sidebar.open { transform: translateX(0); }
+  #cart-overlay {
+    position: fixed; inset: 0;
+    background: rgba(83,94,105,0.08);
+    z-index: 18999; opacity: 0; pointer-events: none;
+    transition: opacity 0.35s;
+  }
+  #cart-overlay.visible { opacity: 1; pointer-events: auto; }
+
+  .cart-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 36px 32px 24px; border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .cart-header h2 {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 200;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--text);
+  }
+  #cart-close {
+    background: none; border: none; font-family: var(--font-mono);
+    font-size: 18px; color: var(--text); cursor: pointer;
+    padding: 4px 8px; transition: color 0.2s;
+  }
+  #cart-items {
+    flex: 1; overflow-y: auto; padding: 24px 32px;
+    scrollbar-width: thin; scrollbar-color: var(--line) transparent;
+  }
+  .cart-empty { color: var(--text); font-size: 12px; letter-spacing: 0.1em; font-style: italic; margin-top: 40px; }
+  .cart-item {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn { from { opacity:0; transform:translateX(12px); } to { opacity:1; transform:none; } }
+  .cart-item-header { display: flex; justify-content: space-between; align-items: flex-start; }
+  .cart-item-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); }
+  .cart-item-meta { font-size: 11px; color: var(--text); font-style: italic; line-height: 1.7; }
+  .cart-item-price { font-size: 11px; color: var(--text); letter-spacing: 0.08em; }
+  .cart-item-remove {
+    background: none; border: none; font-family: var(--font-mono);
+    font-size: 14px; color: var(--text); cursor: pointer;
+    padding: 0 0 0 12px; line-height: 1; flex-shrink: 0;
+  }
+  .cart-qty-row { display: flex; align-items: center; gap: 12px; }
+  .cart-qty-btn {
+    background: none; border: none; color: var(--text);
+    font-family: var(--font-mono); font-size: 13px;
+    width: 24px; height: 24px;
+    display: flex; align-items: center; cursor: pointer;
+  }
+  .cart-qty-num { font-size: 12px; color: var(--text); min-width: 16px; text-align: center; }
+  .cart-footer { padding: 20px 32px 32px; flex-shrink: 0; }
+  .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+  .cart-total-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text); }
+  .cart-total-price { font-size: 13px; color: var(--text); letter-spacing: 0.06em; }
+  #checkout-btn:disabled { opacity: 0.35; pointer-events: none; }
+  .cart-note { font-size: 10px; color: var(--text); font-style: italic; margin-top: 12px; text-align: center; line-height: 1.7; }
+
+  /* NAV CART LINK */
+  #cart-count-nav {
+    display: inline-flex; align-items: center; justify-content: flex-start;
+    width: 18px; height: 18px; font-size: 10px; transition: transform 0.2s;
+  }
+  #cart-count-nav.bump { transform: scale(1.35); }
+</style>
+</head>
+<body>
+
+<!-- TEST BANNER -->
+<div class="test-banner">⚠ Test Page — Stripe Checkout Testing Only — Do Not Share</div>
+
+<!-- NAV -->
+<nav class="page-nav">
+  <a href="index.html">← Back to Archive</a>
+  <a class="nav-brand script" href="index.html">Babaika</a>
+  <a href="#" id="cart-btn-nav">CART <span id="cart-count-nav">0</span></a>
+</nav>
+
+<!-- PRODUCT -->
+<div class="product-wrap">
+
+  <!-- IMAGE COL -->
+  <div class="product-image-col">
+    <img
+      src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777228760/babaika_tuman_10_wly3ap.jpg"
+      alt="Test Product — Tuman Chiffon Bra"
+      loading="eager"
+    />
+  </div>
+
+  <!-- INFO COL -->
+  <div class="product-info-col">
+    <span class="test-badge">Test Product</span>
+    <p class="artifact-tag">[ TEXTILE ARTIFACT — TEST ]</p>
+    <h1 class="artifact-name">Chiffon Bra</h1>
+
+    <p class="artifact-detail-row">Material: White Silk Chiffon</p>
+    <p class="artifact-detail-row">Mulberry Silk Chiffon 8 Momme</p>
+    <p class="artifact-detail-row">Chapter 01: Tuman</p>
+
+    <div class="size-selector-row">
+      <span class="size-label">Size:</span>
+      <div class="size-seg" id="size-seg">
+        <button class="active" data-size="XS-S">XS-S</button>
+        <button data-size="M-L">M-L</button>
+      </div>
+    </div>
+
+    <div class="price-row">$2,000.00 MXN</div>
+
+    <div class="artifact-actions">
+      <button
+        class="btn-glass btn-add-cart"
+        id="btn-add"
+        data-id="01.02"
+        data-name="Tuman — Chiffon Bra"
+        data-desc="White Silk Chiffon"
+        data-price-id="price_1TQb10JPn6LmQgwJFMS0HaD1"
+      >+ Add to Cart</button>
+    </div>
+
+    <!-- TEST INFO -->
+    <div class="test-info">
+      <h3>[ Checkout Test Info ]</h3>
+      <p>
+        This page tests the full Stripe checkout flow.<br><br>
+        <strong>Price ID:</strong> <code>price_1TQb10JPn6LmQgwJFMS0HaD1</code><br>
+        <strong>Product ID:</strong> <code>01.02</code><br>
+        <strong>Price:</strong> $2,000 MXN<br><br>
+        Click <em>Add to Cart</em>, then <em>Checkout</em> in the cart sidebar. You will be redirected to Stripe.<br><br>
+        Use Stripe test card: <code>4242 4242 4242 4242</code>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- CART OVERLAY -->
+<div id="cart-overlay"></div>
+
+<!-- CART SIDEBAR -->
+<aside aria-label="Shopping cart" id="cart-sidebar">
+  <div class="cart-header">
+    <h2>[ Selected Artifacts ]</h2>
+    <button aria-label="Close cart" id="cart-close">×</button>
+  </div>
+  <div id="cart-items">
+    <p class="cart-empty">No artifacts selected.<br/>Each piece is made to order.</p>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">[ Total ]</span>
+      <span class="cart-total-price" id="cart-total">—</span>
+    </div>
+    <button class="btn-glass" disabled id="checkout-btn" style="width:100%;">Checkout via Stripe</button>
+    <p class="cart-note">Test mode — use card 4242 4242 4242 4242</p>
+  </div>
+</aside>
+
+<script>
+  // Size selector
+  const seg = document.getElementById('size-seg');
+  const addBtn = document.getElementById('btn-add');
+  const baseName = addBtn.dataset.name;
+  const baseId = addBtn.dataset.id;
+  let selectedSize = 'XS-S';
+  seg.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      seg.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedSize = btn.dataset.size;
+      addBtn.dataset.name = baseName + ' (' + selectedSize + ')';
+    });
+  });
+
+  // Cart
+  (function() {
+    const PRICE_ID_MAP = { '01.02': 'price_1TQb10JPn6LmQgwJFMS0HaD1' };
+    const PRICE_NUM_MAP = { '01.02': 2000.0 };
+    const PRICE_DISP_MAP = { '01.02': '$2,000.00 MXN' };
+
+    let cart = JSON.parse(localStorage.getItem('babaika_cart') || '[]');
+
+    const cartBtnNav   = document.getElementById('cart-btn-nav');
+    const cartCountNav = document.getElementById('cart-count-nav');
+    const cartSidebar  = document.getElementById('cart-sidebar');
+    const cartOverlay  = document.getElementById('cart-overlay');
+    const cartClose    = document.getElementById('cart-close');
+    const cartItemsEl  = document.getElementById('cart-items');
+    const cartTotal    = document.getElementById('cart-total');
+    const checkoutBtn  = document.getElementById('checkout-btn');
+
+    function save() { localStorage.setItem('babaika_cart', JSON.stringify(cart)); }
+
+    function renderCart() {
+      const total = cart.reduce((s, i) => s + i.qty, 0);
+      cartCountNav.textContent = total;
+      checkoutBtn.disabled = cart.length === 0;
+
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<p class="cart-empty">No artifacts selected.<br>Each piece is made to order.</p>';
+        cartTotal.textContent = '—';
+        return;
+      }
+
+      cartItemsEl.innerHTML = '';
+      cart.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        const baseItemId = item.id.split('-')[0];
+        div.innerHTML = `
+          <div class="cart-item-header">
+            <span class="cart-item-title">${item.name}</span>
+            <button class="cart-item-remove" data-idx="${idx}" aria-label="Remove">×</button>
+          </div>
+          <span class="cart-item-meta">${item.desc}</span>
+          <div class="cart-qty-row">
+            <button class="cart-qty-btn" data-action="dec" data-idx="${idx}">−</button>
+            <span class="cart-qty-num">${item.qty}</span>
+            <button class="cart-qty-btn" data-action="inc" data-idx="${idx}">+</button>
+            <span class="cart-item-price">${PRICE_DISP_MAP[baseItemId] || 'Price on inquiry'}</span>
+          </div>`;
+        cartItemsEl.appendChild(div);
+      });
+
+      let totalPrice = 0;
+      cart.forEach(i => { totalPrice += (PRICE_NUM_MAP[i.id.split('-')[0]] || 0) * i.qty; });
+      const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+      cartTotal.textContent = `${totalQty} piece${totalQty > 1 ? 's' : ''} — $${totalPrice.toLocaleString('en-US', {minimumFractionDigits: 2})} MXN`;
+
+      cartItemsEl.querySelectorAll('.cart-item-remove').forEach(btn => {
+        btn.addEventListener('click', () => { cart.splice(+btn.dataset.idx, 1); save(); renderCart(); });
+      });
+      cartItemsEl.querySelectorAll('.cart-qty-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const i = +btn.dataset.idx;
+          if (btn.dataset.action === 'inc') cart[i].qty++;
+          else { cart[i].qty--; if (cart[i].qty <= 0) cart.splice(i, 1); }
+          save(); renderCart();
+        });
+      });
+    }
+
+    function openCart() { cartSidebar.classList.add('open'); cartOverlay.classList.add('visible'); }
+    function closeCart() { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('visible'); }
+
+    cartBtnNav.addEventListener('click', e => { e.preventDefault(); openCart(); });
+    cartClose.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
+
+    // Add to cart
+    addBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = addBtn.dataset.id + (selectedSize ? '-' + selectedSize : '');
+      const priceId = addBtn.dataset.priceId;
+      const name = addBtn.dataset.name + (selectedSize && !addBtn.dataset.name.includes('(') ? ' (' + selectedSize + ')' : '');
+      const desc = addBtn.dataset.desc;
+      const baseId = id.split('-')[0];
+      const existing = cart.find(i => i.id === id);
+      if (existing) { existing.qty++; } else { cart.push({ id, priceId, name, desc, qty: 1 }); }
+      save(); renderCart();
+      addBtn.textContent = '✓ Added';
+      addBtn.classList.add('added');
+      setTimeout(() => { addBtn.textContent = '+ Add to Cart'; addBtn.classList.remove('added'); }, 1800);
+      openCart();
+    });
+
+    // Stripe checkout
+    checkoutBtn.addEventListener('click', async () => {
+      closeCart();
+      checkoutBtn.textContent = 'Loading…';
+      checkoutBtn.disabled = true;
+
+      const items = cart.map(i => ({
+        priceId: i.priceId || PRICE_ID_MAP[i.id.split('-')[0]],
+        quantity: i.qty
+      })).filter(i => i.priceId);
+
+      if (items.length === 0) {
+        alert('No items with a valid price ID.');
+        checkoutBtn.textContent = 'Checkout via Stripe';
+        checkoutBtn.disabled = false;
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items }),
+        });
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          console.error('Stripe error:', data.error);
+          alert('Stripe error: ' + data.error);
+          checkoutBtn.textContent = 'Checkout via Stripe';
+          checkoutBtn.disabled = false;
+        }
+      } catch (err) {
+        console.error('Network error:', err);
+        alert('Network error — make sure you are running on Vercel or a local dev server with the API available.');
+        checkoutBtn.textContent = 'Checkout via Stripe';
+        checkoutBtn.disabled = false;
+      }
+    });
+
+    renderCart();
+  })();
+</script>
+</body>
+</html>

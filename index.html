@@ -48,7 +48,7 @@
       width: 336px;
       height: 336px;
       pointer-events: none;
-      z-index: 10002;
+      z-index: 20002;
       will-change: transform;
       transition: opacity 0.25s ease;
       opacity: 0;
@@ -65,7 +65,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 10001;
+      z-index: 20001;
       opacity: 0;
       transition: opacity 0.25s ease;
       /* barrel lens distortion filter applied via JS */
@@ -1310,7 +1310,7 @@
 </head>
 <body>
   <!-- ── CART BUTTON ────────────────────────────────────────────── -->
-  <button id="cart-btn" aria-label="Open cart">
+  <button id="cart-btn" aria-label="Open cart" data-no-clone="true">
     <span>Cart</span>
     <span id="cart-count">0</span>
   </button>
