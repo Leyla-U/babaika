@@ -315,7 +315,7 @@
       </div>
     </div>
 
-    <div class="price-row">$2,000.00 MXN</div>
+    <div class="price-row">$10.00 MXN</div>
 
     <div class="artifact-actions">
       <button
@@ -324,7 +324,7 @@
         data-id="01.02"
         data-name="Tuman — Chiffon Bra"
         data-desc="White Silk Chiffon"
-        data-price-id="price_1TQb10JPn6LmQgwJFMS0HaD1"
+        data-price-id="price_1TUtJXJPn6LmQgwJyaL9vUBJ"
       >+ Add to Cart</button>
     </div>
 
@@ -333,9 +333,9 @@
       <h3>[ Checkout Test Info ]</h3>
       <p>
         This page tests the full Stripe checkout flow.<br><br>
-        <strong>Price ID:</strong> <code>price_1TQb10JPn6LmQgwJFMS0HaD1</code><br>
+        <strong>Price ID:</strong> <code>price_1TUtJXJPn6LmQgwJyaL9vUBJ</code><br>
         <strong>Product ID:</strong> <code>01.02</code><br>
-        <strong>Price:</strong> $2,000 MXN<br><br>
+        <strong>Price:</strong> $10.00 MXN<br><br>
         Click <em>Add to Cart</em>, then <em>Checkout</em> in the cart sidebar. You will be redirected to Stripe.<br><br>
         Use Stripe test card: <code>4242 4242 4242 4242</code>
       </p>
@@ -383,9 +383,9 @@
 
   // Cart
   (function() {
-    const PRICE_ID_MAP = { '01.02': 'price_1TQb10JPn6LmQgwJFMS0HaD1' };
-    const PRICE_NUM_MAP = { '01.02': 2000.0 };
-    const PRICE_DISP_MAP = { '01.02': '$2,000.00 MXN' };
+    const PRICE_ID_MAP = { '01.02': 'price_1TUtJXJPn6LmQgwJyaL9vUBJ' };
+    const PRICE_NUM_MAP = { '01.02': 10.0 };
+    const PRICE_DISP_MAP = { '01.02': '$10.00 MXN' };
 
     let cart = JSON.parse(localStorage.getItem('babaika_cart') || '[]');
 
