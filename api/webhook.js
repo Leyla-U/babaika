@@ -76,6 +76,11 @@ module.exports = async function handler(req, res) {
           to: customerEmail,
           subject: 'Order Confirmed: Babaika Archive.',
           html: `
+            <style>
+              @media (prefers-color-scheme: dark) {
+                .email-signature { filter: invert(1) brightness(2); }
+              }
+            </style>
             <div style="font-family: sans-serif; max-width: 600px; color: #222; line-height: 1.6;">
               <p>Your order has been securely received.</p>
               <p>Thank you for acquiring a piece of Volume 01. Because every artifact is prepared and finished by hand, your piece is currently undergoing manual processing in our studio.</p>
@@ -93,7 +98,7 @@ module.exports = async function handler(req, res) {
               
               <p>You will receive an update with tracking information the moment your package is ready to ship.</p>
               <br />
-              <img src="https://babaika-babaika.vercel.app/images/signature.svg" alt="Babaika Studio" style="height: 50px; margin-top: 10px; display: block;" />
+              <img class="email-signature" src="https://babaika-babaika.vercel.app/images/signature.svg" alt="Babaika Studio" style="height: 50px; margin-top: 10px; display: block;" />
             </div>
           `,
         });
