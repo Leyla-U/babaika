@@ -58,26 +58,39 @@ module.exports = async function handler(req, res) {
 
     if (customerEmail) {
       try {
+        // Retrieve line items to show in the email
+        const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+        const orderDetails = lineItems.data.map(item => `- ${item.description} (Qty: ${item.quantity})`).join('<br>');
+
+        const address = session.shipping_details?.address;
+        const shippingAddress = address 
+          ? `${address.line1 || ''} ${address.line2 || ''}<br>${address.city || ''}, ${address.state || ''} ${address.postal_code || ''}<br>${address.country || ''}`
+          : 'Address not provided at checkout.';
+
         // 2. Send the automated production start email
         await transporter.sendMail({
           from: `"Babaika Studio" <${process.env.GMAIL_USER || 'babaika.objects@gmail.com'}>`,
           to: customerEmail,
-          subject: 'Your Babaika piece is now in production',
+          subject: 'Order Confirmed: Babaika Archive.',
           html: `
             <div style="font-family: sans-serif; max-width: 600px; color: #222; line-height: 1.6;">
-              <h2 style="font-weight: normal; border-bottom: 1px solid #eee; padding-bottom: 10px;">Thank you for supporting independent craft.</h2>
-              <p>Hi ${customerName},</p>
-              <p>Your payment has been successfully confirmed, and the studio has officially begun crafting your order.</p>
-              <p>Because every Babaika object is individually handmade to order here in Mexico City, <strong>please allow approximately 2 weeks for the creation, finishing, and packaging of your pieces.</strong> We believe slow, intentional production makes for objects worth waiting for.</p>
+              <p>Your order has been securely received.</p>
+              <p>Thank you for acquiring a piece of Volume 01. Because every artifact is prepared and finished by hand, your piece is currently undergoing manual processing in our studio.</p>
               
+              <h4 style="margin-bottom: 5px;">Order Details:</h4>
+              <p style="margin-top: 0;">${orderDetails}</p>
+
+              <h4 style="margin-bottom: 5px;">Destination:</h4>
+              <p style="margin-top: 0;">${shippingAddress}</p>
+
               <div style="background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-radius: 4px; border-left: 3px solid #000;">
                 <h4 style="margin-top: 0; margin-bottom: 5px;">Custom Adaptations & Notes:</h4>
                 <p style="font-style: italic; color: #555; margin: 0;">"${sizingNotes}"</p>
               </div>
               
-              <p>We will send you a tracking number the exact moment your package is packed and dispatched from the studio.</p>
+              <p>You will receive an update with tracking information the moment your package is ready to ship.</p>
               <br />
-              <p>With care,<br /><strong>Babaika Studio</strong></p>
+              <p>The Babaika Studio.</p>
             </div>
           `,
         });
