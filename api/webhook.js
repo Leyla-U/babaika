@@ -93,7 +93,7 @@ module.exports = async function handler(req, res) {
               
               <p>You will receive an update with tracking information the moment your package is ready to ship.</p>
               <br />
-              <img src="https://babaika-babaika.vercel.app/images/signature.png" alt="Babaika Studio" style="height: 50px; margin-top: 10px; display: block;" />
+              <img src="https://babaika-babaika.vercel.app/images/signature.svg" alt="Babaika Studio" style="height: 50px; margin-top: 10px; display: block;" />
             </div>
           `,
         });
