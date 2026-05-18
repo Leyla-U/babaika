@@ -62,9 +62,12 @@ module.exports = async function handler(req, res) {
         const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
         const orderDetails = lineItems.data.map(item => `- ${item.description} (Qty: ${item.quantity})`).join('<br>');
 
-        const address = session.shipping_details?.address;
+        const shippingInfo = session.shipping_details || session.shipping;
+        const address = shippingInfo?.address || session.customer_details?.address;
+        const recipientName = shippingInfo?.name || session.customer_details?.name || customerName;
+
         const shippingAddress = address 
-          ? `${address.line1 || ''} ${address.line2 || ''}<br>${address.city || ''}, ${address.state || ''} ${address.postal_code || ''}<br>${address.country || ''}`
+          ? `<strong>${recipientName}</strong><br/>${address.line1 || ''} ${address.line2 || ''}<br/>${address.city || ''}, ${address.state || ''} ${address.postal_code || ''}<br/>${address.country || ''}`
           : 'Address not provided at checkout.';
 
         // 2. Send the automated production start email
