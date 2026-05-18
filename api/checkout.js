@@ -34,7 +34,7 @@ module.exports = async function handler(req, res) {
       shipping_address_collection: {
         allowed_countries: ['MX', 'US', 'CA', 'GB', 'DE', 'FR', 'ES', 'IT', 'NL', 'AU', 'JP', 'KR', 'RU', 'KZ'],
       },
-      success_url: `${origin}/catalogue.html?order=success`,
+      success_url: `${origin}/success.html`,
       cancel_url:  `${origin}/catalogue.html`,
     });
 

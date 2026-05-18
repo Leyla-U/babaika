@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Babaika — Order Successful</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #EEEDEB;
+      --text: #535E69;
+      --text-muted: #888880;
+      --text-faint: #b0aea8;
+      --line: rgba(60, 60, 55, 0.18);
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 100;
+      line-height: 1.7;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    @font-face {
+      font-family: 'Figuea Granatae';
+      src: url('fonts/Figuea_Granatae.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    .script { font-family: 'Figuea Granatae', 'Georgia', cursive; font-weight: 400; }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    .page-nav { 
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%); 
+      z-index: 100; display: flex; justify-content: space-between; align-items: center; 
+      max-width: 1400px; width: 90vw; padding: 28px 0; box-sizing: border-box; 
+    }
+    .page-nav a {
+      font-size: 11px; color: var(--text); text-decoration: none;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      transition: color 0.4s ease, opacity 0.2s;
+    }
+    .page-nav .nav-brand { font-family: 'Figuea Granatae', cursive; font-size: 28px; letter-spacing: normal; text-transform: none; }
+    .page-nav a:hover { opacity: 0.6; }
+
+    /* ─── MAIN ───────────────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 24px;
+      margin-top: 80px;
+    }
+
+    .success-title {
+      font-family: 'Figuea Granatae', cursive;
+      font-size: clamp(48px, 6vw, 80px);
+      color: var(--text);
+      margin-bottom: 24px;
+      line-height: 1;
+    }
+
+    .success-subtitle {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--text-faint);
+      margin-bottom: 48px;
+      line-height: 2;
+    }
+
+    /* ─── GLASS BUTTONS ─────────────────────────────────────────── */
+    .btn-glass {
+      border-radius: 100px;
+      background: var(--bg);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .btn-glass:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+      transform: translateY(-1px);
+    }
+    .btn-glass:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 80px 48px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+      width: 100%;
+      border-top: 1px solid var(--line);
+    }
+    footer .footer-brand .script { font-size: 42px; color: var(--text); letter-spacing: normal; }
+    footer .footer-brand p:not(.script) { font-size: 14px; color: var(--text-faint); letter-spacing: 0.10em; line-height: 1.6; margin-top: 12px; max-width: 300px; }
+    footer .footer-nav { display: flex; gap: 16px; flex-wrap: wrap; }
+    footer .footer-nav a { font-size: 12px; color: var(--text-faint); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+    footer .footer-nav a:hover { color: var(--text); }
+    footer .footer-copy { font-size: 11px; color: var(--text-faint); letter-spacing: 0.05em; width: 100%; }
+
+    @media (max-width: 900px) {
+      .page-nav .nav-brand { display: none !important; }
+      footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="page-nav">
+    <a href="index.html">← Back to Archive</a>
+    <a href="index.html" class="nav-brand script">Babaika</a>
+    <a href="catalogue.html">Catalogue</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <h1 class="success-title">Order Successful</h1>
+    <p class="success-subtitle">
+      Thank you. Your artifacts are being prepared.<br>
+      A confirmation has been sent to your email.
+    </p>
+    <a href="catalogue.html" class="btn-glass">Return to Catalogue</a>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <p class="script">Babaika</p>
+      <p>A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+    </div>
+    <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="about.html">About</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="index.html">Index (Main Page)</a>
+        <a href="tuman.html">01 // Tuman</a>
+        <a href="tamarisk.html">02 // Tamarisk</a>
+        <a href="poloi.html">03 // Poloi</a>
+        <a href="il.html">04 // Il</a>
+        <a href="raskaty.html">05 // Raskaty</a>
+        <a href="kamish.html">06 // Kamish</a>
+        <a href="cheshuya.html">07 // Cheshuya</a>
+      </nav>
+    </div>
+    <p class="footer-copy">© 2026 Babaika</p>
+  </footer>
+
+  <script>
+    // Clear both the main cart and test cart upon successful order
+    localStorage.removeItem('babaika_cart');
+    localStorage.removeItem('babaika_test_cart');
+  </script>
+
+</body>
+</html>

@@ -23,7 +23,7 @@ export async function POST(request) {
       shipping_address_collection: {
         allowed_countries: ['MX', 'US', 'CA', 'GB', 'DE', 'FR', 'ES', 'IT', 'NL', 'AU', 'JP', 'KR', 'RU', 'KZ'],
       },
-      success_url: `${request.headers.get('origin')}/catalogue.html?order=success`,
+      success_url: `${request.headers.get('origin')}/success.html`,
       cancel_url: `${request.headers.get('origin')}/catalogue.html`,
     });
 
