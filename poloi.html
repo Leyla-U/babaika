@@ -1247,7 +1247,8 @@
       <footer>
     <div class="footer-brand">
       <p class="script">Babaika</p>
-      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.</p>
+      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>Volume One:
+The Volga Delta, mapped through texture, memory, and myth.</p>
     </div>
     <div style="display: flex; gap: 80px; flex-wrap: wrap;">
       <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
@@ -1690,7 +1691,12 @@
         <span class="cart-total-label">[ Total ]</span>
         <span class="cart-total-price" id="cart-total">Price on inquiry</span>
       </div>
-      <button id="checkout-btn" class="btn-glass" disabled>Checkout</button>
+      <div class="cart-notes-group">
+<label for="cart-order-notes">[ Special Notes ]</label>
+<textarea id="cart-order-notes" name="order_notes" placeholder="Length, height, or any special requests…" rows="3"></textarea>
+<p class="cart-notes-hint">Please leave any special notes or requests here. Babaika is always open to adjusting the length of our wraps to suit your height perfectly. If you have any questions, please contact us before purchasing, or simply specify your preferred length and height in the box above.</p>
+</div>
+<button id="checkout-btn" class="btn-glass" disabled>Checkout</button>
       <p class="cart-note">Each artifact is handcrafted to order.<br>We'll confirm availability and timeline by email.</p>
     </div>
   </aside>
@@ -1707,7 +1713,7 @@
         <!-- populated by JS -->
       </div>
 
-      <form id="checkout-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form id="checkout-form" action="/api/contact" method="POST">
         <input type="hidden" name="_subject" value="New Babaika Order Inquiry">
         <input type="hidden" name="order_details" id="hidden-order-details">
 
@@ -1733,8 +1739,8 @@
         </div>
 
         <div class="form-group">
-          <label for="field-sizes">Size / Notes</label>
-          <textarea id="field-sizes" name="sizes_and_notes" placeholder="Sizes (XS/S/M/L/XL), any special requests, or questions…"></textarea>
+          <label for="field-sizes">Special Notes / Size</label>
+          <textarea id="field-sizes" name="sizes_and_notes" placeholder="Please leave any special notes or requests here. Specify preferred wrap length, height, or any other details…"></textarea>
         </div>
 
         <button type="submit" id="checkout-submit" class="btn-glass">Send Inquiry</button>
@@ -1917,7 +1923,7 @@
         const res = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items }),
+          body: JSON.stringify({ items, notes: (document.getElementById('cart-order-notes') || {}).value || '' }),
         });
 
         const data = await res.json();
@@ -1970,10 +1976,33 @@
         
         const form = document.getElementById('checkout-form');
         if (form) {
-            form.addEventListener('submit', () => {
-                checkoutModal.classList.remove('open');
-                const succ = document.getElementById('success-modal');
-                if (succ) succ.classList.add('open');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn ? submitBtn.textContent : 'Send Inquiry';
+                if (submitBtn) { submitBtn.textContent = 'Sending...'; submitBtn.disabled = true; }
+                try {
+                    const formData = new FormData(form);
+                    const data = Object.fromEntries(formData.entries());
+                    const res = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    if (res.ok) {
+                        checkoutModal.classList.remove('open');
+                        const succ = document.getElementById('success-modal');
+                        if (succ) succ.classList.add('open');
+                        form.reset();
+                    } else {
+                        alert('Failed to send inquiry. Please try again.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Network error. Please try again.');
+                } finally {
+                    if (submitBtn) { submitBtn.textContent = originalText; submitBtn.disabled = false; }
+                }
             });
         }
     }
@@ -2014,7 +2043,8 @@
         nav_back:               '← Back to Archive',
         btn_view:               'View',
         next_chapter:           'Next Chapter //',
-        footer_brand:           'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+        footer_brand:           'A Wearable Landscape Archive.<br><br>Volume One:
+The Volga Delta, mapped through texture, memory, and myth.'
         lbl_textile: '[ TEXTILE ARTIFACTS ]',
         lbl_hardware: '[ HARDWARE ARTIFACTS ]',
         lbl_classification: '[ CLASSIFICATION ]',

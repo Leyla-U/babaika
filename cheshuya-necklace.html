@@ -1482,7 +1482,8 @@ When struck by light, it creates a short, blinding flash. A moment of optical di
 <footer>
 <div class="footer-brand">
 <p class="script">Babaika</p>
-<p data-i18n="footer_brand">A Wearable Landscape Archive.<br/><br/>The Volga Delta, mapped through texture, memory, and myth.</p>
+<p data-i18n="footer_brand">A Wearable Landscape Archive.<br/><br/>Volume One:
+The Volga Delta, mapped through texture, memory, and myth.</p>
 </div>
 <div style="display: flex; gap: 80px; flex-wrap: wrap;">
 <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
@@ -2042,6 +2043,11 @@ When struck by light, it creates a short, blinding flash. A moment of optical di
 <span class="cart-total-label">[ Total ]</span>
 <span class="cart-total-price" id="cart-total">Price on inquiry</span>
 </div>
+<div class="cart-notes-group">
+<label for="cart-order-notes">[ Special Notes ]</label>
+<textarea id="cart-order-notes" name="order_notes" placeholder="Length, height, or any special requests…" rows="3"></textarea>
+<p class="cart-notes-hint">Please leave any special notes or requests here. Babaika is always open to adjusting the length of our wraps to suit your height perfectly. If you have any questions, please contact us before purchasing, or simply specify your preferred length and height in the box above.</p>
+</div>
 <button class="btn-glass" disabled="" id="checkout-btn" style="width: 100%;">Checkout</button>
 <p class="cart-note">Each artifact is handcrafted to order.<br/>We'll confirm availability and timeline by email.</p>
 </div>
@@ -2056,7 +2062,7 @@ When struck by light, it creates a short, blinding flash. A moment of optical di
 <div class="checkout-order-summary" id="checkout-order-summary">
 <!-- populated by JS -->
 </div>
-<form action="https://formspree.io/f/YOUR_FORM_ID" id="checkout-form" method="POST">
+<form action="/api/contact" id="checkout-form" method="POST">
 <input name="_subject" type="hidden" value="New Babaika Order Inquiry"/>
 <input id="hidden-order-details" name="order_details" type="hidden"/>
 <div class="form-row">
@@ -2078,8 +2084,8 @@ When struck by light, it creates a short, blinding flash. A moment of optical di
 <input id="field-address" name="address" placeholder="Street, city, postal code" type="text"/>
 </div>
 <div class="form-group">
-<label for="field-sizes">Size / Notes</label>
-<textarea id="field-sizes" name="sizes_and_notes" placeholder="Sizes (XS/S/M/L/XL), any special requests, or questions…"></textarea>
+<label for="field-sizes">Special Notes / Size</label>
+<textarea id="field-sizes" name="sizes_and_notes" placeholder="Please leave any special notes or requests here. Specify preferred wrap length, height, or any other details…"></textarea>
 </div>
 <button class="btn-glass" id="checkout-submit" style="width: 100%; margin-top: 16px;" type="submit">Send Inquiry</button>
 <p class="checkout-legal">By submitting you agree to be contacted by Babaika regarding your inquiry. No payment is taken at this stage.</p>
@@ -2258,7 +2264,7 @@ When struck by light, it creates a short, blinding flash. A moment of optical di
         const res = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items }),
+          body: JSON.stringify({ items, notes: (document.getElementById('cart-order-notes') || {}).value || '' }),
         });
 
         const data = await res.json();
@@ -2311,10 +2317,33 @@ When struck by light, it creates a short, blinding flash. A moment of optical di
         
         const form = document.getElementById('checkout-form');
         if (form) {
-            form.addEventListener('submit', () => {
-                checkoutModal.classList.remove('open');
-                const succ = document.getElementById('success-modal');
-                if (succ) succ.classList.add('open');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn ? submitBtn.textContent : 'Send Inquiry';
+                if (submitBtn) { submitBtn.textContent = 'Sending...'; submitBtn.disabled = true; }
+                try {
+                    const formData = new FormData(form);
+                    const data = Object.fromEntries(formData.entries());
+                    const res = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    if (res.ok) {
+                        checkoutModal.classList.remove('open');
+                        const succ = document.getElementById('success-modal');
+                        if (succ) succ.classList.add('open');
+                        form.reset();
+                    } else {
+                        alert('Failed to send inquiry. Please try again.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Network error. Please try again.');
+                } finally {
+                    if (submitBtn) { submitBtn.textContent = originalText; submitBtn.disabled = false; }
+                }
             });
         }
     }
@@ -2353,7 +2382,8 @@ When struck by light, it creates a short, blinding flash. A moment of optical di
         nav_back:               '← Back to Archive',
         btn_view:               'View',
         next_chapter:           'Next Chapter //',
-        footer_brand:           'A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory, and myth.'
+        footer_brand:           'A Wearable Landscape Archive.<br><br>Volume One:
+The Volga Delta, mapped through texture, memory, and myth.'
       },
       es: {
         nav_back:               '← Volver al Archivo',

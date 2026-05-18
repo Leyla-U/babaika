@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Babaika — Production & Shipping</title>
+  <meta name="description" content="Production timelines, shipping policies, and care information for Babaika handcrafted pieces." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #EEEDEB;
+      --text: #535E69;
+      --text-muted: #888880;
+      --text-faint: #b0aea8;
+      --line: rgba(60, 60, 55, 0.18);
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 100;
+      line-height: 1.7;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    @font-face {
+      font-family: 'Figuea Granatae';
+      src: url('fonts/Figuea_Granatae.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .script {
+      font-family: 'Figuea Granatae', 'Georgia', cursive;
+      font-weight: 400;
+    }
+
+    /* ─── PAGE HEADER ────────────────────────────────────────── */
+    .page-header {
+      padding: 100px 48px 0;
+      max-width: 680px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .page-header h1 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 100;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    /* ─── MAIN CONTENT ─────────────────────────────────────── */
+    main {
+      flex: 1;
+      max-width: 680px;
+      margin: 0 auto 120px;
+      padding: 0 48px;
+      width: 100%;
+    }
+
+    .shipping-section {
+      margin-bottom: 56px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .shipping-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .shipping-section h2 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 100;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .shipping-section p {
+      color: var(--text);
+      line-height: 1.9;
+      font-weight: 100;
+    }
+
+    /* ─── BACK LINK ──────────────────────────────────────────── */
+    .back-link {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      text-decoration: none;
+      margin-bottom: 64px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--text);
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 80px 48px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+      width: 100%;
+    }
+
+    footer .footer-brand .script {
+      font-size: 42px;
+      color: var(--text);
+      letter-spacing: normal;
+    }
+
+    footer .footer-brand p:not(.script) {
+      font-size: 14px;
+      color: var(--text-faint);
+      letter-spacing: 0.10em;
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+
+    footer .footer-nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-nav a {
+      font-size: 12px;
+      color: var(--text-faint);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+
+    footer .footer-nav a:hover {
+      color: var(--text);
+    }
+
+    footer .footer-copy {
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+      width: 100%;
+    }
+
+    .footer-lang {
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .footer-lang span,
+    .footer-lang a {
+      cursor: pointer;
+      color: var(--text-faint) !important;
+      text-decoration: none !important;
+      transition: opacity 0.2s;
+    }
+
+    .footer-lang span.active,
+    .footer-lang a.active {
+      text-decoration: underline !important;
+      text-underline-offset: 4px;
+      color: var(--text) !important;
+    }
+
+    .footer-lang span:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 80px 24px 0;
+      }
+
+      main {
+        padding: 0 24px;
+        margin-bottom: 80px;
+      }
+
+      footer {
+        padding: 60px 24px 40px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* Fix for weird vertical line on mobile */
+    @media (max-width: 900px) {
+      .artifact-left, .artifact-right, .artifact-center, .info-col, .sticky-col {
+        border-right: none !important;
+        border-left: none !important;
+      }
+    }
+
+    /* Hide brand on mobile and make cart smaller */
+    @media (max-width: 900px) {
+      .page-nav .nav-brand { display: none !important; }
+      #cart-btn { padding: 8px 16px !important; font-size: 10px !important; gap: 8px !important; }
+      #cart-btn-nav { font-size: 10px !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── PAGE HEADER ────────────────────────────────────────── -->
+  <div class="page-header">
+    <h1 data-i18n="page_title">[ PRODUCTION &amp; SHIPPING ]</h1>
+  </div>
+
+  <!-- ── MAIN CONTENT ────────────────────────────────────────── -->
+  <main>
+
+    <a href="index.html" class="back-link" data-i18n="nav_back">← Back to Archive</a>
+
+    <!-- Section 1: Production & Processing Time -->
+    <div class="shipping-section">
+      <h2 data-i18n="s1_title">[ PRODUCTION &amp; PROCESSING TIME ]</h2>
+      <p data-i18n="s1_body">To ensure the highest quality, all Babaika pieces are created to order. The production process begins only once your payment is fully confirmed. Please allow approximately two weeks for the creation of your item. As soon as your piece is completed and packed, it will be dispatched, and you will receive a shipping confirmation with your tracking information. Transit times will apply from the date of shipment, not the date of purchase.</p>
+    </div>
+
+    <!-- Section 2: All Sales Final / No Refunds -->
+    <div class="shipping-section">
+      <h2 data-i18n="s2_title">[ SALES POLICY ]</h2>
+      <p data-i18n="s2_body">Because every piece is made to order upon payment, all sales are final. We cannot offer refunds or exchanges for change of mind or incorrect sizing. Since our wraps are designed as one-size, please contact us if you have any specific sizing questions, or feel free to include your measurements/specifications in the notes at checkout. If you require a resize after receiving your piece, please contact us within 7 days; resizing services are subject to a studio fee and return shipping costs.</p>
+    </div>
+
+    <!-- Section 3: Handmade Variations -->
+    <div class="shipping-section">
+      <h2 data-i18n="s3_title">[ HANDMADE VARIATIONS ]</h2>
+      <p data-i18n="s3_body">Each Babaika object is individually crafted by hand. Due to the nature of our production process, slight variations in texture, metal finish, or textile drape are to be expected and celebrated. These nuances ensure your piece is entirely unique and are not considered defects.</p>
+    </div>
+
+    <!-- Section 4: Shipping Address -->
+    <div class="shipping-section">
+      <h2 data-i18n="s4_title">[ SHIPPING ADDRESS ]</h2>
+      <p data-i18n="s4_body">Please ensure your shipping address is entered correctly at checkout. We are not responsible for lost packages or returned shipments due to incorrect or incomplete addresses provided by the buyer. If a package is returned to our studio for this reason, the buyer is responsible for the cost of re-shipping.</p>
+    </div>
+
+    <!-- Section 5: Customs & Duties -->
+    <div class="shipping-section">
+      <h2 data-i18n="s5_title">[ CUSTOMS &amp; DUTIES ]</h2>
+      <p data-i18n="s5_body">If a package is returned to us because the recipient refused to pay local customs duties or taxes, or failed to claim the package from their local courier, any return shipping fees incurred by our studio will be deducted from a potential store credit.</p>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-brand">
+      <p class="script">Babaika</p>
+      <p data-i18n="footer_brand">A Wearable Landscape Archive.<br><br>The Volga Delta, mapped through texture, memory,
+        and myth.</p>
+    </div>
+    <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="about.html" data-i18n="nav_about">About</a>
+        <a href="shipping.html" data-i18n="nav_shipping">Production &amp; Shipping</a>
+        <a href="catalogue.html" data-i18n="nav_catalogue">Catalogue</a>
+        <a href="https://www.instagram.com/babaika.babaika.babaika/" target="_blank"
+          rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <nav class="footer-nav" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+        <a href="index.html" data-i18n="nav_index">Index (Main Page)</a>
+        <a href="tuman.html">01 // Tuman</a>
+        <a href="tamarisk.html">02 // Tamarisk</a>
+        <a href="poloi.html">03 // Poloi</a>
+        <a href="il.html">04 // Il</a>
+        <a href="raskaty.html">05 // Raskaty</a>
+        <a href="kamish.html">06 // Kamish</a>
+        <a href="cheshuya.html">07 // Cheshuya</a>
+      </nav>
+    </div>
+    <div class="footer-lang">
+      <span id="footer-lang-en" onclick="setLang('en')">EN</span> / <span id="footer-lang-es"
+        onclick="setLang('es')">ES</span>
+    </div>
+    <p class="footer-copy">© 2026 Babaika</p>
+  </footer>
+
+  <!-- ── TRANSLATION SYSTEM ── -->
+  <script>
+  (function() {
+    const TRANSLATIONS = {
+      en: {
+        page_title:    '[ PRODUCTION &amp; SHIPPING ]',
+        nav_back:      '← Back to Archive',
+        nav_about:     'About',
+        nav_shipping:  'Production &amp; Shipping',
+        nav_catalogue: 'Catalogue',
+        nav_index:     'Index (Main Page)',
+        footer_brand:  'A Wearable Landscape Archive.<br><br>Volume One:
+The Volga Delta, mapped through texture, memory, and myth.',
+
+        s1_title: '[ PRODUCTION &amp; PROCESSING TIME ]',
+        s1_body:  'To ensure the highest quality, all Babaika pieces are created to order. The production process begins only once your payment is fully confirmed. Please allow approximately two weeks for the creation of your item. As soon as your piece is completed and packed, it will be dispatched, and you will receive a shipping confirmation with your tracking information. Transit times will apply from the date of shipment, not the date of purchase.',
+
+        s2_title: '[ SALES POLICY ]',
+        s2_body:  'Because every piece is made to order upon payment, all sales are final. We cannot offer refunds or exchanges for change of mind or incorrect sizing. Since our wraps are designed as one-size, please contact us if you have any specific sizing questions, or feel free to include your measurements/specifications in the notes at checkout. If you require a resize after receiving your piece, please contact us within 7 days; resizing services are subject to a studio fee and return shipping costs.',
+
+        s3_title: '[ HANDMADE VARIATIONS ]',
+        s3_body:  'Each Babaika object is individually crafted by hand. Due to the nature of our production process, slight variations in texture, metal finish, or textile drape are to be expected and celebrated. These nuances ensure your piece is entirely unique and are not considered defects.',
+
+        s4_title: '[ SHIPPING ADDRESS ]',
+        s4_body:  'Please ensure your shipping address is entered correctly at checkout. We are not responsible for lost packages or returned shipments due to incorrect or incomplete addresses provided by the buyer. If a package is returned to our studio for this reason, the buyer is responsible for the cost of re-shipping.',
+
+        s5_title: '[ CUSTOMS &amp; DUTIES ]',
+        s5_body:  'If a package is returned to us because the recipient refused to pay local customs duties or taxes, or failed to claim the package from their local courier, any return shipping fees incurred by our studio will be deducted from a potential store credit.'
+      },
+      es: {
+        page_title:    '[ PRODUCCIÓN Y ENVÍO ]',
+        nav_back:      '← Volver al Archivo',
+        nav_about:     'Acerca de',
+        nav_shipping:  'Producción y Envío',
+        nav_catalogue: 'Catálogo',
+        nav_index:     'Índice (Página Principal)',
+        footer_brand:  'Un Archivo de Paisajes Vestibles.<br><br>El Delta del Volga, cartografiado a través de la textura, la memoria y el mito.',
+
+        s1_title: '[ TIEMPO DE PRODUCCIÓN Y PROCESAMIENTO ]',
+        s1_body:  'Para garantizar la más alta calidad, todas las piezas de Babaika se crean bajo pedido. El proceso de producción comienza únicamente una vez que tu pago haya sido completamente confirmado. Por favor, permite aproximadamente dos semanas para la creación de tu artículo. Tan pronto como tu pieza esté terminada y empacada, será enviada, y recibirás una confirmación de envío con tu información de rastreo. Los tiempos de tránsito aplican a partir de la fecha de envío, no de la fecha de compra.',
+
+        s2_title: '[ POLÍTICA DE VENTAS ]',
+        s2_body:  'Dado que cada pieza se realiza bajo pedido al momento del pago, todas las ventas son definitivas. No podemos ofrecer reembolsos ni cambios por arrepentimiento o tallas incorrectas. Dado que nuestros wraps están diseñados en talla única, te invitamos a contactarnos si tienes alguna pregunta específica sobre medidas, o puedes incluir tus medidas/especificaciones en las notas al momento del pago. Si necesitas un ajuste de talla después de recibir tu pieza, contáctanos dentro de los 7 días siguientes; los servicios de ajuste están sujetos a un cargo de estudio y costos de envío de devolución.',
+
+        s3_title: '[ VARIACIONES ARTESANALES ]',
+        s3_body:  'Cada objeto de Babaika está elaborado individualmente a mano. Debido a la naturaleza de nuestro proceso de producción, pequeñas variaciones en la textura, el acabado metálico o la caída del textil son esperadas y celebradas. Estas particularidades garantizan que tu pieza sea completamente única y no se consideran defectos.',
+
+        s4_title: '[ DIRECCIÓN DE ENVÍO ]',
+        s4_body:  'Por favor, asegúrate de ingresar correctamente tu dirección de envío al momento del pago. No somos responsables de paquetes perdidos o envíos devueltos por direcciones incorrectas o incompletas proporcionadas por el comprador. Si un paquete es devuelto a nuestro estudio por esta razón, el comprador será responsable del costo de reenvío.',
+
+        s5_title: '[ ADUANAS Y ARANCELES ]',
+        s5_body:  'Si un paquete es devuelto porque el destinatario se negó a pagar los aranceles aduaneros o impuestos locales, o no reclamó el paquete de su servicio de mensajería local, cualquier cargo de envío de devolución incurrido por nuestro estudio será deducido de un posible crédito en tienda.'
+      }
+    };
+
+    var lang = localStorage.getItem('babaika_lang') || 'en';
+
+    function applyLang(l) {
+      if (!TRANSLATIONS[l]) l = 'en';
+      lang = l;
+      localStorage.setItem('babaika_lang', l);
+      document.documentElement.lang = l;
+
+      var t = TRANSLATIONS[l];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      ['en','es'].forEach(function(code) {
+        ['footer-lang-', 'lang-'].forEach(function(prefix) {
+          var el = document.getElementById(prefix + code);
+          if (!el) return;
+          if (code === l) {
+            el.classList.add('active');
+            el.style.textDecoration = 'underline';
+            el.style.textUnderlineOffset = '4px';
+          } else {
+            el.classList.remove('active');
+            el.style.textDecoration = 'none';
+          }
+        });
+      });
+    }
+
+    window.setLang = function(l) { applyLang(l); };
+    applyLang(lang);
+  })();
+  </script>
+
+</body>
+
+</html>
