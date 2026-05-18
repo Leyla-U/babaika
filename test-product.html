@@ -387,7 +387,7 @@
     const PRICE_NUM_MAP = { '01.02': 10.0 };
     const PRICE_DISP_MAP = { '01.02': '$10.00 MXN' };
 
-    let cart = JSON.parse(localStorage.getItem('babaika_cart') || '[]');
+    let cart = JSON.parse(localStorage.getItem('babaika_test_cart') || '[]');
 
     const cartBtnNav   = document.getElementById('cart-btn-nav');
     const cartCountNav = document.getElementById('cart-count-nav');
@@ -398,7 +398,7 @@
     const cartTotal    = document.getElementById('cart-total');
     const checkoutBtn  = document.getElementById('checkout-btn');
 
-    function save() { localStorage.setItem('babaika_cart', JSON.stringify(cart)); }
+    function save() { localStorage.setItem('babaika_test_cart', JSON.stringify(cart)); }
 
     function renderCart() {
       const total = cart.reduce((s, i) => s + i.qty, 0);
