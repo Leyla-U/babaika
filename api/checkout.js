@@ -35,6 +35,7 @@ module.exports = async function handler(req, res) {
       customer_creation: 'always',
       // Shipping options — customer selects at checkout
       shipping_options: [
+        { shipping_rate: 'shr_1TYI7tJPn6LmQgwJOD7VGgJk' }, // Mexico City (Free)
         { shipping_rate: 'shr_1TYFbWJPn6LmQgwJysioBAaa' }, // Domestic (MX)
         { shipping_rate: 'shr_1TYFbkJPn6LmQgwJSOQfWURp' }, // International — US & Canada
         { shipping_rate: 'shr_1TYFdOJPn6LmQgwJjEFHW9WD' }, // International — Rest of World
