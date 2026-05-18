@@ -20,8 +20,13 @@ export async function POST(request) {
     const session = await stripe.checkout.sessions.create({
       line_items,
       mode: 'payment',
+      billing_address_collection: 'required',
+      customer_creation: 'always',
       shipping_address_collection: {
         allowed_countries: ['MX', 'US', 'CA', 'GB', 'DE', 'FR', 'ES', 'IT', 'NL', 'AU', 'JP', 'KR', 'RU', 'KZ'],
+      },
+      payment_intent_data: {
+        receipt_email: null, // Stripe will use the email entered at checkout
       },
       success_url: `${request.headers.get('origin')}/success.html`,
       cancel_url: `${request.headers.get('origin')}/catalogue.html`,
