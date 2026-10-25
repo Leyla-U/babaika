@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Babaika — A Wearable Landscape Archive.</title>
   <meta name="description" content="Babaika is an adornment and wear brand rooted in the Volga delta — silks, kimonos, and handcrafted jewellery inspired by the natural world." />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <script>
+    // Auto-reload on file changes during local preview
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      let lastMod = null;
+      setInterval(async () => {
+        try {
+          const res = await fetch(location.href, { method: 'HEAD', cache: 'no-store' });
+          const mod = res.headers.get('Last-Modified') || res.headers.get('ETag');
+          if (lastMod && mod && mod !== lastMod) {
+            location.reload();
+          }
+          lastMod = mod;
+        } catch(e) {}
+      }, 1500);
+    }
+  </script>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -104,7 +124,7 @@
     .hero {
       position: relative;
       width: 100%;
-      height: 1100px;
+      height: clamp(600px, 100svh, 1100px);
       overflow: hidden;
     }
 
@@ -580,7 +600,7 @@
     /* ─── FULL-WIDTH LANDSCAPE ──────────────────────────────── */
     .landscape-full {
       width: 100%;
-      height: 800px;
+      height: clamp(400px, 70svh, 800px);
       overflow: hidden;
     }
 
@@ -697,7 +717,7 @@
       transition: opacity 0.2s;
     }
     .hero-lang span.active {
-      text-decoration: underlineunderline
+      text-decoration: underline;
       text-underline-offset: 4px;
     }
     .hero-lang span:hover, .hero-lang a:hover {
@@ -747,7 +767,7 @@
       .image-strip, .image-strip-scroll { gap: 1px !important; }
       .chapter-body {
         grid-template-columns: 1fr;
-        padding: 120px 75px 100px;
+        padding: 80px 24px 60px;
         gap: 40px;
       }
       .chapter-center { order: 1; }
@@ -764,8 +784,8 @@
       .image-strip img { width: calc(100% / 3); }
       .image-strip-6 > * { height: 180px; width: auto; flex: 0 0 auto; }
       .image-strip-6 { flex-wrap: nowrap; height: 180px; }
-      .intro-section { padding: 80px 75px; }
-      footer { padding: 60px 75px 40px; flex-direction: column; align-items: flex-start; }
+      .intro-section { padding: 60px 24px; }
+      footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
       .hero-lang { top: 32px; left: 50%; right: auto; transform: translateX(-50%); }
     }
 
@@ -1324,7 +1344,7 @@
       background: transparent;
       border: 1px solid var(--line);
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 100;
       color: var(--text);
       padding: 10px;
@@ -1344,9 +1364,31 @@
       line-height: 1.6;
       margin-top: 6px;
     }
+
+    /* MOBILE CURSOR FIX */
+    @media (hover: none) and (pointer: coarse) {
+      body, a, button, [role="button"], input, textarea, select, label, .btn-glass, .product-name, .hero-lang a, .slider-arrow, .photo-nav { cursor: auto !important; }
+      .slider-arrow, .photo-nav { opacity: 0.8 !important; display: block !important; }
+    }
 </style>
 </head>
 <body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────── -->
+  <nav class="page-nav index-nav-added" style="position: fixed; top: 0; left: 0; width: 100%; padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; z-index: 100; mix-blend-mode: difference; color: #fff; box-sizing: border-box; pointer-events: none;" data-no-clone="true">
+    <div style="pointer-events: auto;">
+      <a href="catalogue.html" data-i18n="nav_catalogue" style="color: inherit; text-decoration: none; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;">Catalogue</a>
+    </div>
+    <a class="nav-brand script" href="index.html" style="position: absolute; left: 50%; transform: translateX(-50%); font-size: 28px; text-transform: none; letter-spacing: normal; color: inherit; text-decoration: none; pointer-events: auto;">Babaika</a>
+    <div style="width: 100px;"></div>
+  </nav>
+  <style>
+    @media (max-width: 900px) {
+      .index-nav-added { padding: 24px !important; }
+      .index-nav-added .nav-brand { display: none !important; }
+    }
+  </style>
+
   <!-- ── CART BUTTON ────────────────────────────────────────────── -->
   <button id="cart-btn" aria-label="Open cart" data-no-clone="true">
     <span>Cart</span>
@@ -1595,11 +1637,6 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
             <p class="artifact-desc">Base: Mulberry Silk<br>Pile: Rayon</p>
           </div>
           
-          <div class="artifact-item" onclick="window.location='tuman-bra.html'">
-            <p class="artifact-title">BRA</p>
-            <p class="artifact-desc">Mulberry Silk Chiffon 8 Momme</p>
-          </div>
-          
           <p class="artifact-section-title" data-i18n="lbl_hardware">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='tuman-ring.html'">
@@ -1630,7 +1667,9 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777096239/tuman_video_earring_fkqiwa.mp4"     style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto; cursor:pointer;" onclick="window.location='tuman-earring.html'" title="View Tuman Earring Details" autoplay loop muted playsinline></video>
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777228769/babaika_tuman_44_pugv7t.jpg" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;"  loading="lazy" />
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777088807/tuman-2_hrfdxd.mp4"     style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <!-- Temporarily hidden: bra photo
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777228757/babaika_tuman_02_ia8ol9.jpg" alt="Tuman look" style="object-position:center 20%; width:clamp(200px,28vw,420px); flex:0 0 auto;"  loading="lazy" />
+        -->
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777088809/tuman-3_yrdu03.mp4"     style="object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777229016/babaika_delta_45_tznxgx.png" alt="Tuman look" style="object-position:center 30%; width:clamp(200px,28vw,420px); flex:0 0 auto;"  loading="lazy" />
 
@@ -1674,12 +1713,6 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
             <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
           </div>
           
-          <div class="artifact-item" onclick="window.location='tamarisk-bra.html'">
-            <p class="artifact-title">BRA</p>
-            <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
-          </div>
-
-
           <p class="artifact-section-title" data-i18n="lbl_hardware">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='tamarisk-ring.html'">
@@ -1701,7 +1734,9 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
       <div id="tamarisk-slider" class="image-strip image-strip-6 image-strip-scroll" style="height:clamp(200px,28vw,420px);">
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777144550/tmr-v67_uqesir.mp4"     onclick="window.location='tamarisk-wrap.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777082418/tamarisk_ring_vxj0td.mp4"     onclick="window.location='tamarisk-wrap.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
+        <!-- Temporarily hidden: bra photo
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777224852/tmr12_jkch4z.png" alt="Tamarisk look" onclick="window.location='tamarisk-wrap.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"  loading="lazy" />
+        -->
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777144391/tmr-v3_sdm17t.mp4"     onclick="window.location='tamarisk-wrap.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777167754/tmr123_mjl8ib.png" alt="Tamarisk look" onclick="window.location='tamarisk-wrap.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;"  loading="lazy" />
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777085761/Tamarisk-video-1_qfx1ck.mp4"     onclick="window.location='tamarisk-wrap.html'" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline></video>
@@ -1748,12 +1783,6 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
             <p class="artifact-desc">40% Silk, 60% Cotton</p>
           </div>
           
-          <div class="artifact-item" onclick="window.location='poloi-bra.html'">
-            <p class="artifact-title">BRA</p>
-            <p class="artifact-desc">Mulberry Silk 6 Momme Georgette Fabric</p>
-          </div>
-
-
         </div>
       </div>
     </div>
@@ -1772,7 +1801,9 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777169031/pc2_fsgmnp.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='poloi.html'"></video>
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777153181/psc7_kmsqof.png" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'"  loading="lazy" />
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777081967/poloi-fabric-cotton_lom1g0.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='poloi.html'"></video>
+        <!-- Temporarily hidden: bra photo
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777152373/babaika_delta_30_rzpquc.jpg" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'"  loading="lazy" />
+        -->
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777152390/babaika_delta_19_bfd8m6.jpg" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'"  loading="lazy" />
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777173966/babaika_delta_38_mktiwe.jpg" alt="Poloi look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='poloi.html'"  loading="lazy" />
       </div>
@@ -1940,16 +1971,7 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
         <div class="artifact-list">
           <p class="artifact-section-title" data-i18n="lbl_textile">[ TEXTILE ARTIFACTS ]</p>
           
-          <div class="artifact-item" onclick="window.location='kamish-wrap-beige.html'">
-            <p class="artifact-title">WRAP</p>
-            <p class="artifact-desc">Beige Sandwashed Mulberry Silk Charmeuse 16 Momme</p>
-          </div>
-          
-          <div class="artifact-item" onclick="window.location='kamish-wrap-green.html'">
-            <p class="artifact-title">WRAP</p>
-            <p class="artifact-desc">Light Green Sandwashed Mulberry Silk Charmeuse 16 Momme</p>
-          </div>
-          
+
 
           
           <div class="artifact-item" onclick="window.location='kamish-bag.html'">
@@ -2007,13 +2029,6 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
       </div>
       <div class="chapter-right reveal">
         <div class="artifact-list">
-          <p class="artifact-section-title" data-i18n="lbl_textile">[ TEXTILE ARTIFACTS ]</p>
-          
-          <div class="artifact-item" onclick="window.location='cheshuya-bra.html'">
-            <p class="artifact-title">BRA</p>
-            <p class="artifact-desc">50% Silk, 50% Cotton Charmeuse Base, Mother-of-Pearl Shell Coins</p>
-          </div>
-
           <p class="artifact-section-title" data-i18n="lbl_hardware">[ HARDWARE ARTIFACTS ]</p>
           
           <div class="artifact-item" onclick="window.location='cheshuya-necklace.html'">
@@ -2046,7 +2061,9 @@ The Volga Delta, mapped through texture, memory, and myth.</p>
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777184287/kam45_fkonri.png" alt="Cheshuya look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='cheshuya.html'" loading="lazy" />
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777256112/babaika_delta_07_uthpkv.jpg" alt="Cheshuya look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='cheshuya.html'" loading="lazy" />
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777083709/cheshuya-material_d7rghf.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='cheshuya.html'"></video>
+        <!-- Temporarily hidden: bra photo
         <img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777256321/hesh-tits_gnsgol.png" alt="Cheshuya look" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" onclick="window.location='cheshuya.html'" loading="lazy" />
+        -->
         <video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777088809/tuman-6_grktcd.mp4" style="cursor:pointer; object-position:center; width:clamp(200px,28vw,420px); flex:0 0 auto;" autoplay loop muted playsinline onclick="window.location='cheshuya.html'"></video>
       </div>
     </div>

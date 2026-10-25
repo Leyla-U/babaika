@@ -5,6 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Babaika — Catalogue</title>
   <meta name="description" content="Catalogue of all Babaika products. A wearable landscape archive." />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <script>
+    // Auto-reload on file changes during local preview
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      let lastMod = null;
+      setInterval(async () => {
+        try {
+          const res = await fetch(location.href, { method: 'HEAD', cache: 'no-store' });
+          const mod = res.headers.get('Last-Modified') || res.headers.get('ETag');
+          if (lastMod && mod && mod !== lastMod) {
+            location.reload();
+          }
+          lastMod = mod;
+        } catch(e) {}
+      }, 1500);
+    }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300&display=swap" rel="stylesheet" />
@@ -333,6 +354,18 @@
       #cart-btn { padding: 8px 16px !important; font-size: 10px !important; gap: 8px !important; }
       #cart-btn-nav { font-size: 10px !important; }
     }
+
+    /* MOBILE CURSOR FIX */
+    @media (hover: none) and (pointer: coarse) {
+      body, a, button, [role="button"], input, textarea, select, label, .btn-glass, .product-name, .hero-lang a, .slider-arrow, .photo-nav { cursor: auto !important; }
+      .slider-arrow, .photo-nav { opacity: 0.8 !important; display: block !important; }
+    }
+
+    /* MOBILE CATALOGUE GRID */
+    @media (max-width: 600px) {
+      .cat-row { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+      .cat-item-name, .cat-item-desc, .cat-item-price { font-size: 11px !important; }
+    }
 </style>
 </head>
 <body>
@@ -413,12 +446,14 @@
           <span class="cat-item-desc">Velvet, Mulberry Silk / Rayon Pile</span>
           <span class="cat-item-price">$6,000.00 MXN</span>
         </a>
+        <!-- Temporarily hidden: bra
         <a href="tuman-bra.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777228757/babaika_tuman_02_ia8ol9.jpg" alt="Tuman Soft Bra" loading="lazy" /></div>
           <span class="cat-item-name">Bra</span>
           <span class="cat-item-desc">Mulberry Silk Chiffon 8 Momme</span>
           <span class="cat-item-price">$2,000.00 MXN</span>
         </a>
+        -->
         <a href="tuman-earring.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777096239/tuman_video_earring_fkqiwa.mp4" autoplay loop muted playsinline></video></div>
           <span class="cat-item-name">Earring</span>
@@ -447,12 +482,14 @@
           <span class="cat-item-desc">Mulberry Silk 6 Momme Georgette</span>
           <span class="cat-item-price">$4,000.00 MXN</span>
         </a>
+        <!-- Temporarily hidden: bra
         <a href="tamarisk-bra.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777224852/tmr12_jkch4z.png" alt="Tamarisk Bra" loading="lazy" /></div>
           <span class="cat-item-name">Bra</span>
           <span class="cat-item-desc">Mulberry Silk 6 Momme Georgette</span>
           <span class="cat-item-price">$2,000.00 MXN</span>
         </a>
+        -->
         <a href="tamarisk-ring.html" class="cat-item">
           <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777082418/tamarisk_ring_vxj0td.mp4" autoplay loop muted playsinline></video></div>
           <span class="cat-item-name">Ring</span>
@@ -475,6 +512,7 @@
           <span class="cat-item-desc">Mulberry Silk Chiffon 8 Momme</span>
           <span class="cat-item-price">$6,000.00 MXN</span>
         </a>
+        <!-- Temporarily hidden: bra & spacer
         <a href="poloi-bra.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777152373/babaika_delta_30_rzpquc.jpg" alt="Polói Bra" loading="lazy" /></div>
           <span class="cat-item-name">Bra</span>
@@ -482,6 +520,7 @@
           <span class="cat-item-price">$2,000.00 MXN</span>
         </a>
         <div class="cat-item" style="opacity:0; pointer-events:none;"></div>
+        -->
         <a href="poloi-wrap-cotton.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777153181/psc7_kmsqof.png" alt="Polói Cotton Silk Wrap" loading="lazy" /></div>
           <span class="cat-item-name">Wrap</span>
@@ -551,18 +590,7 @@
       </div>
       <p class="cat-chapter-title"><a href="kamish.html">Kamish</a></p>
       <div class="cat-row">
-        <a href="kamish-wrap-beige.html" class="cat-item">
-          <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777182832/babaika_delta_07_og8w3g.png" alt="Kamish Beige Wrap" loading="lazy" /></div>
-          <span class="cat-item-name">Wrap</span>
-          <span class="cat-item-desc">Beige Sandwashed Mulberry Silk Charmeuse 16 Momme</span>
-          <span class="cat-item-price">$6,000.00 MXN</span>
-        </a>
-        <a href="kamish-wrap-green.html" class="cat-item">
-          <div class="cat-item-thumb"><video preload="none" src="https://res.cloudinary.com/dejpm4v8y/video/upload/q_auto,f_auto,vc_auto/v1777175218/kamish1_vrnrqx.mp4" autoplay loop muted playsinline></video></div>
-          <span class="cat-item-name">Wrap</span>
-          <span class="cat-item-desc">Grey Green Sandwashed Mulberry Silk Charmeuse 16 Momme</span>
-          <span class="cat-item-price">$6,000.00 MXN</span>
-        </a>
+
         <a href="kamish-bag.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777258779/kambagbw_nf3cyb.png" alt="Kamish Bag" loading="lazy" /></div>
           <span class="cat-item-name">Bag</span>
@@ -585,12 +613,14 @@
       </div>
       <p class="cat-chapter-title"><a href="cheshuya.html">Cheshuya</a></p>
       <div class="cat-row">
+        <!-- Temporarily hidden: bra
         <a href="cheshuya-bra.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777256108/babaika_delta_04_drfdvt.jpg" alt="Cheshuya Bra" loading="lazy" /></div>
           <span class="cat-item-name">Bra</span>
           <span class="cat-item-desc">50% Silk, 50% Cotton Charmeuse Base, Mother-of-Pearl Shell Coins</span>
           <span class="cat-item-price">$4,000.00 MXN</span>
         </a>
+        -->
         <a href="cheshuya-necklace.html" class="cat-item">
           <div class="cat-item-thumb"><img src="https://res.cloudinary.com/dejpm4v8y/image/upload/q_auto,f_auto/v1777256120/babaika_delta_39_uob0kk.jpg" alt="Cotton Silk Necklace" loading="lazy" /></div>
           <span class="cat-item-name">Necklace</span>

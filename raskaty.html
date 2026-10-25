@@ -1002,7 +1002,7 @@
       background: transparent;
       border: 1px solid var(--line);
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 100;
       color: var(--text);
       padding: 10px;
@@ -1021,6 +1021,12 @@
       font-style: italic;
       line-height: 1.6;
       margin-top: 6px;
+    }
+
+    /* MOBILE CURSOR FIX */
+    @media (hover: none) and (pointer: coarse) {
+      body, a, button, [role="button"], input, textarea, select, label, .btn-glass, .product-name, .hero-lang a, .slider-arrow, .photo-nav { cursor: auto !important; }
+      .slider-arrow, .photo-nav { opacity: 0.8 !important; display: block !important; }
     }
 </style>
 </head>

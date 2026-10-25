@@ -132,7 +132,13 @@
       .page-nav .nav-brand { display: none !important; }
       footer { padding: 60px 24px 40px; flex-direction: column; align-items: flex-start; }
     }
-  </style>
+  
+    /* MOBILE CURSOR FIX */
+    @media (hover: none) and (pointer: coarse) {
+      body, a, button, [role="button"], input, textarea, select, label, .btn-glass, .product-name, .hero-lang a, .slider-arrow, .photo-nav { cursor: auto !important; }
+      .slider-arrow, .photo-nav { opacity: 0.8 !important; display: block !important; }
+    }
+</style>
 </head>
 <body>
 

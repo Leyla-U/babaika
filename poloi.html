@@ -1003,7 +1003,7 @@
       background: transparent;
       border: 1px solid var(--line);
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 100;
       color: var(--text);
       padding: 10px;
@@ -1022,6 +1022,12 @@
       font-style: italic;
       line-height: 1.6;
       margin-top: 6px;
+    }
+
+    /* MOBILE CURSOR FIX */
+    @media (hover: none) and (pointer: coarse) {
+      body, a, button, [role="button"], input, textarea, select, label, .btn-glass, .product-name, .hero-lang a, .slider-arrow, .photo-nav { cursor: auto !important; }
+      .slider-arrow, .photo-nav { opacity: 0.8 !important; display: block !important; }
     }
 </style>
 </head>
@@ -1170,7 +1176,7 @@
         <p class="artifact-name">CHIFFON WRAP</p>
         <p class="artifact-detail-row">Material: Mulberry Silk Chiffon 8 Momme</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size (length can be customized)</p>
-        <p class="artifact-detail-row" style="margin-top:8px;">Price: $4,000.00 MXN</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Price: $6,000.00 MXN</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
           <button onclick="window.location='poloi-wrap.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
@@ -1199,7 +1205,7 @@
         <p class="artifact-name">POPLIN WRAP</p>
         <p class="artifact-detail-row">Material: 50% Silk, 50% Cotton Poplin</p>
         <p class="artifact-detail-row" style="margin-top:8px;">Size: One size (length can be customized)</p>
-        <p class="artifact-detail-row" style="margin-top:8px;">Price: $4,000.00 MXN</p>
+        <p class="artifact-detail-row" style="margin-top:8px;">Price: $6,000.00 MXN</p>
         <div class="artifact-actions" style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
           <button onclick="window.location='poloi-wrap-cotton.html'" class="btn-glass" style="width:100%;" data-i18n="btn_view">View</button>
         </div>
@@ -1218,7 +1224,7 @@
     </div>
   </div>
 
-  <!-- ARTIFACT 03: BRA -->
+  <!-- Temporarily hidden: bra artifact
   <div class="artifact-container reveal">
     <div class="artifact-header">
       <p class="artifact-tag">[ TEXTILE ARTIFACT 03.03 ]</p>
@@ -1246,6 +1252,7 @@
       </div>
     </div>
   </div>
+  -->
 
 
 
